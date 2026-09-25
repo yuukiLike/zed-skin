@@ -1,21 +1,21 @@
 # GreenTree Contrast AAA
 
-**绿树 · 高对比度** — 绿色重点文字、多彩语法，以及白天与夜晚两套中性背景的 Zed 主题，以 WCAG AAA 的普通文字对比度为配色目标。
+**绿树 · 高对比度** — 绿色重点文字、冰川日间与深黑夜间两套 Zed 主题，以 WCAG AAA 的普通文字对比度为配色目标。
 
-Day 使用炭灰背景，Night 使用深黑背景。配色参考 RepoBar 的中性暗背景与清晰的颜色语义：绿色只用于关键字、标题等重点文字和成功状态文字；函数用蓝色，字符串用金黄，类型用紫色，数字与布尔值用橙色，对象字段用青蓝。普通文字、注释、边框和侧栏采用中性色，焦点与选区采用蓝色，所有背景都去除了绿色调。关键字适度加粗，函数略加字重，注释不使用斜体。
+Day 以蓝天和北极冰川为配色方向：冰白背景、浅冰蓝侧栏与选区，常规文字全部采用蓝青色系，关键字用青绿、函数用海蓝、类型用宝蓝、字符串用湖青。Night 保留 RepoBar 参考带来的清晰颜色语义：鲜绿关键字、天蓝函数、亮紫类型、金黄字符串与杏橙数字。两款的错误文字使用红色提示，背景均没有绿色调。关键字适度加粗，函数与类型略加字重，注释不使用斜体。
 
-辅助色提高了饱和度和彼此的色差，同时降低正文与边框的相对亮度，以减少泛白、刺眼的观感。数值检查不等于舒适度保证，实际感受还受字号、屏幕亮度与环境光影响。
+Day 的蓝青文字比参考图标里的亮蓝、鲜绿更深，这是用户在“冰白背景”和“AAA 文字对比度”之间选定的组合。Night 的正文、变量和常规目录名使用从用户截图采样得到的冷白 `#EFF4FB`；本地光标采用橙色 `#FFAD66`，注释保留稍暗的层次。数值检查不等于舒适度保证，实际感受还受字号、屏幕亮度与环境光影响。
 
-关键词：**green · tree · high contrast · AAA contrast · day · night · charcoal · black · Zed theme · 绿色 · 树 · 高对比度 · 炭灰 · 深黑 · 无障碍配色**。
+关键词：**green · tree · high contrast · AAA contrast · day · night · arctic · glacier · sky blue · ice white · black · Zed theme · 绿色 · 树 · 高对比度 · 冰川 · 天蓝 · 冰白 · 深黑 · 无障碍配色**。
 
 ## 白天与夜晚
 
 | 主题名称 | 使用场景 | 编辑器背景 | 正文对比度 |
 | --- | --- | --- | ---: |
-| `GreenTree Contrast Day AAA` | 白天，炭灰背景 | `#18191D` | 12.61:1 |
-| `GreenTree Contrast Night AAA` | 夜晚，深黑背景 | `#050505` | 14.63:1 |
+| `GreenTree Contrast Day AAA` | 白天，冰白与蓝青色系 | `#F5FBFF` | 8.93:1 |
+| `GreenTree Contrast Night AAA` | 夜晚，深黑背景 | `#050505` | 18.44:1 |
 
-两款保持一致的语法颜色，切换时无需重新适应颜色含义。Day 也属于深色主题，名称表示白天使用的炭灰配色。
+Day 为浅色主题，Night 为深色主题。两款保持语法角色与字重一致，配色分别适配浅底和深底；例如类型在 Day 使用宝蓝，在 Night 使用亮紫。
 
 原来的 **`GreenTree Contrast AAA`** 名称继续可用，配色与 **Night** 完全一致，已有设置可以直接沿用。
 
@@ -41,7 +41,7 @@ Windows：将同一个 JSON 文件复制到 `%USERPROFILE%\AppData\Roaming\Zed\t
 }
 ```
 
-也可以跟随系统外观，在系统浅色模式时使用炭灰 Day、深色模式时使用深黑 Night：
+也可以跟随系统外观，在系统浅色模式时使用冰白 Day、深色模式时使用深黑 Night：
 
 ```json
 {
@@ -60,28 +60,30 @@ Windows：将同一个 JSON 文件复制到 `%USERPROFILE%\AppData\Roaming\Zed\t
 
 ## 配色
 
-| 用途 | 颜色 | 视觉角色 |
+| 用途 | Day | Night |
 | --- | --- | --- |
-| 正文、变量 | `#D5DBE3` | 柔和灰白 |
-| 关键字、标题、重点文字 | `#54D878` | 鲜绿 |
-| 字符串、警告 | `#E9C04F` | 金黄 |
-| 函数、链接 | `#80BBFF` | 清晰蓝 |
-| 类型、命名空间 | `#D2A8FF` | 紫色 |
-| 数字、常量、布尔值 | `#FFA47A` | 杏橙 |
-| 正则、特殊变量 | `#EB9DD9` | 粉紫 |
-| 对象字段、内置函数、特殊字符串 | `#62CFDF` | 青蓝 |
-| 标点、运算符 | `#B7C1CD` | 冷灰 |
-| 注释、次要文字、行号 | `#AFB5BF` | 中性灰 |
-| 错误 | `#FF9993` | 珊瑚红 |
-| 焦点、活动边框 | `#5C98EA` | 蓝色标识 |
+| 正文、变量、常规目录名 | `#004B73` 海蓝 | `#EFF4FB` 截图冷白 |
+| 关键字、标题、重点文字 | `#005956` 青绿 | `#54D878` 鲜绿 |
+| 字符串、警告 | `#005765` 湖青 | `#E9C04F` 金黄 |
+| 函数、构造函数 | `#005480` 海蓝 | `#70B9FF` 天蓝 |
+| 链接 | `#005480` 海蓝 | `#80BBFF` 浅蓝 |
+| 类型、命名空间 | `#174B94` 宝蓝 | `#D99CFF` 亮紫 |
+| 数字、常量、布尔值 | `#194F90` 蓝色 | `#FFA47A` 杏橙 |
+| 正则、特殊变量 | `#165378` 湖蓝 | `#EB9DD9` 粉紫 |
+| 对象字段、内置函数、特殊字符串 | `#00556D` 青蓝 | `#62CFDF` 青蓝 |
+| 标点、运算符 | `#19536F` 蓝灰 | `#BDC7D3` 冷灰 |
+| 注释、次要文字、行号 | `#2C536A` 蓝灰 | `#B5BBC5` 中性灰 |
+| 错误 | `#8C2A46` 莓红 | `#FF9993` 珊瑚红 |
+| 焦点、活动边框 | `#2374B8` 蓝色 | `#5C98EA` 蓝色 |
+| 本地光标 | `#005480` 蓝色 | `#FFAD66` 橙色 |
 
 编辑器、侧栏、补全菜单、搜索、diff、终端、协作光标和 Vim / Helix 模式标识均有显式配色。窗口和承载文字的背景使用不透明颜色，避免壁纸或背后的窗口改变对比度。缩略图的视口使用透明填充和清晰边框，保持代码可见。
 
-下图由主题 JSON 离屏绘制，展示修改前的 Night 与当前 Day / Night。它是静态配色样张，不是 Zed 截图；语法片段由样张指定，实际着色范围由语言语法与 Zed 决定。
+下图由主题 JSON 离屏绘制，展示上一版暖白 Day、当前冰白 Day 与当前 Night。它是静态配色样张，不是 Zed 截图；语法片段由样张指定，实际着色范围由语言语法与 Zed 决定。
 
-![修改前后与 Day / Night 的静态配色对照](docs/palette-comparison.png)
+![冰白 Day 与天蓝函数、冷白文字、橙色光标的 Night](docs/ice-day-night-preview.png)
 
-三轮调整的依据与检查结果见 [配色迭代记录](docs/palette-review.md)。
+配色参考、当前调整与历史检查结果见 [配色迭代记录](docs/palette-review.md)。
 
 ## 对比度验证与范围
 
@@ -102,7 +104,7 @@ python3 scripts/check_contrast.py --report docs/contrast-report.md
 
 终端的普通、bright 和 dim ANSI 前景均针对默认底色和主题选区检查。为了让 ANSI black 的文字在深色底上也清晰可见，black 映射为中性浅灰。终端程序自行设置的 ANSI 背景、256 色或真彩色输出不在保证范围内；依赖传统黑色背景槽的 TUI 可能需要调整自己的配色。
 
-终端 bright 使用有限提亮的颜色，白色槽采用灰白色而非纯白；dim 的相对亮度不高于普通色，并保留至少 7:1 的对比度，因此部分 dim 与普通色的差异较小。
+终端配色分别适配浅底和深底：Night 的 bright 彩色略微提亮、Day 的 bright 略微加深，以增加各自背景上的对比度；dim 降低对比度但仍保留至少 7:1，因此部分 dim 与普通色的差异较小。Night 的普通与 bright 白色统一使用截图冷白，Day 的白色槽转为可读的蓝色文字。Day 的 ANSI 黄与品红槽也采用蓝青色系。
 
 ## 文件
 
@@ -110,8 +112,10 @@ python3 scripts/check_contrast.py --report docs/contrast-report.md
 - `extension.toml`：本地开发扩展清单。
 - `scripts/check_contrast.py`：可重复运行的颜色审计。
 - `docs/contrast-report.md`：从当前 JSON 生成的检查结果。
-- `docs/palette-review.md`：RepoBar 参考依据、三轮变更与验收范围。
-- `docs/palette-comparison.png`：修改前后及 Day / Night 的静态配色样张。
+- `docs/palette-review.md`：RepoBar 参考依据、配色变更历史与验收范围。
+- `docs/ice-day-night-preview.png`：当前版本的日夜静态配色样张。
+- `docs/day-night-preview.png`：0.4.0 暖白 Day 的历史配色样张。
+- `docs/palette-comparison.png`：0.3.0 的历史配色样张。
 - `examples/tree.ts`：语法配色示例。
 
 规范参考：[Zed 主题与本地安装](https://zed.dev/docs/themes)、[Zed Theme JSON Schema](https://zed.dev/schema/themes/v0.2.0.json)、[WCAG 2.2 文字增强对比度](https://www.w3.org/WAI/WCAG22/Understanding/contrast-enhanced.html)、[WCAG 2.2 非文字对比度](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html)。部分较新的 Zed 字段依据[官方主题字段定义](https://github.com/zed-industries/zed/blob/main/crates/settings_content/src/theme.rs)补全。

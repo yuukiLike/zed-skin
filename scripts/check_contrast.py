@@ -105,8 +105,8 @@ def contrast(foreground, background):
 
 def audit(theme):
     style = theme["style"]
-    if theme["appearance"] != "dark" or style["background.appearance"] != "opaque":
-        raise ValueError("This audit requires a dark theme with an opaque window background")
+    if theme["appearance"] not in ("dark", "light") or style["background.appearance"] != "opaque":
+        raise ValueError("This audit requires a light or dark theme with an opaque window background")
 
     status_backgrounds = [f"{name}.background" for name in STATUSES]
     status_borders = [f"{name}.border" for name in STATUSES]

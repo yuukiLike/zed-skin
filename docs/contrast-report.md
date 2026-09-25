@@ -9,18 +9,18 @@
 
 | 检查范围 | 组合数 | 最低对比度 | 要求 | 结果 |
 | --- | ---: | ---: | ---: | --- |
-| UI text | 2652 | 7.1108:1 | 7:1 | PASS |
-| Editor / syntax | 4290 | 7.1108:1 | 7:1 | PASS |
-| Terminal text | 270 | 7.1108:1 | 7:1 | PASS |
-| UI indicators | 3510 | 3.3344:1 | 3:1 | PASS |
-| Scrollbar | 3 | 3.9944:1 | 3:1 | PASS |
-| Cursors | 624 | 7.1423:1 | 3:1 | PASS |
-| Inverse cursor text | 8 | 8.5560:1 | 7:1 | PASS |
-| Vim / Helix badges | 8 | 7.9313:1 | 7:1 | PASS |
+| UI text | 2652 | 7.1240:1 | 7:1 | PASS |
+| Editor / syntax | 4290 | 7.1240:1 | 7:1 | PASS |
+| Terminal text | 270 | 7.1059:1 | 7:1 | PASS |
+| UI indicators | 3510 | 3.7250:1 | 3:1 | PASS |
+| Scrollbar | 3 | 4.0790:1 | 3:1 | PASS |
+| Cursors | 624 | 7.1240:1 | 3:1 | PASS |
+| Inverse cursor text | 8 | 7.8010:1 | 7:1 | PASS |
+| Vim / Helix badges | 8 | 7.5746:1 | 7:1 | PASS |
 
 最低文字对比度对应的组合：
 
-`text.muted` / `element.active`：7.1108:1。
+`terminal.ansi.dim_red` / `players[0].selection`：7.1059:1。
 
 ## GreenTree Contrast Night AAA
 
@@ -28,9 +28,9 @@
 
 | 检查范围 | 组合数 | 最低对比度 | 要求 | 结果 |
 | --- | ---: | ---: | ---: | --- |
-| UI text | 2652 | 7.3872:1 | 7:1 | PASS |
-| Editor / syntax | 4290 | 7.3872:1 | 7:1 | PASS |
-| Terminal text | 270 | 7.3872:1 | 7:1 | PASS |
+| UI text | 2652 | 7.4199:1 | 7:1 | PASS |
+| Editor / syntax | 4290 | 7.3059:1 | 7:1 | PASS |
+| Terminal text | 270 | 7.3925:1 | 7:1 | PASS |
 | UI indicators | 3510 | 3.4640:1 | 3:1 | PASS |
 | Scrollbar | 3 | 4.6351:1 | 3:1 | PASS |
 | Cursors | 624 | 7.4199:1 | 3:1 | PASS |
@@ -39,7 +39,7 @@
 
 最低文字对比度对应的组合：
 
-`text.muted` / `element.active`：7.3872:1。
+`syntax.constructor` / `element.active`：7.3059:1。
 
 ## GreenTree Contrast AAA
 
@@ -47,9 +47,9 @@
 
 | 检查范围 | 组合数 | 最低对比度 | 要求 | 结果 |
 | --- | ---: | ---: | ---: | --- |
-| UI text | 2652 | 7.3872:1 | 7:1 | PASS |
-| Editor / syntax | 4290 | 7.3872:1 | 7:1 | PASS |
-| Terminal text | 270 | 7.3872:1 | 7:1 | PASS |
+| UI text | 2652 | 7.4199:1 | 7:1 | PASS |
+| Editor / syntax | 4290 | 7.3059:1 | 7:1 | PASS |
+| Terminal text | 270 | 7.3925:1 | 7:1 | PASS |
 | UI indicators | 3510 | 3.4640:1 | 3:1 | PASS |
 | Scrollbar | 3 | 4.6351:1 | 3:1 | PASS |
 | Cursors | 624 | 7.4199:1 | 3:1 | PASS |
@@ -58,7 +58,7 @@
 
 最低文字对比度对应的组合：
 
-`text.muted` / `element.active`：7.3872:1。
+`syntax.constructor` / `element.active`：7.3059:1。
 
 
 ## 范围
