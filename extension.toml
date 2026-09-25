@@ -1,7 +1,7 @@
 id = "green-tree-contrast"
 name = "GreenTree Contrast"
-version = "0.5.0"
+version = "0.9.0"
 schema_version = 1
 authors = ["chp"]
-description = "Green keywords, an arctic ice Day palette and deep black Night with sky-blue functions, white text and an orange cursor. WCAG AAA text contrast. 绿树 · 高对比度，冰白日间与深黑夜间。"
+description = "GreenTree AAA high-contrast themes: vivid green and sky blue on indigo Day; soft-white Night; pure-black Midnight with bright white text and bold blue functions. 绿树 · 高对比度，靛蓝日间、夜晚与深夜。"
 themes = ["themes/green-tree-contrast.json"]
