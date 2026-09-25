@@ -1,7 +1,8 @@
-id = "green-tree-contrast"
-name = "GreenTree Contrast"
-version = "0.9.0"
+id = "green-tree-theme"
+name = "GreenTree"
+version = "0.11.0"
 schema_version = 1
-authors = ["chp"]
-description = "GreenTree AAA high-contrast themes: vivid green and sky blue on indigo Day; soft-white Night; pure-black Midnight with bright white text and bold blue functions. 绿树 · 高对比度，靛蓝日间、夜晚与深夜。"
-themes = ["themes/green-tree-contrast.json"]
+authors = ["yuukiLike"]
+description = "A high contrast theme collection for Zed. Three dark variants meet the WCAG AAA text contrast target in the included palette audit; warm-white Day Vivid prioritizes brighter colors."
+repository = "https://github.com/yuukiLike/zed-skin"
+themes = ["themes/green-tree.json"]

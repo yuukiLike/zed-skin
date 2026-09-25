@@ -1,10 +1,30 @@
-# GreenTree Contrast · 对比度检查
+# GreenTree · 对比度检查
 
-使用 WCAG 2.x sRGB 相对亮度公式；Day、Night、Midnight 及旧名称的普通文字均 ≥ 7:1（AAA）。
+使用 WCAG 2.x sRGB 相对亮度公式；Day Vivid 的鲜绿语法采用自定义下限 2.5:1，不满足普通文字 AA。
+Day Vivid 的其余文字 ≥ 4.5:1；Day AAA、Night、Midnight 的文字 ≥ 7:1。
 所有主题的关键非文字标识 ≥ 3:1；每个主题名称都有明确阈值，未知名称不自动降级。
 判定使用未舍入数值，下表仅为显示而保留四位小数。
 
-## GreenTree Contrast Day AAA
+## GreenTree Day Vivid
+
+检查组合数：11365。
+
+| 检查范围 | 组合数 | 最低对比度 | 要求 | 结果 |
+| --- | ---: | ---: | ---: | --- |
+| UI text | 2652 | 4.5105:1 | 4.5:1 | PASS |
+| Editor / syntax | 4290 | 2.7265:1 | 2.5:1 / 4.5:1 | PASS (custom) |
+| Terminal text | 270 | 4.5105:1 | 4.5:1 | PASS |
+| UI indicators | 3510 | 3.6919:1 | 3:1 | PASS |
+| Scrollbar | 3 | 3.6962:1 | 3:1 | PASS |
+| Cursors | 624 | 4.5534:1 | 3:1 | PASS |
+| Inverse cursor text | 8 | 4.5587:1 | 4.5:1 | PASS |
+| Vim / Helix badges | 8 | 4.5559:1 | 4.5:1 | PASS |
+
+最低文字对比度对应的组合：
+
+`syntax.keyword` / `renamed.background`：2.7265:1。
+
+## GreenTree Day AAA
 
 检查组合数：11365。
 
@@ -23,7 +43,7 @@
 
 `terminal.ansi.dim_yellow` / `players[0].selection`：7.0721:1。
 
-## GreenTree Contrast Night AAA
+## GreenTree Night AAA
 
 检查组合数：11365。
 
@@ -42,7 +62,7 @@
 
 `syntax.constructor` / `element.active`：7.3059:1。
 
-## GreenTree Contrast Midnight AAA
+## GreenTree Midnight AAA
 
 检查组合数：11365。
 
@@ -60,25 +80,6 @@
 最低文字对比度对应的组合：
 
 `syntax.constructor` / `search.active_match_background`：8.2937:1。
-
-## GreenTree Contrast AAA
-
-检查组合数：11365。
-
-| 检查范围 | 组合数 | 最低对比度 | 要求 | 结果 |
-| --- | ---: | ---: | ---: | --- |
-| UI text | 2652 | 7.4199:1 | 7:1 | PASS |
-| Editor / syntax | 4290 | 7.3059:1 | 7:1 | PASS |
-| Terminal text | 270 | 7.3925:1 | 7:1 | PASS |
-| UI indicators | 3510 | 3.4640:1 | 3:1 | PASS |
-| Scrollbar | 3 | 4.6351:1 | 3:1 | PASS |
-| Cursors | 624 | 7.4199:1 | 3:1 | PASS |
-| Inverse cursor text | 8 | 9.9285:1 | 7:1 | PASS |
-| Vim / Helix badges | 8 | 9.0515:1 | 7:1 | PASS |
-
-最低文字对比度对应的组合：
-
-`syntax.constructor` / `element.active`：7.3059:1。
 
 
 ## 范围

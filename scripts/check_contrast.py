@@ -15,10 +15,20 @@ ROOT = Path(__file__).resolve().parents[1]
 # Explicit targets prevent a light appearance or an accidental rename from
 # silently weakening the Night / Midnight AAA requirement.
 TEXT_CONTRAST_TARGETS = {
-    "GreenTree Contrast Day AAA": 7,
-    "GreenTree Contrast Night AAA": 7,
-    "GreenTree Contrast Midnight AAA": 7,
-    "GreenTree Contrast AAA": 7,
+    "GreenTree Day Vivid": 4.5,
+    "GreenTree Day AAA": 7,
+    "GreenTree Night AAA": 7,
+    "GreenTree Midnight AAA": 7,
+}
+# Vivid deliberately prioritizes a bright green on warm white. Only these
+# green syntax captures use a custom floor; 2.5:1 is NOT a WCAG text target.
+# Keep UI, terminal and all other syntax at 4.5:1, and all AAA themes at 7:1.
+VIVID_GREEN_CAPTURES = {
+    "keyword", "preproc", "punctuation.markup", "tag", "title", "diff.plus",
+}
+TEXT_GROUPS = {
+    "UI text", "Editor / syntax", "Terminal text", "Inverse cursor text",
+    "Vim / Helix badges",
 }
 UI_BACKGROUNDS = """
 background surface.background elevated_surface.background
@@ -142,12 +152,17 @@ def audit(theme):
         raise ValueError("Provide local/remote player colors and at least one accent")
 
     results = []
+    vivid_foregrounds = (
+        {f"syntax.{capture}" for capture in VIVID_GREEN_CAPTURES}
+        if theme["name"] == "GreenTree Day Vivid" else set()
+    )
 
     def check(group, foregrounds, backgrounds, threshold):
         for foreground_name, foreground in foregrounds:
+            target = 2.5 if foreground_name in vivid_foregrounds else threshold
             for background_name, background in backgrounds:
                 ratio = contrast(foreground, background)
-                results.append((group, foreground_name, background_name, ratio, threshold))
+                results.append((group, foreground_name, background_name, ratio, target))
 
     def fields(names):
         return [(name, style[name]) for name in names]
@@ -210,15 +225,16 @@ def text_contrast_target(name):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("theme", nargs="?", type=Path, default=ROOT / "themes/green-tree-contrast.json")
+    parser.add_argument("theme", nargs="?", type=Path, default=ROOT / "themes/green-tree.json")
     parser.add_argument("--report", type=Path, help="Write a Markdown report, including every failed pair")
     args = parser.parse_args()
     try:
         family = json.loads(args.theme.read_text(), object_pairs_hook=read_object)
         if not family["name"] or not family["author"] or not family["themes"]:
             raise ValueError("Theme family metadata and themes must not be empty")
-        sections = ["# GreenTree Contrast · 对比度检查", "",
-                    "使用 WCAG 2.x sRGB 相对亮度公式；Day、Night、Midnight 及旧名称的普通文字均 ≥ 7:1（AAA）。",
+        sections = ["# GreenTree · 对比度检查", "",
+                    "使用 WCAG 2.x sRGB 相对亮度公式；Day Vivid 的鲜绿语法采用自定义下限 2.5:1，不满足普通文字 AA。",
+                    "Day Vivid 的其余文字 ≥ 4.5:1；Day AAA、Night、Midnight 的文字 ≥ 7:1。",
                     "所有主题的关键非文字标识 ≥ 3:1；每个主题名称都有明确阈值，未知名称不自动降级。",
                     "判定使用未舍入数值，下表仅为显示而保留四位小数。", ""]
         names = [theme["name"] for theme in family["themes"]]
@@ -236,10 +252,13 @@ def main():
                 rows = [row for row in results if row[0] == group]
                 worst = min(rows, key=lambda row: row[3])
                 result = "PASS" if all(row[3] >= row[4] for row in rows) else "FAIL"
-                sections.append(f"| {group} | {len(rows)} | {worst[3]:.4f}:1 | {worst[4]}:1 | {result} |")
+                targets = " / ".join(f"{value:g}:1" for value in sorted({row[4] for row in rows}))
+                if theme["name"] == "GreenTree Day Vivid" and group == "Editor / syntax":
+                    result += " (custom)"
+                sections.append(f"| {group} | {len(rows)} | {worst[3]:.4f}:1 | {targets} | {result} |")
                 print(f"{result:4} {group:22} {len(rows):5} pairs; min {worst[3]:.4f}:1 ({worst[1]} / {worst[2]})")
             sections += ["", "最低文字对比度对应的组合：", ""]
-            worst_text = min((row for row in results if row[4] == text_contrast_target(theme["name"])), key=lambda row: row[3])
+            worst_text = min((row for row in results if row[0] in TEXT_GROUPS), key=lambda row: row[3])
             sections += [f"`{worst_text[1]}` / `{worst_text[2]}`：{worst_text[3]:.4f}:1。", ""]
         if failed:
             sections += ["## 未通过的组合", ""]
