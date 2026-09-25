@@ -1,58 +1,58 @@
 # GreenTree
 
-A high contrast theme collection for Zed. **Day AAA, Night AAA and Midnight AAA meet the WCAG AAA text contrast target of 7:1 in the included palette audit.** Warm-white Day Vivid prioritizes brighter colors; its vivid green syntax does not meet AA or AAA.
+A high contrast theme collection for Zed. Three dark variants meet the **WCAG AAA 7:1 text contrast target** in the [palette audit](docs/contrast-report.md), alongside a brighter warm-white Day Vivid.
 
-Green keywords, sky-blue functions, violet types and warm accents help distinguish code without tinting the whole interface green.
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
-| Theme | Appearance | Minimum audited text contrast |
+[![GreenTree Midnight AAA in Zed](docs/screenshots/midnight.jpg)](docs/screenshots/midnight.jpg)
+
+*Midnight AAA — pure black, white filenames, bold green keywords and sky-blue functions.*
+
+## Four themes
+
+| Theme | Feel | Minimum audited text contrast |
 | --- | --- | ---: |
-| **GreenTree Day Vivid** | Warm ivory, vivid green, blue-cyan fields, pink numbers | 2.7265:1; other text ≥ 4.5:1 |
-| **GreenTree Day AAA** | Indigo with vivid green, sky blue and violet | 7.0721:1 |
-| **GreenTree Night AAA** | Deep black, soft white, regular green, orange cursor | 7.3059:1 |
-| **GreenTree Midnight AAA** | Pure black, white filenames, bold green, blue functions and rose-pink `this` | 8.2937:1 |
+| **Day Vivid** | Warm ivory · vivid green · violet · pink | 2.73:1 |
+| **Day AAA** | Deep indigo · vivid colors | 7.07:1 |
+| **Night AAA** | Deep black · soft white · regular green | 7.31:1 |
+| **Midnight AAA** | Pure black · bright white · bold accents | 8.29:1 |
 
-Day Vivid is the light theme. Day AAA, Night and Midnight are dark themes. The AAA label describes audited color pairs, not certification of the whole editor.
+Day Vivid favors brighter green on a light background; that green does **not** meet AA or AAA. Its other audited text reaches 4.5:1. The AAA label describes checked color pairs, not certification of the whole editor.
 
-## Install locally
+<details>
+<summary>Day Vivid — warm and colorful</summary>
 
-Clone the repository and copy the theme file:
+[![GreenTree Day Vivid in Zed](docs/screenshots/day-vivid.jpg)](docs/screenshots/day-vivid.jpg)
 
-```sh
-git clone https://github.com/yuukiLike/zed-skin.git
-cd zed-skin
-mkdir -p ~/.config/zed/themes
-cp -i themes/green-tree.json ~/.config/zed/themes/
-```
+</details>
 
-On Windows, copy the JSON file to `%USERPROFILE%\AppData\Roaming\Zed\themes\`.
+<details>
+<summary>Day AAA — indigo and vivid</summary>
 
-In Zed, run `theme selector: toggle` and search for **GreenTree**. On macOS, the shortcut is `⌘K`, then `⌘T`; on Linux and Windows, use `Ctrl+K`, then `Ctrl+T`.
+[![GreenTree Day AAA in Zed](docs/screenshots/day-aaa.jpg)](docs/screenshots/day-aaa.jpg)
 
-To follow your system appearance, merge this field into your existing Zed settings:
+</details>
 
-```json
-{
-  "theme": {
-    "mode": "system",
-    "light": "GreenTree Day Vivid",
-    "dark": "GreenTree Night AAA"
-  }
-}
-```
+<details>
+<summary>Night AAA — softer after dark</summary>
 
-The extension manifest is included for local development. Marketplace publication is being prepared; the theme is not listed there yet. See the official [theme installation guide](https://zed.dev/docs/themes).
+[![GreenTree Night AAA in Zed](docs/screenshots/night.jpg)](docs/screenshots/night.jpg)
 
-## Verify the palette
+</details>
 
-```sh
-python3 scripts/check_contrast.py
-python3 scripts/check_contrast.py --report docs/contrast-report.md
-```
+*Actual Zed screenshots. Click any image for its original resolution.*
 
-The dependency-free audit checks **45,460 foreground/background pairs** across all four themes, including syntax, UI text, selections, search, diff, terminal foregrounds and cursors. It uses unrounded WCAG sRGB contrast ratios. Day Vivid's six green syntax captures use an explicit custom 2.5:1 floor; this is **not a WCAG text threshold**. All other Day Vivid text is checked at 4.5:1, the three AAA variants at 7:1, and key non-text indicators at 3:1.
+## Install
 
-See the [contrast report](docs/contrast-report.md), [palette history](docs/palette-review.md) and [TypeScript example](examples/tree.ts). Runtime fading, user overrides, plugins and terminal applications can change the rendered result. A color audit does not establish keyboard accessibility, screen-reader support or reading comfort.
+Download [green-tree.json](https://raw.githubusercontent.com/yuukiLike/zed-skin/main/themes/green-tree.json) and copy it into:
 
-## License
+| Platform | Folder |
+| --- | --- |
+| macOS / Linux | `~/.config/zed/themes/` |
+| Windows | `%USERPROFILE%\AppData\Roaming\Zed\themes\` |
 
-[MIT](LICENSE) © 2026 yuukiLike.
+Create the folder if needed. Run **`theme selector: toggle`** in Zed and search **GreenTree**. Restart Zed if the new names do not appear. [Official guide](https://zed.dev/docs/themes).
+
+Marketplace submission is being prepared; install locally for now.
+
+[Contrast report](docs/contrast-report.md) · [Palette notes](docs/palette-review.md) · [MIT License](LICENSE)

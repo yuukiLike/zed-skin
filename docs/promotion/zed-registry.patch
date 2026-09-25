@@ -1,0 +1,35 @@
+diff --git a/.gitmodules b/.gitmodules
+--- a/.gitmodules
++++ b/.gitmodules
+@@ -2066,6 +2066,10 @@
+ 	path = extensions/green-theme
+ 	url = https://github.com/ningfangbin/zed_code_green.git
+ 
++[submodule "extensions/green-tree-theme"]
++	path = extensions/green-tree-theme
++	url = https://github.com/yuukiLike/zed-skin.git
++
+ [submodule "extensions/gregorio"]
+ 	path = extensions/gregorio
+ 	url = https://github.com/AISCGre-BR/zed-gregorio.git
+diff --git a/extensions.toml b/extensions.toml
+--- a/extensions.toml
++++ b/extensions.toml
+@@ -2114,6 +2114,10 @@
+ submodule = "extensions/green-theme"
+ version = "0.0.3"
+ 
++[green-tree-theme]
++submodule = "extensions/green-tree-theme"
++version = "0.11.0"
++
+ [gregorio]
+ submodule = "extensions/gregorio"
+ version = "0.8.0"
+diff --git a/extensions/green-tree-theme b/extensions/green-tree-theme
+new file mode 160000
+index 0000000..f0c745e
+--- /dev/null
++++ b/extensions/green-tree-theme
+@@ -0,0 +1 @@
++Subproject commit f0c745e93e52aea44c92d0528b366f4cd7c52708

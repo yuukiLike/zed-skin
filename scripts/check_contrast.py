@@ -232,11 +232,12 @@ def main():
         family = json.loads(args.theme.read_text(), object_pairs_hook=read_object)
         if not family["name"] or not family["author"] or not family["themes"]:
             raise ValueError("Theme family metadata and themes must not be empty")
-        sections = ["# GreenTree · 对比度检查", "",
-                    "使用 WCAG 2.x sRGB 相对亮度公式；Day Vivid 的鲜绿语法采用自定义下限 2.5:1，不满足普通文字 AA。",
-                    "Day Vivid 的其余文字 ≥ 4.5:1；Day AAA、Night、Midnight 的文字 ≥ 7:1。",
-                    "所有主题的关键非文字标识 ≥ 3:1；每个主题名称都有明确阈值，未知名称不自动降级。",
-                    "判定使用未舍入数值，下表仅为显示而保留四位小数。", ""]
+        sections = ["# GreenTree · Contrast audit", "",
+                    "Uses the WCAG 2.x sRGB relative luminance formula. Day Vivid's green syntax has a custom 2.5:1 floor and does not meet AA text contrast.",
+                    "Other Day Vivid text is checked at 4.5:1; Day AAA, Night and Midnight text at 7:1.",
+                    "Key non-text indicators are checked at 3:1. Unknown theme names are rejected, not given a weaker target.",
+                    "Pass/fail uses unrounded ratios; tables display four decimal places.", "",
+                    "Reproduce: `python3 scripts/check_contrast.py --report docs/contrast-report.md`.", ""]
         names = [theme["name"] for theme in family["themes"]]
         if len(names) != len(set(names)):
             raise ValueError("Theme names must be unique")
@@ -245,8 +246,8 @@ def main():
             print(f"\n{theme['name']}")
             results = audit(theme)
             failed.extend((theme["name"], *row) for row in results if row[3] < row[4])
-            sections += [f"## {theme['name']}", "", f"检查组合数：{len(results)}。", "",
-                         "| 检查范围 | 组合数 | 最低对比度 | 要求 | 结果 |",
+            sections += [f"## {theme['name']}", "", f"Checked pairs: {len(results)}.", "",
+                         "| Scope | Pairs | Minimum contrast | Target | Result |",
                          "| --- | ---: | ---: | ---: | --- |"]
             for group in dict.fromkeys(row[0] for row in results):
                 rows = [row for row in results if row[0] == group]
@@ -257,21 +258,23 @@ def main():
                     result += " (custom)"
                 sections.append(f"| {group} | {len(rows)} | {worst[3]:.4f}:1 | {targets} | {result} |")
                 print(f"{result:4} {group:22} {len(rows):5} pairs; min {worst[3]:.4f}:1 ({worst[1]} / {worst[2]})")
-            sections += ["", "最低文字对比度对应的组合：", ""]
+            sections += ["", "Lowest text contrast pair:", ""]
             worst_text = min((row for row in results if row[0] in TEXT_GROUPS), key=lambda row: row[3])
-            sections += [f"`{worst_text[1]}` / `{worst_text[2]}`：{worst_text[3]:.4f}:1。", ""]
+            sections += [f"`{worst_text[1]}` / `{worst_text[2]}`: {worst_text[3]:.4f}:1.", ""]
         if failed:
-            sections += ["## 未通过的组合", ""]
+            sections += ["## Failed pairs", ""]
             for name, group, foreground, background, ratio, threshold in failed:
                 message = f"{name} / {group}: {foreground} / {background} = {ratio:.4f}:1 < {threshold}:1"
                 print(message, file=sys.stderr)
                 sections.append(f"- {message}")
-        sections += ["", "## 范围", "",
-                     "覆盖主题显式定义的界面文字、语法（含注释）、行号、状态文字、默认终端 ANSI 前景、",
-                     "光标及边框；同时检查选区、搜索、diff、括号匹配及弹出层底色。透明占位边框不作为可见标识。",
-                     "这是颜色组合审计，不是 Zed 应用的完整 WCAG AA / AAA 认证。未验证焦点面积、键盘或读屏行为、",
-                     "选区与相邻底色之间的区别、语言服务额外淡化、插件自定义颜色，或终端程序指定的背景色、256 色和真彩色。",
-                     "Zed 运行时若调整颜色或透明度，须按实际渲染重新评估。", ""]
+        sections += ["", "## Scope", "",
+                     "Checks explicit UI text, syntax including comments, line numbers, status text, default ANSI terminal foregrounds,",
+                     "cursors and borders against selection, search, diff, bracket-match and popup backgrounds. Transparent placeholder borders are excluded.", "",
+                     "This is a palette audit, not WCAG certification of Zed. It does not verify focus area, keyboard or screen-reader behavior,",
+                     "selection/background separation, language-server fading, plugin colors, or terminal application backgrounds, 256 colors and true color.",
+                     "Runtime color/opacity adjustments and user overrides require evaluation of the actual rendered result.", "",
+                     "References: [WCAG AAA text contrast](https://www.w3.org/WAI/WCAG22/Understanding/contrast-enhanced.html),",
+                     "[non-text contrast](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html).", ""]
         if args.report:
             args.report.parent.mkdir(parents=True, exist_ok=True)
             args.report.write_text("\n".join(sections))
