@@ -1,0 +1,2 @@
+# Unified diff context preserves blank-line spaces and spaces before tabs.
+docs/promotion/zed-registry.patch whitespace=-blank-at-eol,-space-before-tab
