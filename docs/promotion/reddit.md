@@ -19,7 +19,7 @@ There are four variants:
 - **Night AAA:** deep black, softer white text and regular-weight green.
 - **Midnight AAA:** pure black, white filenames, bold green and blue, plus rose-pink `this`.
 
-The three dark variants meet the **7:1 AAA text contrast target in the included palette audit**. The white version is a deliberate compromise: I found it hard to keep both bright colors and strong contrast on a light background. Its green is around 2.73:1, so Day Vivid does not claim AA or AAA.
+The three dark variants target **AAA 7:1 for primary text**, with **AA 4.5:1 for comments and Markdown selections** in the palette audit. The white version is a deliberate compromise: I found it hard to keep both bright colors and strong contrast on a light background. Its green is around 2.73:1 before selection, so Day Vivid does not claim AA or AAA.
 
 [GitHub, screenshots and local installation](https://github.com/yuukiLike/zed-skin)
 

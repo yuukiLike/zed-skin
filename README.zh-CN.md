@@ -1,6 +1,6 @@
 # GreenTree
 
-一组为 Zed 设计的高对比度主题。三款深色主题在[配色审计](docs/contrast-report.md)中达到 **WCAG AAA 7:1 文字对比度目标**，另有优先鲜亮感的暖白 Day Vivid。
+一组为 Zed 设计的高对比度主题。三款深色主题在[配色审计](docs/contrast-report.md)中以 **WCAG AAA 7:1 为主要文字目标**，**注释与 Markdown 选中文字采用 AA 4.5:1**。另有优先鲜亮感的暖白 Day Vivid。
 
 [English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
@@ -12,12 +12,12 @@
 
 | 主题 | 风格 | 审计最低文字对比度 |
 | --- | --- | ---: |
-| **Day Vivid** | 暖白 · 鲜绿 · 紫色 · 粉色 | 2.73:1 |
-| **Day AAA** | 深靛蓝 · 鲜亮语法 | 7.07:1 |
-| **Night AAA** | 深黑 · 柔和白色 · 常规绿色字重 | 7.31:1 |
-| **Midnight AAA** | 纯黑 · 亮白 · 加粗重点语法 | 8.29:1 |
+| **Day Vivid** | 暖白 · 鲜绿 · 紫色 · 粉色 | 2.52:1 |
+| **Day AAA** | 深靛蓝 · 鲜亮语法 | 4.72:1 |
+| **Night AAA** | 深黑 · 柔和白色 · 常规绿色字重 | 4.71:1 |
+| **Midnight AAA** | 纯黑 · 亮白 · 加粗重点语法 | 4.60:1 |
 
-Day Vivid 为了保留浅底鲜绿，绿色文字**不满足 AA 或 AAA**；其余已审计文字达到 4.5:1。AAA 标记描述已检查的颜色组合，不表示整个编辑器获得无障碍认证。
+最低值包含注释和 Markdown 选中状态。名称中的 AAA 指主要文字目标，不代表所有状态或整个编辑器获得认证。Day Vivid 的鲜绿及部分选中状态**不满足 AA 或 AAA**。语言服务器对未使用代码的淡化不在审计范围内。
 
 <details>
 <summary>Day Vivid — 暖白与鲜亮色彩</summary>

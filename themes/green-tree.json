@@ -21,7 +21,7 @@
         "element.hover": "#F1F0EA",
         "element.active": "#EAF1F8",
         "element.selected": "#EAF1F8",
-        "element.selection_background": "#EAF1F8",
+        "element.selection_background": "#203FFF28",
         "element.disabled": "#F3F0E9",
         "drop_target.background": "#EAF1F8",
         "drop_target.border": "#006AC4",
@@ -255,12 +255,12 @@
             "font_weight": 600
           },
           "comment": {
-            "color": "#66685F",
-            "font_style": "normal"
+            "color": "#626262",
+            "font_style": "italic"
           },
           "comment.doc": {
-            "color": "#66685F",
-            "font_style": "normal"
+            "color": "#626262",
+            "font_style": "italic"
           },
           "constant": {
             "color": "#BD2B77"
@@ -428,7 +428,7 @@
         "element.hover": "#23293F",
         "element.active": "#242D43",
         "element.selected": "#242D43",
-        "element.selection_background": "#242D43",
+        "element.selection_background": "#408CFF30",
         "element.disabled": "#1F253B",
         "drop_target.background": "#242D43",
         "drop_target.border": "#78C1FF",
@@ -662,12 +662,12 @@
             "font_weight": 600
           },
           "comment": {
-            "color": "#BEC8DF",
-            "font_style": "normal"
+            "color": "#A8A8A8",
+            "font_style": "italic"
           },
           "comment.doc": {
-            "color": "#BEC8DF",
-            "font_style": "normal"
+            "color": "#A8A8A8",
+            "font_style": "italic"
           },
           "constant": {
             "color": "#FF9ECD"
@@ -834,7 +834,7 @@
         "element.hover": "#1C2029",
         "element.active": "#15263E",
         "element.selected": "#15263E",
-        "element.selection_background": "#15263E",
+        "element.selection_background": "#408CFF40",
         "element.disabled": "#0B0B0D",
         "drop_target.background": "#15263E",
         "drop_target.border": "#5C98EA",
@@ -1068,12 +1068,12 @@
             "font_weight": 600
           },
           "comment": {
-            "color": "#B5BBC5",
-            "font_style": "normal"
+            "color": "#979797",
+            "font_style": "italic"
           },
           "comment.doc": {
-            "color": "#B5BBC5",
-            "font_style": "normal"
+            "color": "#979797",
+            "font_style": "italic"
           },
           "constant": {
             "color": "#FFA47A"
@@ -1240,7 +1240,7 @@
         "element.hover": "#0D1521",
         "element.active": "#0C1A2D",
         "element.selected": "#0C1A2D",
-        "element.selection_background": "#0C1A2D",
+        "element.selection_background": "#408CFF4D",
         "element.disabled": "#000000",
         "drop_target.background": "#0C1A2D",
         "drop_target.border": "#5C98EA",
@@ -1474,12 +1474,12 @@
             "font_weight": 600
           },
           "comment": {
-            "color": "#B5BBC5",
-            "font_style": "normal"
+            "color": "#979797",
+            "font_style": "italic"
           },
           "comment.doc": {
-            "color": "#B5BBC5",
-            "font_style": "normal"
+            "color": "#979797",
+            "font_style": "italic"
           },
           "constant": {
             "color": "#FFA47A"

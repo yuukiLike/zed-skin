@@ -1,6 +1,6 @@
 # GreenTree
 
-A high contrast theme collection for Zed. Three dark variants meet the **WCAG AAA 7:1 text contrast target** in the [palette audit](docs/contrast-report.md), alongside a brighter warm-white Day Vivid.
+A high contrast theme collection for Zed. Three dark variants target **WCAG AAA 7:1 for primary text**, with **AA 4.5:1 for comments and Markdown selections** in the [palette audit](docs/contrast-report.md). Warm-white Day Vivid favors brighter colors.
 
 [English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
@@ -12,12 +12,12 @@ A high contrast theme collection for Zed. Three dark variants meet the **WCAG AA
 
 | Theme | Feel | Minimum audited text contrast |
 | --- | --- | ---: |
-| **Day Vivid** | Warm ivory · vivid green · violet · pink | 2.73:1 |
-| **Day AAA** | Deep indigo · vivid colors | 7.07:1 |
-| **Night AAA** | Deep black · soft white · regular green | 7.31:1 |
-| **Midnight AAA** | Pure black · bright white · bold accents | 8.29:1 |
+| **Day Vivid** | Warm ivory · vivid green · violet · pink | 2.52:1 |
+| **Day AAA** | Deep indigo · vivid colors | 4.72:1 |
+| **Night AAA** | Deep black · soft white · regular green | 4.71:1 |
+| **Midnight AAA** | Pure black · bright white · bold accents | 4.60:1 |
 
-Day Vivid favors brighter green on a light background; that green does **not** meet AA or AAA. Its other audited text reaches 4.5:1. The AAA label describes checked color pairs, not certification of the whole editor.
+Minimums include comments and Markdown selections. The AAA names refer to primary text, not every state or certification of the editor. Day Vivid's bright green and some selections do **not** meet AA or AAA. Language-server fading is outside the audit.
 
 <details>
 <summary>Day Vivid — warm and colorful</summary>

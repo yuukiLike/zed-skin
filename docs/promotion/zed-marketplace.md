@@ -9,7 +9,7 @@
 | 公开仓库 | [yuukiLike/zed-skin](https://github.com/yuukiLike/zed-skin) |
 | 主题提交 | [`f0c745e`](https://github.com/yuukiLike/zed-skin/commit/f0c745e93e52aea44c92d0528b366f4cd7c52708)，已推送且在 `main` 历史中 |
 | 实机验证 | Zed 1.21.0 / macOS，开发扩展安装成功，四款主题逐一切换并截图 |
-| 颜色验证 | 45,460 个组合通过各自阈值；Day Vivid 鲜绿不满足 AA，另外三款达到审计 AAA 目标 |
+| 颜色验证 | 当前[配色审计](../contrast-report.md)：三款深色主题主要文字达到 7:1；注释和 Markdown 选中文字按 4.5:1 校验；Day Vivid 鲜绿不满足 AA |
 
 [zed-registry.patch](zed-registry.patch) 已在上游 `fac8916` 的注册文件上通过 `git apply --check --index`，只新增 `.gitmodules` 条目、`extensions.toml` 条目和指向上述主题提交的 gitlink。ID 在该上游版本未被占用。
 
