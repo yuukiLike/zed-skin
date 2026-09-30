@@ -44,6 +44,10 @@ Minimums include comments and Markdown selections. The AAA names refer to primar
 
 ## Install
 
+Open **Extensions** in Zed (`Cmd+Shift+X` on macOS or `Ctrl+Shift+X` on Linux/Windows), search **GreenTree**, and install it. Run **`theme selector: toggle`** and choose one of the four GreenTree themes. [Marketplace listing](https://zed.dev/extensions/green-tree-theme).
+
+### Manual install
+
 Download [green-tree.json](https://raw.githubusercontent.com/yuukiLike/zed-skin/main/themes/green-tree.json) and copy it into:
 
 | Platform | Folder |
@@ -52,7 +56,5 @@ Download [green-tree.json](https://raw.githubusercontent.com/yuukiLike/zed-skin/
 | Windows | `%USERPROFILE%\AppData\Roaming\Zed\themes\` |
 
 Create the folder if needed. Run **`theme selector: toggle`** in Zed and search **GreenTree**. Restart Zed if the new names do not appear. [Official guide](https://zed.dev/docs/themes).
-
-Marketplace submission is being prepared; install locally for now.
 
 [Contrast report](docs/contrast-report.md) · [Palette notes](docs/palette-review.md) · [MIT License](LICENSE)

@@ -44,6 +44,10 @@
 
 ## 安装
 
+在 Zed 中打开 **Extensions**（macOS：`Cmd+Shift+X`；Linux / Windows：`Ctrl+Shift+X`），搜索 **GreenTree** 并安装。运行 **`theme selector: toggle`**，选择四款 GreenTree 主题之一。[扩展市场页面](https://zed.dev/extensions/green-tree-theme)。
+
+### 手动安装
+
 下载 [green-tree.json](https://raw.githubusercontent.com/yuukiLike/zed-skin/main/themes/green-tree.json)，复制到：
 
 | 平台 | 目录 |
@@ -52,7 +56,5 @@
 | Windows | `%USERPROFILE%\AppData\Roaming\Zed\themes\` |
 
 目录不存在时先创建。在 Zed 中运行 **`theme selector: toggle`**，搜索 **GreenTree**。新名称未出现时重启 Zed。[官方指南](https://zed.dev/docs/themes)。
-
-扩展市场上架正在准备中，目前请使用本地安装。
 
 [对比度报告](docs/contrast-report.md) · [配色说明](docs/palette-review.md) · [MIT 许可证](LICENSE)

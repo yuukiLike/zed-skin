@@ -44,6 +44,10 @@ Zed 向けの高コントラストテーマ集です。3 つのダークテー�
 
 ## インストール
 
+Zed の **Extensions** を開き（macOS：`Cmd+Shift+X`、Linux / Windows：`Ctrl+Shift+X`）、**GreenTree** を検索してインストールします。**`theme selector: toggle`** を実行し、4 つの GreenTree テーマから選んでください。[マーケットプレイス](https://zed.dev/extensions/green-tree-theme)。
+
+### 手動インストール
+
 [green-tree.json](https://raw.githubusercontent.com/yuukiLike/zed-skin/main/themes/green-tree.json) をダウンロードし、次のフォルダにコピーします。
 
 | OS | フォルダ |
@@ -52,7 +56,5 @@ Zed 向けの高コントラストテーマ集です。3 つのダークテー�
 | Windows | `%USERPROFILE%\AppData\Roaming\Zed\themes\` |
 
 フォルダがなければ作成してください。Zed で **`theme selector: toggle`** を実行し、**GreenTree** を検索します。新しい名前が表示されない場合は Zed を再起動してください。[公式ガイド](https://zed.dev/docs/themes)。
-
-マーケットプレイスへの掲載は準備中です。現在はローカルでインストールしてください。
 
 [コントラストレポート](docs/contrast-report.md) · [配色メモ](docs/palette-review.md) · [MIT ライセンス](LICENSE)
