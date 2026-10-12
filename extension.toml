@@ -3,6 +3,6 @@ name = "GreenTree"
 version = "0.11.1"
 schema_version = 1
 authors = ["yuukiLike"]
-description = "A high contrast theme collection for Zed. Three dark variants target WCAG AAA 7:1 for primary text, with AA 4.5:1 for comments and Markdown selections. Warm-white Day Vivid favors brighter colors."
+description = "A high contrast theme collection for Zed. Three dark variants target WCAG AAA 7:1 for primary text, with AA 4.5:1 for comments, search and selections. Warm-white Day Vivid favors brighter colors."
 repository = "https://github.com/yuukiLike/zed-skin"
 themes = ["themes/green-tree.json"]
