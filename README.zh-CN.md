@@ -28,6 +28,8 @@
 
 目录不存在时先创建，再打开主题选择器。[Zed 官方指南](https://zed.dev/docs/themes)。
 
-深色主题以 AAA 7:1 为主要文字目标，注释、搜索和选中状态采用 AA 4.5:1。Day Vivid 的绿色采用自定义 2.5:1 下限，低于 AA。这些是配色目标，不代表整个编辑器获得认证。
+深色主题以 AAA 7:1 为主要文字目标，注释、搜索采用 AA 4.5:1。选区优先考虑观感与辨识度，不设文字对比度门槛。Day Vivid 的绿色采用自定义 2.5:1 下限，低于 AA。这些是配色目标，不代表整个编辑器获得认证。
 
-[对比度报告](docs/contrast-report.md) · [检查与参考](docs/theme-testing.md) · [配色说明](docs/palette-review.md) · [MIT 许可证](LICENSE)
+无需额外依赖的[检查](docs/theme-testing.md)覆盖搜索、选区、列表、Git 差异与冲突、符号引用、括号和 ANSI 黑白配对。
+
+[人工验收](human-todo.md) · [对比度报告](docs/contrast-report.md) · [配色说明](docs/palette-review.md) · [MIT 许可证](LICENSE)

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Audit GreenTree's text contrast and search/selection visibility.
+"""Audit GreenTree's text contrast and common interaction states.
 
 No dependencies. This checks theme colors, not whole-application WCAG conformance.
 New color fields must be classified below instead of silently escaping the audit.
@@ -24,15 +24,14 @@ TEXT_CONTRAST_TARGETS = {
 # Vivid deliberately prioritizes a bright green on warm white. Only these
 # green syntax captures use a custom floor; 2.5:1 is NOT a WCAG text target.
 # Keep other Vivid text at 4.5:1. Dark variants retain 7:1 for primary text;
-# comments, search matches and selected text use AA's 4.5:1.
+# comments and search matches use AA's 4.5:1. Selected text has no contrast target.
 VIVID_GREEN_CAPTURES = {
     "keyword", "preproc", "punctuation.markup", "tag", "title", "diff.plus",
 }
 COMMENT_CAPTURES = {"comment", "comment.doc"}
 TEXT_GROUPS = {
-    "UI text", "Editor / syntax", "Terminal text", "Inverse cursor text",
-    "Vim / Helix badges", "Comments", "Markdown selection",
-    "Markdown selection (under text)",
+    "UI text", "Editor / syntax", "Terminal text", "Terminal ANSI", "Inverse cursor text",
+    "Vim / Helix badges", "Comments",
 }
 UI_BACKGROUNDS = """
 background surface.background elevated_surface.background
@@ -52,10 +51,13 @@ editor.document_highlight.bracket_background
 editor.diff_hunk.added.background editor.diff_hunk.added.hollow_background
 editor.diff_hunk.deleted.background editor.diff_hunk.deleted.hollow_background
 search.match_background search.active_match_background
-version_control.word_added version_control.word_deleted
 version_control.conflict_marker.ours version_control.conflict_marker.theirs
 vim.yank.background
 """.split()
+WORD_DIFF_BACKGROUNDS = {
+    f"version_control.word_{kind}": [f"editor.diff_hunk.{kind}.{part}" for part in ("background", "hollow_background")]
+    for kind in ("added", "deleted")
+}
 UI_TEXT = """
 text text.muted text.placeholder text.disabled text.accent link_text.hover
 version_control.added version_control.deleted version_control.modified
@@ -111,9 +113,12 @@ background surface.background elevated_surface.background panel.background edito
 # distinct while pale, nearly identical backgrounds can pass text contrast.
 SEARCH_VISIBILITY_TARGET = 0.06
 SEARCH_DISTINCTION_TARGET = 0.06
+STATE_VISIBILITY_TARGET = 0.06
 COLOR_DISTANCE_GROUPS = {
     "Search visibility", "Search state distinction", "Editor selection visibility",
-    "Markdown search selection visibility",
+    "Markdown search selection visibility", "List selection visibility",
+    "Editor highlight visibility", "Diff word visibility", "Conflict distinction",
+    "Diff search visibility", "Diff search distinction",
 }
 
 
@@ -235,10 +240,9 @@ def search_highlight_checks(style):
     return results
 
 
-def markdown_selection_checks(style, text_threshold):
-    # Older Zed painted Markdown selections over glyphs (PR #32388). Keep that
-    # conservative model, and also check v1.23.2's selection below glyphs:
-    # crates/markdown/src/markdown.rs, test_search_and_selection_below_aligned_inline_code.
+def markdown_selection_checks(style):
+    # Keep selections visible on each rendered surface. Selected text has no
+    # contrast target, including older Zed versions that paint over glyphs.
     overlay = style[MARKDOWN_SELECTION]
     composite(overlay, rgb(style["editor.background"]))  # Validate RGBA first.
     if not 0 < int(overlay[7:9], 16) < 255:
@@ -246,12 +250,8 @@ def markdown_selection_checks(style, text_threshold):
     results = []
     checked_backgrounds = set()
 
-    def check(foreground_name, foreground, background_name, background, search_match=False):
+    def check(background_name, background, search_match=False):
         selected_background = composite(overlay, background)
-        results.append(("Markdown selection", foreground_name, background_name,
-                        contrast_rgb(composite(overlay, rgb(foreground)), selected_background), text_threshold))
-        results.append(("Markdown selection (under text)", foreground_name, background_name,
-                        contrast_rgb(rgb(foreground), selected_background), text_threshold))
         if background_name not in checked_backgrounds:
             checked_backgrounds.add(background_name)
             if search_match:
@@ -263,28 +263,70 @@ def markdown_selection_checks(style, text_threshold):
 
     for background_name in MARKDOWN_BACKGROUNDS:
         background = rgb(style[background_name])
-        for foreground_name in ("text", "text.muted", "text.accent"):
-            check(foreground_name, style[foreground_name], background_name, background)
+        check(background_name, background)
         # Zed gives inline code an editor.foreground overlay at 8% opacity,
         # and links at 2.5%. Both are painted below the selection overlay.
-        for foreground_name, opacity, label in (("text", 0.08, "inline code"),
-                                                ("text.accent", 0.025, "link")):
-            check(foreground_name, style[foreground_name], f"{background_name} / {label}",
+        for opacity, label in ((0.08, "inline code"), (0.025, "link")):
+            check(f"{background_name} / {label}",
                   blend(rgb(style["editor.foreground"]), background, opacity))
     for capture, highlight in style["syntax"].items():
         background = highlight.get("background_color", style["editor.background"])
         background_name = f"syntax.{capture}.background_color" if "background_color" in highlight else "editor.background"
-        check(f"syntax.{capture}", highlight["color"], f"{background_name} / code block", rgb(background))
+        check(f"{background_name} / code block", rgb(background))
     # Opaque search paint covers inline chips and fenced-code backgrounds before
-    # selection is painted. Code inside a link inherits text.accent.
+    # selection is painted, so they share the same selected background.
     for background_name in ("search.match_background", "search.active_match_background"):
-        for foreground_name in ("text", "text.accent"):
-            check(foreground_name, style[foreground_name], f"{background_name} / inline code",
-                  rgb(style[background_name]), search_match=True)
-        for capture, highlight in style["syntax"].items():
-            check(f"syntax.{capture}", highlight["color"], f"{background_name} / code block",
-                  rgb(style[background_name]), search_match=True)
+        for label in ("inline code", "code block"):
+            check(f"{background_name} / {label}", rgb(style[background_name]), search_match=True)
     return results
+
+
+def interaction_checks(style):
+    """Compare actual neighboring states, not only text against each fill."""
+    pairs = []
+    for kind in ("element", "ghost_element"):
+        for background in ("background", "surface.background", "elevated_surface.background",
+                           "panel.background", "element.background", f"{kind}.hover"):
+            pairs.append(("List selection visibility", f"{kind}.selected", background))
+    for kind in ("read", "write", "bracket"):
+        for background in ("editor.background", "editor.active_line.background"):
+            pairs.append(("Editor highlight visibility", f"editor.document_highlight.{kind}_background", background))
+    for side in ("ours", "theirs"):
+        pairs.append(("Conflict distinction", f"version_control.conflict_marker.{side}", "editor.background"))
+    pairs.append(("Conflict distinction", "version_control.conflict_marker.ours", "version_control.conflict_marker.theirs"))
+    return [(group, first, second, color_distance(rgb(style[first]), rgb(style[second])), STATE_VISIBILITY_TARGET)
+            for group, first, second in pairs]
+
+
+def word_diff_backgrounds(style):
+    return [(f"{word} / {surface}", selection_color(style[word], rgb(style[surface])))
+            for word, surfaces in WORD_DIFF_BACKGROUNDS.items() for surface in surfaces]
+
+
+def word_diff_checks(style):
+    # Zed appends word highlights after search, then paints player selections.
+    # Audit that order; an opaque word fill erases both search states.
+    results = []
+    search_backgrounds = []
+    for word, surfaces in WORD_DIFF_BACKGROUNDS.items():
+        ordinary, active = [selection_color(style[word], rgb(style[key])) for key in
+                            ("search.match_background", "search.active_match_background")]
+        states = [("ordinary", ordinary), ("active", active)] + [
+            (f"active / {focus} / players[0].selection", selection_color(style["players"][0]["selection"], active, opacity))
+            for focus, opacity in (("search focused", 0.5), ("editor focused", 1))
+        ]
+        search_backgrounds.extend((f"search.{state} / {word}", color) for state, color in states)
+        for state, color in states[1:]:
+            results.append(("Diff search distinction", f"{word} / {state}", f"{word} / ordinary",
+                            color_distance(color, ordinary), SEARCH_DISTINCTION_TARGET))
+        for surface in surfaces:
+            base = rgb(style[surface])
+            plain = selection_color(style[word], base)
+            results.append(("Diff word visibility", word, surface, color_distance(plain, base), STATE_VISIBILITY_TARGET))
+            for state, color in states:
+                results.append(("Diff search visibility", f"{word} / {state}", surface,
+                                color_distance(color, plain), SEARCH_VISIBILITY_TARGET))
+    return results, search_backgrounds
 
 
 def audit(theme):
@@ -301,7 +343,7 @@ def audit(theme):
         + STATUSES + status_backgrounds + status_borders + mode_colors
         + TERMINAL_TEXT + TERMINAL_BACKGROUNDS + ["scrollbar.track.background"]
     )
-    required = expected | TRANSPARENT | {"background.appearance", "players", "syntax", "accents", MARKDOWN_SELECTION}
+    required = expected | TRANSPARENT | set(WORD_DIFF_BACKGROUNDS) | {"background.appearance", "players", "syntax", "accents", MARKDOWN_SELECTION}
     if required != set(style):
         raise ValueError(f"Missing fields: {sorted(required - set(style))}; unclassified fields: {sorted(set(style) - required)}")
     for key in expected:
@@ -326,7 +368,9 @@ def audit(theme):
     def check(group, foregrounds, backgrounds, threshold):
         for foreground_name, foreground in foregrounds:
             for background_name, background in backgrounds:
-                interaction = background_name.startswith("search.") or ".selection" in background_name
+                if group in TEXT_GROUPS and ".selection" in background_name:
+                    continue
+                interaction = background_name.startswith("search.")
                 target = min(threshold, 4.5) if interaction else threshold
                 if foreground_name in vivid_foregrounds:
                     target = 2.5
@@ -337,14 +381,16 @@ def audit(theme):
         return [(name, rgb(style[name])) for name in names]
 
     ui_backgrounds = fields(UI_BACKGROUNDS + status_backgrounds)
-    editor_backgrounds = fields(EDITOR_BACKGROUNDS)
+    word_backgrounds = word_diff_backgrounds(style)
+    word_results, word_search_backgrounds = word_diff_checks(style)
+    editor_backgrounds = fields(EDITOR_BACKGROUNDS) + word_backgrounds + word_search_backgrounds
     for index, player in enumerate(style["players"]):
         if set(player) != {"cursor", "background", "selection"}:
             raise ValueError(f"Incomplete player colors at index {index}")
         luminance(player["cursor"])
         ui_backgrounds.append((f"players[{index}].background", rgb(player["background"])))
         if len(player["selection"]) == 9:
-            for name, background in fields(EDITOR_BACKGROUNDS):
+            for name, background in fields(EDITOR_BACKGROUNDS) + word_backgrounds:
                 label = f"{name} / players[{index}].selection"
                 editor_backgrounds.append((label, selection_color(player["selection"], background)))
             active = rgb(style["search.active_match_background"])
@@ -380,13 +426,17 @@ def audit(theme):
     check("UI text", fields(UI_TEXT + STATUSES) + accents, all_backgrounds, text_threshold)
     check("Editor / syntax", fields(EDITOR_TEXT) + syntax_text, all_backgrounds, text_threshold)
     check("Comments", comment_text, all_backgrounds, 4.5)
-    # Terminal selections use player colors. ANSI backgrounds chosen by programs
-    # and indexed/true-color output are outside the default-background guarantee.
-    terminal_backgrounds = fields(TERMINAL_BACKGROUNDS) + [
-        (f"players[{i}].selection", selection_color(p["selection"], rgb(style["terminal.background"])))
-        for i, p in enumerate(style["players"])
-    ]
-    check("Terminal text", fields(TERMINAL_TEXT), terminal_backgrounds, text_threshold)
+    check("Terminal text", fields(TERMINAL_TEXT[:3]), fields(TERMINAL_BACKGROUNDS), text_threshold)
+    # ANSI names can be foregrounds OR backgrounds. Do not turn black into
+    # white (or white into black) just to pass the default-background check.
+    low_contrast_name = "black" if theme["appearance"] == "dark" else "white"
+    ansi_on_default = [key for key in TERMINAL_TEXT[3:] if not key.endswith(low_contrast_name)]
+    check("Terminal ANSI", fields(ansi_on_default), fields(TERMINAL_BACKGROUNDS), text_threshold)
+    for variant in ("", "bright_", "dim_"):
+        black, white = (f"terminal.ansi.{variant}{name}" for name in ("black", "white"))
+        if luminance(style[black]) >= luminance(style[white]):
+            raise ValueError(f"{black} must be darker than {white}")
+        check("Terminal ANSI", fields([black]), fields([white]), 4.5)
     # Search and text selections cover glyph ranges, not UI borders or icons.
     indicator_backgrounds = [(name, color) for name, color in all_backgrounds
                              if not name.startswith("search.") and ".selection" not in name]
@@ -401,10 +451,10 @@ def audit(theme):
               [(f"players[{index}].cursor", rgb(player["cursor"]))], text_threshold)
     for mode in MODES:
         check("Vim / Helix badges", fields([f"vim.{mode}.foreground"]), fields([f"vim.{mode}.background"]), text_threshold)
-    # Selected Markdown is deliberately AA so its highlight can be visible.
-    # Day Vivid retains the custom 2.5:1 floor used by its bright green syntax.
-    results.extend(markdown_selection_checks(style, 2.5 if theme["name"] == "GreenTree Day Vivid" else 4.5))
+    results.extend(markdown_selection_checks(style))
     results.extend(search_highlight_checks(style))
+    results.extend(interaction_checks(style))
+    results.extend(word_results)
     return results
 
 
@@ -428,9 +478,10 @@ def main():
         if not family["name"] or not family["author"] or not family["themes"]:
             raise ValueError("Theme family metadata and themes must not be empty")
         sections = ["# GreenTree · Contrast audit", "",
-                    "Dark primary text: AAA 7:1. Comments, search and selected text: AA 4.5:1. Day Vivid uses 4.5:1, except green syntax and selected Markdown at a custom 2.5:1 (below AA).",
-                    "UI indicators use 3:1 on their surfaces. Text selections are composited before measurement; Markdown checks cover both legacy over-glyph and current under-glyph paint order.",
-                    "Visibility guards are custom: 0.06 Oklab distance (ΔEOK) for color separation; 1.25:1 luminance for Markdown selections and active search on dark editor surfaces. They are not WCAG criteria or proof of visual acceptance.",
+                    "Dark primary text: AAA 7:1. Comments and search: AA 4.5:1. Day Vivid uses 4.5:1, except green syntax at a custom 2.5:1 (below AA). Selected text has no contrast target.",
+                    "UI indicators use 3:1 on their surfaces. Selection checks measure background visibility and search overlap; selected text appearance is reviewed in Zed.",
+                    "Visibility guards are custom: 0.06 Oklab distance (ΔEOK) for search, selection, symbols, changed words and conflict sides; 1.25:1 luminance for Markdown selections and active search on dark editor surfaces. They are not WCAG criteria or proof of visual acceptance.",
+                    "ANSI black/white retain their terminal roles: paired normal, bright and dim colors target 4.5:1; black on a dark default surface and white on a light one are exempt. Other program-chosen combinations need an in-app check.",
                     "Pass/fail uses unrounded values. See [checks, sources and limits](theme-testing.md).", "",
                     "Reproduce: `python3 scripts/check_contrast.py --report docs/contrast-report.md`.", ""]
         names = [theme["name"] for theme in family["themes"]]
@@ -450,7 +501,7 @@ def main():
                 result = "PASS" if all(row[3] >= row[4] for row in rows) else "FAIL"
                 unit = " ΔEOK" if group in COLOR_DISTANCE_GROUPS else ":1"
                 targets = " / ".join(f"{value:g}{unit}" for value in sorted({row[4] for row in rows}))
-                if group in COLOR_DISTANCE_GROUPS | {"Markdown selection visibility", "Active search visibility"} or (theme["name"] == "GreenTree Day Vivid" and group in ("Editor / syntax", "Markdown selection", "Markdown selection (under text)")):
+                if group in COLOR_DISTANCE_GROUPS | {"Markdown selection visibility", "Active search visibility"} or (theme["name"] == "GreenTree Day Vivid" and group == "Editor / syntax"):
                     result += " (custom)"
                 sections.append(f"| {group} | {len(rows)} | {measurement(group, worst[3])} | {targets} | {result} |")
                 print(f"{result:4} {group:22} {len(rows):5} pairs; min {measurement(group, worst[3])} ({worst[1]} / {worst[2]})")

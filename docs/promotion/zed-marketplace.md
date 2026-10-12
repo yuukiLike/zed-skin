@@ -1,5 +1,7 @@
 # Zed marketplace handoff
 
+历史记录：以下仅描述 0.11.1，不是当前工作区的发布清单。当前检查与配色目标见[测试说明](../theme-testing.md)。
+
 首次上架 [PR #7749](https://github.com/zed-industries/extensions/pull/7749) 已合并，扩展市场已收录 [GreenTree](https://zed.dev/extensions/green-tree-theme)。本文件记录 **0.11.1 更新**的范围与验证事实，最终 PR 由作者本人提交。[官方更新说明](https://zed.dev/docs/extensions/publishing/updating-and-maintenance)
 
 | 项目 | 已确认内容 |

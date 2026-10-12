@@ -1,4 +1,4 @@
-"""Regression coverage for theme validation, search highlights and Markdown selections.
+"""Regressions for theme validation and common editor, Markdown and terminal states.
 
 Run: python3 -m unittest discover -s scripts -p 'test_*.py'
 """
@@ -12,9 +12,10 @@ import unittest
 from pathlib import Path
 
 from check_contrast import (
-    COLOR_DISTANCE_GROUPS, MARKDOWN_SELECTION, ROOT, VIVID_GREEN_CAPTURES,
-    audit, color_distance, composite, contrast, markdown_selection_checks,
+    COLOR_DISTANCE_GROUPS, MARKDOWN_SELECTION, ROOT, TEXT_GROUPS,
+    audit, color_distance, composite, contrast, contrast_rgb, interaction_checks, markdown_selection_checks,
     oklab, read_object, rgb, search_highlight_checks, selection_color,
+    word_diff_backgrounds, word_diff_checks,
 )
 
 
@@ -23,120 +24,72 @@ class MarkdownSelectionTests(unittest.TestCase):
     def setUpClass(cls):
         cls.themes = json.loads((ROOT / "themes/green-tree.json").read_text())["themes"]
 
-    def test_all_four_themes_keep_selected_text_readable(self):
-        for theme in self.themes:
-            with self.subTest(theme=theme["name"]):
-                target = 2.5 if theme["name"] == "GreenTree Day Vivid" else 4.5
-                rows = markdown_selection_checks(theme["style"], target)
-                self.assertTrue(any("inline code" in row[2] for row in rows))
-                self.assertTrue(any(row[1] == "syntax.comment" for row in rows))
-                self.assertFalse([row for row in rows if row[0] == "Markdown selection" and row[3] < row[4]])
-
-    def test_current_zed_selection_below_glyphs_keeps_text_readable(self):
-        for theme in self.themes:
-            with self.subTest(theme=theme["name"]):
-                target = 2.5 if theme["name"] == "GreenTree Day Vivid" else 4.5
-                rows = markdown_selection_checks(theme["style"], target)
-                current = [row for row in rows if row[0] == "Markdown selection (under text)"]
-                self.assertTrue(current)
-                self.assertFalse([row for row in current if row[3] < row[4]])
-
-    def test_old_vivid_green_fails_current_paint_order(self):
-        style = copy.deepcopy(self.themes[0]["style"])
-        for capture in VIVID_GREEN_CAPTURES:
-            style["syntax"][capture]["color"] = "#00A84A"
-        rows = markdown_selection_checks(style, 2.5)
-        self.assertTrue(all(row[3] >= row[4] for row in rows if row[0] == "Markdown selection"))
-        self.assertTrue(any(row[3] < row[4] for row in rows if row[0] == "Markdown selection (under text)"))
-
     def test_prose_links_inline_code_and_fenced_code_are_covered(self):
         for theme in self.themes:
             with self.subTest(theme=theme["name"]):
-                rows = markdown_selection_checks(theme["style"], 2.5)
-                for group in ("Markdown selection", "Markdown selection (under text)"):
-                    cases = [(row[1], row[2]) for row in rows if row[0] == group]
-                    self.assertIn(("text", "editor.background"), cases)
-                    self.assertIn(("text.accent", "editor.background / link"), cases)
-                    self.assertIn(("text", "editor.background / inline code"), cases)
-                    self.assertIn(("syntax.comment", "editor.background / code block"), cases)
-                    for capture in ("diff.plus", "diff.minus"):
-                        self.assertIn((f"syntax.{capture}", f"syntax.{capture}.background_color / code block"), cases)
+                rows = markdown_selection_checks(theme["style"])
+                backgrounds = {row[2] for row in rows}
+                for background in ("editor.background", "editor.background / link",
+                                   "editor.background / inline code", "editor.background / code block"):
+                    self.assertIn(background, backgrounds)
+                for capture in ("diff.plus", "diff.minus"):
+                    self.assertIn(f"syntax.{capture}.background_color / code block", backgrounds)
 
-    def test_inline_code_search_and_selection_overlap_is_covered(self):
+    def test_search_overlap_covers_inline_and_fenced_code(self):
         for theme in self.themes:
             with self.subTest(theme=theme["name"]):
-                rows = markdown_selection_checks(theme["style"], 2.5 if theme["appearance"] == "light" else 4.5)
-                overlap = [row for row in rows if row[2].startswith("search.")]
-                for key in ("search.match_background", "search.active_match_background"):
-                    for foreground in ("text", "text.accent"):
-                        self.assertTrue(any(row[1] == foreground and row[2] == f"{key} / inline code" for row in overlap))
-                self.assertTrue(any(row[0] == "Markdown search selection visibility" for row in overlap))
+                rows = markdown_selection_checks(theme["style"])
+                overlap = [row for row in rows if row[0] == "Markdown search selection visibility"]
+                self.assertEqual({row[2] for row in overlap}, {
+                    f"{key} / {label}" for key in ("search.match_background", "search.active_match_background")
+                    for label in ("inline code", "code block")
+                })
                 self.assertFalse([row for row in overlap if row[3] < row[4]])
 
     def test_faint_selection_over_a_search_match_fails(self):
         style = copy.deepcopy(self.themes[-1]["style"])
         style[MARKDOWN_SELECTION] = "#408CFF06"
-        rows = markdown_selection_checks(style, 4.5)
+        rows = markdown_selection_checks(style)
         self.assertTrue(any(row[0] == "Markdown search selection visibility" and row[3] < row[4] for row in rows))
-
-    def test_fenced_code_search_and_selection_overlap_is_covered(self):
-        for theme in self.themes:
-            with self.subTest(theme=theme["name"]):
-                rows = markdown_selection_checks(theme["style"], 2.5 if theme["appearance"] == "light" else 4.5)
-                overlap = [row for row in rows if row[2].startswith("search.") and row[2].endswith(" / code block")]
-                cases = {(row[0], row[1], row[2]) for row in overlap}
-                for group in ("Markdown selection", "Markdown selection (under text)"):
-                    for key in ("search.match_background", "search.active_match_background"):
-                        for capture in theme["style"]["syntax"]:
-                            self.assertIn((group, f"syntax.{capture}", f"{key} / code block"), cases)
-                self.assertFalse([row for row in overlap if row[3] < row[4]])
-
-    def test_previous_dark_palettes_fail_when_search_and_selection_stack(self):
-        for theme in self.themes[1:]:
-            with self.subTest(theme=theme["name"]):
-                style = copy.deepcopy(theme["style"])
-                old_comment = "#A8A8A8" if theme["name"] == "GreenTree Day AAA" else "#979797"
-                for capture in ("comment", "comment.doc"):
-                    style["syntax"][capture]["color"] = old_comment
-                if theme["name"] == "GreenTree Midnight AAA":
-                    style[MARKDOWN_SELECTION] = "#408CFF4D"
-                rows = markdown_selection_checks(style, 4.5)
-                failed = [row for row in rows if row[3] < row[4]]
-                self.assertTrue(failed)
-                self.assertTrue(any(row[1] == "syntax.comment" and row[2].startswith("search.")
-                                    and row[2].endswith(" / code block") for row in failed))
 
     def test_all_four_selections_stand_out_from_their_surfaces(self):
         for theme in self.themes:
             with self.subTest(theme=theme["name"]):
-                rows = markdown_selection_checks(theme["style"], 4.5)
+                rows = markdown_selection_checks(theme["style"])
                 visibility = [row for row in rows if row[0] == "Markdown selection visibility"]
                 self.assertTrue(any("inline code" in row[2] for row in visibility))
                 self.assertTrue(any("syntax.diff.minus.background_color" in row[2] for row in visibility))
                 self.assertFalse([row for row in visibility if row[3] < row[4]])
 
-    def test_faint_selection_fails_even_when_text_contrast_passes(self):
+    def test_faint_selection_is_still_rejected(self):
         style = copy.deepcopy(self.themes[1]["style"])
         style[MARKDOWN_SELECTION] = "#408CFF06"
-        rows = markdown_selection_checks(style, 4.5)
-        self.assertTrue(all(row[3] >= row[4] for row in rows if row[0] == "Markdown selection"))
+        rows = markdown_selection_checks(style)
         self.assertTrue(any(row[3] < row[4] for row in rows if row[0] == "Markdown selection visibility"))
 
-    def test_aa_exceptions_do_not_weaken_primary_text_targets(self):
+    def test_selected_text_below_aa_is_allowed(self):
+        theme = copy.deepcopy(self.themes[-1])
+        style = theme["style"]
+        style[MARKDOWN_SELECTION] = "#408CFF80"
+        background = composite(style[MARKDOWN_SELECTION], rgb(style["search.active_match_background"]))
+        foreground = rgb(style["syntax"]["comment"]["color"])
+        for painted in (foreground, composite(style[MARKDOWN_SELECTION], foreground)):
+            self.assertLess(contrast_rgb(painted, background), 4.5)
+        self.assertFalse([row for row in audit(theme) if row[3] < row[4]])
+
+    def test_selection_exception_preserves_primary_and_search_targets(self):
         for theme in self.themes[1:]:
             with self.subTest(theme=theme["name"]):
                 rows = audit(theme)
-                for group in ("Comments", "Markdown selection", "Markdown selection (under text)"):
-                    self.assertEqual({row[4] for row in rows if row[0] == group}, {4.5})
+                self.assertEqual({row[4] for row in rows if row[0] == "Comments"}, {4.5})
                 for group in ("Editor / syntax", "UI text", "Terminal text"):
-                    primary = [row for row in rows if row[0] == group
-                               and not row[2].startswith("search.") and ".selection" not in row[2]]
+                    primary = [row for row in rows if row[0] == group and not row[2].startswith("search.")]
                     self.assertTrue(primary)
                     self.assertEqual({row[4] for row in primary}, {7})
-                    interaction = [row for row in rows if row[0] == group
-                                   and (row[2].startswith("search.") or ".selection" in row[2])]
-                    self.assertTrue(interaction)
-                    self.assertEqual({row[4] for row in interaction}, {4.5})
+                for group in ("Editor / syntax", "UI text"):
+                    search = [row for row in rows if row[0] == group and row[2].startswith("search.")]
+                    self.assertTrue(search)
+                    self.assertEqual({row[4] for row in search}, {4.5})
 
     def test_opaque_or_invisible_selections_are_rejected(self):
         for theme in self.themes:
@@ -145,16 +98,9 @@ class MarkdownSelectionTests(unittest.TestCase):
                 with self.subTest(theme=theme["name"], color=color):
                     style[MARKDOWN_SELECTION] = color
                     with self.assertRaises(ValueError):
-                        markdown_selection_checks(style, 7)
+                        markdown_selection_checks(style)
 
-    def test_high_opacity_reduces_glyph_contrast(self):
-        style = copy.deepcopy(self.themes[-1]["style"])
-        style[MARKDOWN_SELECTION] = "#408CFFEE"
-        rows = markdown_selection_checks(style, 7)
-        # Merely requiring alpha < 1 would still allow almost invisible text.
-        self.assertTrue(all(row[3] < row[4] for row in rows if row[0] == "Markdown selection"))
-
-    def test_source_over_composites_foreground_as_well_as_background(self):
+    def test_source_over_composites_colors(self):
         self.assertEqual(composite("#408CFF00", rgb("#FFFFFF")), rgb("#FFFFFF"))
         for under in ("#FFFFFF", "#000000"):
             self.assertEqual(composite("#408CFFFF", rgb(under)), rgb("#408CFF"))
@@ -194,9 +140,8 @@ class SearchHighlightTests(unittest.TestCase):
                 old["style"]["search.match_background"] = ordinary
                 old["style"]["search.active_match_background"] = active
                 rows = audit(old)
-                # The old text-only audit did not check search/selection stacking.
-                old_scope = [row for row in rows if row[0] not in COLOR_DISTANCE_GROUPS | {"Active search visibility"}
-                             and not (row[0].startswith("Markdown selection") and row[2].startswith("search."))]
+                # Text contrast alone did not catch the old faint backgrounds.
+                old_scope = [row for row in rows if row[0] not in COLOR_DISTANCE_GROUPS | {"Active search visibility"}]
                 self.assertFalse([row for row in old_scope if row[3] < row[4]])
                 self.assertTrue(any(row[3] < row[4] for row in rows if row[0] == "Search state distinction"))
 
@@ -227,15 +172,15 @@ class SearchHighlightTests(unittest.TestCase):
         rows = search_highlight_checks(style)
         self.assertTrue(any(row[0] == "Editor selection visibility" and row[3] == 0 for row in rows))
 
-    def test_search_text_covers_both_editor_focus_states(self):
-        for theme in self.themes[1:]:
+    def test_editor_and_terminal_selections_have_no_text_contrast_target(self):
+        for theme in self.themes:
             with self.subTest(theme=theme["name"]):
                 rows = audit(theme)
-                for suffix in ("players[0].selection", "players[0].selection / search focused"):
-                    selected = [row for row in rows if row[0] in ("Editor / syntax", "Comments")
-                                and row[2] == f"search.active_match_background / {suffix}"]
-                    self.assertTrue(selected)
-                    self.assertTrue(all(row[3] >= row[4] == 4.5 for row in selected))
+                self.assertFalse([row for row in rows if row[0] in TEXT_GROUPS and ".selection" in row[2]])
+                self.assertTrue(any(row[0] == "Editor selection visibility" for row in rows))
+                for state in ("search focused", "editor focused"):
+                    self.assertTrue(any(row[0] == "Search state distinction"
+                                        and row[1] == f"active match / {state}" for row in rows))
 
     def test_transparent_selection_preserves_the_active_search_fill(self):
         for theme in self.themes[1:]:
@@ -294,6 +239,125 @@ class SearchHighlightTests(unittest.TestCase):
                     bad[key] = color
                     with self.assertRaises(ValueError):
                         search_highlight_checks(bad)
+
+
+class InteractionTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.themes = json.loads((ROOT / "themes/green-tree.json").read_text())["themes"]
+
+    def test_changed_words_cannot_blend_into_either_diff_row_style(self):
+        for theme in self.themes:
+            for kind in ("added", "deleted"):
+                for surface in ("background", "hollow_background"):
+                    with self.subTest(theme=theme["name"], kind=kind, surface=surface):
+                        style = copy.deepcopy(theme["style"])
+                        word, row = f"version_control.word_{kind}", f"editor.diff_hunk.{kind}.{surface}"
+                        style[word] = style[row]
+                        self.assertTrue(any(r[0] == "Diff word visibility" and r[1:3] == (word, row)
+                                            and r[3] < r[4] for r in word_diff_checks(style)[0]))
+
+    def test_opaque_word_fills_cannot_hide_search_results(self):
+        for theme in self.themes:
+            for word in ("version_control.word_added", "version_control.word_deleted"):
+                for opacity in ("", "FF", "FE"):
+                    with self.subTest(theme=theme["name"], word=word, opacity=opacity):
+                        style = copy.deepcopy(theme["style"])
+                        style[word] = "#00245E" + opacity
+                        rows, _ = word_diff_checks(style)
+                        self.assertTrue(any(r[0] == "Diff search distinction" and r[3] < r[4] for r in rows))
+
+    def test_transparent_word_fills_cannot_erase_the_diff_emphasis(self):
+        style = copy.deepcopy(self.themes[-1]["style"])
+        style["version_control.word_deleted"] = "#0000FF00"
+        rows, _ = word_diff_checks(style)
+        self.assertTrue(any(r[0] == "Diff word visibility" and r[3] == 0 for r in rows))
+
+    def test_word_fills_are_composited_on_solid_and_hollow_rows(self):
+        style = copy.deepcopy(self.themes[-1]["style"])
+        style["version_control.word_deleted"] = "#0000FF33"
+        for surface in ("background", "hollow_background"):
+            style[f"editor.diff_hunk.deleted.{surface}"] = "#000000"
+        rows = [(name, color) for name, color in word_diff_backgrounds(style) if "word_deleted" in name]
+        self.assertEqual(len(rows), 2)
+        for _, color in rows:
+            self.assertEqual(color, (0, 0, 0.2))
+
+    def test_word_diff_search_text_retains_aa_without_weakening_plain_code(self):
+        for theme in self.themes[1:]:
+            rows = [r for r in audit(theme) if r[0] == "Editor / syntax" and "version_control.word_" in r[2]]
+            self.assertEqual({r[4] for r in rows if r[2].startswith("search.")}, {4.5})
+            self.assertEqual({r[4] for r in rows if not r[2].startswith("search.")}, {7})
+
+    def test_conflict_sides_cannot_be_equal_or_almost_equal(self):
+        for color in ("#00245E", "#00245F"):
+            style = copy.deepcopy(self.themes[-1]["style"])
+            style["version_control.conflict_marker.ours"] = "#00245E"
+            style["version_control.conflict_marker.theirs"] = color
+            self.assertTrue(any(r[0] == "Conflict distinction" and r[2].endswith(".theirs")
+                                and r[3] < r[4] for r in interaction_checks(style)))
+
+    def test_each_conflict_side_must_be_visible_on_the_editor(self):
+        for theme in self.themes:
+            for side in ("ours", "theirs"):
+                style = copy.deepcopy(theme["style"])
+                style[f"version_control.conflict_marker.{side}"] = style["editor.background"]
+                self.assertTrue(any(r[0] == "Conflict distinction" and r[2] == "editor.background"
+                                    and r[3] < r[4] for r in interaction_checks(style)))
+
+    def test_previous_faint_list_selections_are_rejected(self):
+        for theme, old_color in zip(self.themes[:2], ("#EAF1F8", "#242D43")):
+            for kind in ("element", "ghost_element"):
+                with self.subTest(theme=theme["name"], kind=kind):
+                    style = copy.deepcopy(theme["style"])
+                    style[f"{kind}.selected"] = old_color
+                    self.assertTrue(any(r[0] == "List selection visibility" and r[1] == f"{kind}.selected"
+                                        and r[3] < r[4] for r in interaction_checks(style)))
+
+    def test_list_selection_must_differ_from_hover_as_well_as_the_surface(self):
+        for kind in ("element", "ghost_element"):
+            style = copy.deepcopy(self.themes[-1]["style"])
+            style[f"{kind}.hover"] = style[f"{kind}.selected"]
+            self.assertTrue(any(r[0] == "List selection visibility" and r[2] == f"{kind}.hover"
+                                and r[3] < r[4] for r in interaction_checks(style)))
+
+    def test_symbol_and_bracket_highlights_cover_normal_and_active_lines(self):
+        for kind in ("read", "write", "bracket"):
+            for background in ("editor.background", "editor.active_line.background"):
+                style = copy.deepcopy(self.themes[-1]["style"])
+                key = f"editor.document_highlight.{kind}_background"
+                style[key] = style[background]
+                self.assertTrue(any(r[0] == "Editor highlight visibility" and r[1:3] == (key, background)
+                                    and r[3] < r[4] for r in interaction_checks(style)))
+
+    def test_old_light_ansi_black_fails_despite_readable_default_terminal_text(self):
+        theme = copy.deepcopy(self.themes[2])
+        theme["style"]["terminal.ansi.black"] = "#B5BBC5"
+        rows = audit(theme)
+        self.assertFalse([r for r in rows if r[0] == "Terminal text" and r[3] < r[4]])
+        self.assertTrue(any(r[0] == "Terminal ANSI" and r[1] == "terminal.ansi.black"
+                            and r[2] == "terminal.ansi.white" and r[3] < r[4] for r in rows))
+
+    def test_ansi_black_white_pairs_include_bright_and_dim_variants(self):
+        for variant in ("", "bright_", "dim_"):
+            theme = copy.deepcopy(self.themes[2])
+            black = f"terminal.ansi.{variant}black"
+            theme["style"][black] = "#A0A0A0"
+            self.assertTrue(any(r[0] == "Terminal ANSI" and r[1] == black and r[3] < r[4]
+                                for r in audit(theme)))
+
+    def test_inverted_ansi_names_are_rejected_even_with_high_contrast(self):
+        theme = copy.deepcopy(self.themes[0])
+        theme["style"]["terminal.ansi.black"] = "#FFFFFF"
+        theme["style"]["terminal.ansi.white"] = "#000000"
+        with self.assertRaisesRegex(ValueError, "must be darker"):
+            audit(theme)
+
+    def test_unreadable_default_terminal_text_is_still_rejected(self):
+        for theme in self.themes:
+            bad = copy.deepcopy(theme)
+            bad["style"]["terminal.foreground"] = bad["style"]["terminal.background"]
+            self.assertTrue(any(r[0] == "Terminal text" and r[3] < r[4] for r in audit(bad)))
 
 
 class ThemeValidationTests(unittest.TestCase):
