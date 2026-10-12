@@ -1,60 +1,33 @@
 # GreenTree
 
-Zed 向けの高コントラストテーマ集です。3 つのダークテーマは[配色監査](docs/contrast-report.md)で、**主要な文字は WCAG AAA の 7:1**、**コメントと Markdown の選択文字は AA の 4.5:1** を目標にしています。暖かな白背景の Day Vivid は鮮やかさを優先しています。
+緑を基調とした Zed 向けの高コントラストテーマ。ライト 1 種とダーク 3 種を用意しています。
 
 [English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
 [![Zed 上の GreenTree Midnight AAA](docs/screenshots/midnight.jpg)](docs/screenshots/midnight.jpg)
 
-*Midnight AAA — 黒い背景、白いファイル名、太字の緑のキーワードとスカイブルーの関数。*
+| テーマ | 配色 |
+| --- | --- |
+| **Day Vivid** | 暖かな白、鮮やかな緑、紫とピンク |
+| **Day AAA** | 深いインディゴと明るい構文色 |
+| **Night AAA** | 黒に近い背景、柔らかな白、標準の太さの緑 |
+| **Midnight AAA** | 純黒、明るい白、太字の緑のキーワード |
 
-## 4 つのテーマ
-
-| テーマ | 特徴 | 監査した文字の最低コントラスト比 |
-| --- | --- | ---: |
-| **Day Vivid** | 暖かなアイボリー · 鮮やかな緑 · 紫 · ピンク | 2.52:1 |
-| **Day AAA** | 深いインディゴ · 鮮やかな配色 | 4.72:1 |
-| **Night AAA** | 深い黒 · 柔らかな白 · 標準の太さの緑 | 4.71:1 |
-| **Midnight AAA** | 純黒 · 明るい白 · 太字のアクセント | 4.60:1 |
-
-最低値にはコメントと Markdown の選択文字を含みます。名称の AAA は主要な文字の目標を示し、すべての状態への適合やエディタ全体の認証ではありません。Day Vivid の鮮やかな緑と一部の選択表示は **AA・AAA を満たしません**。言語サーバーによる未使用コードの淡色化は監査対象外です。
-
-<details>
-<summary>Day Vivid — 暖かな白と鮮やかな色</summary>
-
-[![Zed 上の GreenTree Day Vivid](docs/screenshots/day-vivid.jpg)](docs/screenshots/day-vivid.jpg)
-
-</details>
-
-<details>
-<summary>Day AAA — インディゴと高コントラスト</summary>
-
-[![Zed 上の GreenTree Day AAA](docs/screenshots/day-aaa.jpg)](docs/screenshots/day-aaa.jpg)
-
-</details>
-
-<details>
-<summary>Night AAA — 柔らかな夜の配色</summary>
-
-[![Zed 上の GreenTree Night AAA](docs/screenshots/night.jpg)](docs/screenshots/night.jpg)
-
-</details>
-
-*Zed の実際のスクリーンショットです。画像をクリックすると元の解像度で表示できます。*
+その他の画像：[Day Vivid](docs/screenshots/day-vivid.jpg) · [Day AAA](docs/screenshots/day-aaa.jpg) · [Night AAA](docs/screenshots/night.jpg)。
 
 ## インストール
 
-Zed の **Extensions** を開き（macOS：`Cmd+Shift+X`、Linux / Windows：`Ctrl+Shift+X`）、**GreenTree** を検索してインストールします。**`theme selector: toggle`** を実行し、4 つの GreenTree テーマから選んでください。[マーケットプレイス](https://zed.dev/extensions/green-tree-theme)。
+Zed の **Extensions** で **[GreenTree](https://zed.dev/extensions/green-tree-theme)** を検索してインストールし、**`theme selector: toggle`** でテーマを選びます。
 
-### 手動インストール
-
-[green-tree.json](https://raw.githubusercontent.com/yuukiLike/zed-skin/main/themes/green-tree.json) をダウンロードし、次のフォルダにコピーします。
+手動の場合は [green-tree.json](themes/green-tree.json) を次のフォルダに保存してください。
 
 | OS | フォルダ |
 | --- | --- |
 | macOS / Linux | `~/.config/zed/themes/` |
 | Windows | `%USERPROFILE%\AppData\Roaming\Zed\themes\` |
 
-フォルダがなければ作成してください。Zed で **`theme selector: toggle`** を実行し、**GreenTree** を検索します。新しい名前が表示されない場合は Zed を再起動してください。[公式ガイド](https://zed.dev/docs/themes)。
+フォルダがなければ作成し、テーマ選択画面を開き直します。[Zed 公式ガイド](https://zed.dev/docs/themes)。
 
-[コントラストレポート](docs/contrast-report.md) · [配色メモ](docs/palette-review.md) · [MIT ライセンス](LICENSE)
+ダークテーマは主要な文字に AAA 7:1、コメント・検索・選択表示に AA 4.5:1 を目標とします。Day Vivid の緑は独自の下限 2.5:1 で、AA を満たしません。配色の目標であり、エディタ全体の認証ではありません。
+
+[コントラストレポート](docs/contrast-report.md) · [検証と参考資料](docs/theme-testing.md) · [配色メモ](docs/palette-review.md) · [MIT ライセンス](LICENSE)
