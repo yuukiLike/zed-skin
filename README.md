@@ -28,7 +28,7 @@ For manual installation, download [green-tree.json](themes/green-tree.json) into
 
 Create the folder if needed, then reopen the theme selector. [Zed's theme guide](https://zed.dev/docs/themes).
 
-Dark variants target AAA 7:1 for primary text and AA 4.5:1 for comments and search. Selections prioritize appearance and visibility, with no text contrast target. Day Vivid's green uses a custom 2.5:1 floor, below AA. These are palette targets, not whole-editor certification.
+Dark variants target AAA 7:1 for primary text and AA 4.5:1 for comments. Search and selections share a blue hue and prioritize appearance and visibility, with no text contrast target. Day Vivid's green uses a custom 2.5:1 floor, below AA. These are palette targets, not whole-editor certification.
 
 Dependency-free [checks](docs/theme-testing.md) cover search, selections, lists, Git diffs/conflicts, symbols, brackets and ANSI black/white pairs.
 

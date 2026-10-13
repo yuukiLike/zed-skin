@@ -12,7 +12,7 @@ import unittest
 from pathlib import Path
 
 from check_contrast import (
-    COLOR_DISTANCE_GROUPS, MARKDOWN_SELECTION, ROOT, TEXT_GROUPS,
+    COLOR_DISTANCE_GROUPS, MARKDOWN_SELECTION, ROOT, SEARCH_BACKGROUNDS, TEXT_GROUPS,
     audit, color_distance, composite, contrast, contrast_rgb, interaction_checks, markdown_selection_checks,
     oklab, read_object, rgb, search_highlight_checks, selection_color,
     word_diff_backgrounds, word_diff_checks,
@@ -40,10 +40,12 @@ class MarkdownSelectionTests(unittest.TestCase):
             with self.subTest(theme=theme["name"]):
                 rows = markdown_selection_checks(theme["style"])
                 overlap = [row for row in rows if row[0] == "Markdown search selection visibility"]
-                self.assertEqual({row[2] for row in overlap}, {
-                    f"{key} / {label}" for key in ("search.match_background", "search.active_match_background")
-                    for label in ("inline code", "code block")
-                })
+                for key in SEARCH_BACKGROUNDS:
+                    for surface in ("editor.background", "editor.background / inline code",
+                                    "editor.background / link", "editor.background / code block",
+                                    "syntax.diff.plus.background_color / code block",
+                                    "syntax.diff.minus.background_color / code block"):
+                        self.assertIn(f"{key} / {surface}", {row[2] for row in overlap})
                 self.assertFalse([row for row in overlap if row[3] < row[4]])
 
     def test_faint_selection_over_a_search_match_fails(self):
@@ -71,13 +73,14 @@ class MarkdownSelectionTests(unittest.TestCase):
         theme = copy.deepcopy(self.themes[-1])
         style = theme["style"]
         style[MARKDOWN_SELECTION] = "#408CFF80"
-        background = composite(style[MARKDOWN_SELECTION], rgb(style["search.active_match_background"]))
+        match = selection_color(style["search.active_match_background"], rgb(style["editor.background"]))
+        background = composite(style[MARKDOWN_SELECTION], match)
         foreground = rgb(style["syntax"]["comment"]["color"])
         for painted in (foreground, composite(style[MARKDOWN_SELECTION], foreground)):
             self.assertLess(contrast_rgb(painted, background), 4.5)
         self.assertFalse([row for row in audit(theme) if row[3] < row[4]])
 
-    def test_selection_exception_preserves_primary_and_search_targets(self):
+    def test_interaction_exceptions_preserve_normal_text_targets(self):
         for theme in self.themes[1:]:
             with self.subTest(theme=theme["name"]):
                 rows = audit(theme)
@@ -88,8 +91,7 @@ class MarkdownSelectionTests(unittest.TestCase):
                     self.assertEqual({row[4] for row in primary}, {7})
                 for group in ("Editor / syntax", "UI text"):
                     search = [row for row in rows if row[0] == group and row[2].startswith("search.")]
-                    self.assertTrue(search)
-                    self.assertEqual({row[4] for row in search}, {4.5})
+                    self.assertFalse(search)
 
     def test_opaque_or_invisible_selections_are_rejected(self):
         for theme in self.themes:
@@ -127,7 +129,17 @@ class SearchHighlightTests(unittest.TestCase):
                             "editor.background / inline code", "editor.background / link"):
                 self.assertIn((match, surface), cases)
         for state in ("active match", "active match / search focused", "active match / editor focused"):
-            self.assertIn((state, "ordinary match"), cases)
+            for surface in ("editor.background", "editor.background / inline code", "editor.background / code block"):
+                self.assertIn((state, f"ordinary match / {surface}"), cases)
+
+    def test_search_uses_the_markdown_selection_blue_with_lighter_other_matches(self):
+        for theme in self.themes:
+            with self.subTest(theme=theme["name"]):
+                style = theme["style"]
+                ordinary, active = (style[key] for key in SEARCH_BACKGROUNDS)
+                self.assertEqual(active, style[MARKDOWN_SELECTION])
+                self.assertEqual(ordinary[:7], active[:7])
+                self.assertLess(int(ordinary[7:], 16), int(active[7:], 16))
 
     def test_previous_search_palette_is_rejected_in_every_variant(self):
         old_colors = [
@@ -187,7 +199,8 @@ class SearchHighlightTests(unittest.TestCase):
             with self.subTest(theme=theme["name"]):
                 style = theme["style"]
                 selection = style["players"][0]["selection"]
-                active = selection_color(selection, rgb(style["search.active_match_background"]))
+                match = selection_color(style["search.active_match_background"], rgb(style["editor.background"]))
+                active = selection_color(selection, match)
                 plain = selection_color(selection, rgb(style["editor.background"]))
                 self.assertGreater(color_distance(active, plain), 0.1)
 
@@ -217,23 +230,55 @@ class SearchHighlightTests(unittest.TestCase):
 
     def test_selection_can_hide_active_match_distinction(self):
         style = copy.deepcopy(self.themes[-1]["style"])
+        style["search.match_background"] = "#380867"
         style["players"][0]["selection"] = style["search.match_background"]
         rows = search_highlight_checks(style)
         self.assertTrue(any(row[1] == "active match / editor focused" and row[3] == 0 for row in rows))
         self.assertTrue(all(row[3] >= row[4] for row in rows if row[1] == "active match"))
 
-    def test_bright_search_background_cannot_sacrifice_text(self):
-        for theme in self.themes:
+    def test_search_text_below_aa_is_allowed(self):
+        for theme, capture in ((self.themes[0], "keyword"), (self.themes[1], "comment")):
             with self.subTest(theme=theme["name"]):
-                bad = copy.deepcopy(theme)
-                bad["style"]["search.match_background"] = bad["style"]["editor.foreground"]
-                rows = audit(bad)
-                self.assertTrue(any(row[0] == "Editor / syntax" and row[3] < row[4] for row in rows))
+                style = theme["style"]
+                active = selection_color(style["search.active_match_background"], rgb(style["editor.background"]))
+                self.assertLess(contrast_rgb(rgb(style["syntax"][capture]["color"]), active), 4.5)
+                rows = audit(theme)
+                self.assertFalse([row for row in rows if row[0] in TEXT_GROUPS and row[2].startswith("search.")])
+                self.assertFalse([row for row in rows if row[3] < row[4]])
 
-    def test_search_transparency_is_rejected_instead_of_miscomputed(self):
+    def test_cursor_visibility_is_still_checked_over_search_and_selection(self):
+        theme = copy.deepcopy(self.themes[0])
+        theme["style"]["players"][0]["cursor"] = "#006AC4"
+        rows = audit(theme)
+        self.assertTrue(any(row[0] == "Cursors" and row[1] == "players[0].cursor"
+                            and row[2].startswith("search.") and ".selection" in row[2]
+                            and row[3] < row[4] for row in rows))
+        self.assertFalse([row for row in rows if row[0] == "Inverse cursor text" and row[3] < row[4]])
+
+    def test_transparent_search_uses_each_actual_surface(self):
         style = copy.deepcopy(self.themes[-1]["style"])
-        for key in ("search.match_background", "search.active_match_background"):
-            for color in ("#00000000", "#38086780", None):
+        style["search.match_background"] = "#FFFFFF33"
+        style["editor.background"] = "#000000"
+        style["editor.active_line.background"] = "#808080"
+        rows = search_highlight_checks(style)
+        for surface, base, painted in (
+            ("editor.background", (0, 0, 0), (0.2, 0.2, 0.2)),
+            ("editor.active_line.background", (128 / 255,) * 3, (0.2 + 0.8 * 128 / 255,) * 3),
+        ):
+            row = next(r for r in rows if r[:3] == ("Search visibility", "search.match_background", surface))
+            self.assertAlmostEqual(row[3], color_distance(painted, base))
+
+    def test_zero_alpha_matches_fail_visibility(self):
+        for key in SEARCH_BACKGROUNDS:
+            style = copy.deepcopy(self.themes[-1]["style"])
+            style[key] = "#408CFF00"
+            rows = search_highlight_checks(style)
+            self.assertTrue(any(row[0] == "Search visibility" and row[1] == key and row[3] == 0 for row in rows))
+
+    def test_malformed_search_colors_are_rejected(self):
+        style = copy.deepcopy(self.themes[-1]["style"])
+        for key in SEARCH_BACKGROUNDS:
+            for color in ("#408CFF0", "#408CFFGG", None):
                 with self.subTest(key=key, color=color):
                     bad = copy.deepcopy(style)
                     bad[key] = color
@@ -283,11 +328,32 @@ class InteractionTests(unittest.TestCase):
         for _, color in rows:
             self.assertEqual(color, (0, 0, 0.2))
 
-    def test_word_diff_search_text_retains_aa_without_weakening_plain_code(self):
+    def test_word_diff_search_does_not_weaken_plain_code(self):
         for theme in self.themes[1:]:
             rows = [r for r in audit(theme) if r[0] == "Editor / syntax" and "version_control.word_" in r[2]]
-            self.assertEqual({r[4] for r in rows if r[2].startswith("search.")}, {4.5})
+            self.assertFalse([r for r in rows if r[2].startswith("search.")])
             self.assertEqual({r[4] for r in rows if not r[2].startswith("search.")}, {7})
+
+    def test_search_then_word_then_selection_are_composited_on_each_diff_row(self):
+        style = copy.deepcopy(self.themes[-1]["style"])
+        style["search.match_background"] = "#FF000033"
+        style["search.active_match_background"] = "#FF000066"
+        style["version_control.word_added"] = "#0000FF33"
+        style["players"][0]["selection"] = "#00FF0033"
+        style["editor.diff_hunk.added.background"] = "#000000"
+        style["editor.diff_hunk.added.hollow_background"] = "#FFFFFF"
+        _, backgrounds = word_diff_checks(style)
+        colors = dict(backgrounds)
+        for state, surface, expected in (
+            ("ordinary", "background", (0.16, 0, 0.2)),
+            ("ordinary", "hollow_background", (0.8, 0.64, 0.84)),
+            ("active", "background", (0.32, 0, 0.2)),
+            ("active / search focused / players[0].selection", "background", (0.288, 0.1, 0.18)),
+            ("active / editor focused / players[0].selection", "background", (0.256, 0.2, 0.16)),
+        ):
+            actual = colors[f"search.{state} / version_control.word_added / editor.diff_hunk.added.{surface}"]
+            for channel, reference in zip(actual, expected):
+                self.assertAlmostEqual(channel, reference)
 
     def test_conflict_sides_cannot_be_equal_or_almost_equal(self):
         for color in ("#00245E", "#00245F"):

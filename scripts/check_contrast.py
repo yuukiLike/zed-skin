@@ -24,7 +24,7 @@ TEXT_CONTRAST_TARGETS = {
 # Vivid deliberately prioritizes a bright green on warm white. Only these
 # green syntax captures use a custom floor; 2.5:1 is NOT a WCAG text target.
 # Keep other Vivid text at 4.5:1. Dark variants retain 7:1 for primary text;
-# comments and search matches use AA's 4.5:1. Selected text has no contrast target.
+# comments use AA's 4.5:1. Search and selected text have no contrast target.
 VIVID_GREEN_CAPTURES = {
     "keyword", "preproc", "punctuation.markup", "tag", "title", "diff.plus",
 }
@@ -50,10 +50,10 @@ editor.document_highlight.read_background editor.document_highlight.write_backgr
 editor.document_highlight.bracket_background
 editor.diff_hunk.added.background editor.diff_hunk.added.hollow_background
 editor.diff_hunk.deleted.background editor.diff_hunk.deleted.hollow_background
-search.match_background search.active_match_background
 version_control.conflict_marker.ours version_control.conflict_marker.theirs
 vim.yank.background
 """.split()
+SEARCH_BACKGROUNDS = ("search.match_background", "search.active_match_background")
 WORD_DIFF_BACKGROUNDS = {
     f"version_control.word_{kind}": [f"editor.diff_hunk.{kind}.{part}" for part in ("background", "hollow_background")]
     for kind in ("added", "deleted")
@@ -195,6 +195,20 @@ def selection_color(color, background, opacity=1):
     return blend(rgb(color), background, opacity)
 
 
+def markdown_surfaces(style):
+    surfaces = {}
+    for name in MARKDOWN_BACKGROUNDS:
+        background = rgb(style[name])
+        surfaces[name] = background
+        # Zed paints inline chips and link backgrounds below search/selection.
+        for label, opacity in (("inline code", 0.08), ("link", 0.025)):
+            surfaces[f"{name} / {label}"] = blend(rgb(style["editor.foreground"]), background, opacity)
+    for capture, highlight in style["syntax"].items():
+        name = f"syntax.{capture}.background_color" if "background_color" in highlight else "editor.background"
+        surfaces[f"{name} / code block"] = rgb(highlight.get("background_color", style["editor.background"]))
+    return list(surfaces.items())
+
+
 def search_highlight_checks(style):
     """Check ordinary/active matches and the editor's selection over a match.
 
@@ -202,41 +216,31 @@ def search_highlight_checks(style):
     editor/src/element.rs paints the player selection over the match, at 50%
     of its theme alpha while search has focus, and its full alpha with editor focus.
     """
-    matches = [(name, rgb(style[name])) for name in
-               ("search.match_background", "search.active_match_background")]
-    surfaces = [(name, rgb(style[name])) for name in dict.fromkeys(
-        MARKDOWN_BACKGROUNDS + ["editor.active_line.background", "editor.highlighted_line.background"]
-    )]
-    for name in MARKDOWN_BACKGROUNDS:
-        for label, opacity in (("inline code", 0.08), ("link", 0.025)):
-            surfaces.append((f"{name} / {label}",
-                             blend(rgb(style["editor.foreground"]), rgb(style[name]), opacity)))
-    results = [
-        ("Search visibility", name, surface_name, color_distance(color, surface), SEARCH_VISIBILITY_TARGET)
-        for name, color in matches for surface_name, surface in surfaces
-    ]
-    ordinary, active = (color for _, color in matches)
+    surfaces = markdown_surfaces(style) + [(name, rgb(style[name])) for name in
+                                         ("editor.active_line.background", "editor.highlighted_line.background")]
     selection = style["players"][0]["selection"]
     editor_background = rgb(style["editor.background"])
-    results.append(("Editor selection visibility", "players[0].selection", "editor.background",
-                    color_distance(selection_color(selection, editor_background), editor_background),
-                    SEARCH_VISIBILITY_TARGET))
-    for name, color in (
-        ("active match", active),
-        ("active match / search focused", selection_color(selection, active, 0.5)),
-        ("active match / editor focused", selection_color(selection, active)),
-    ):
-        results.append(("Search state distinction", name, "ordinary match",
-                        color_distance(color, ordinary), SEARCH_DISTINCTION_TARGET))
-        for surface_name in ("editor.background", "editor.active_line.background"):
+    results = [("Editor selection visibility", "players[0].selection", "editor.background",
+                color_distance(selection_color(selection, editor_background), editor_background),
+                SEARCH_VISIBILITY_TARGET)]
+    for surface_name, surface in surfaces:
+        ordinary, active = [selection_color(style[key], surface) for key in SEARCH_BACKGROUNDS]
+        for key, color in zip(SEARCH_BACKGROUNDS, (ordinary, active)):
+            results.append(("Search visibility", key, surface_name,
+                            color_distance(color, surface), SEARCH_VISIBILITY_TARGET))
+        for name, color in (
+            ("active match", active),
+            ("active match / search focused", selection_color(selection, active, 0.5)),
+            ("active match / editor focused", selection_color(selection, active)),
+        ):
+            results.append(("Search state distinction", name, f"ordinary match / {surface_name}",
+                            color_distance(color, ordinary), SEARCH_DISTINCTION_TARGET))
             results.append(("Search visibility", name, surface_name,
-                            color_distance(color, rgb(style[surface_name])), SEARCH_VISIBILITY_TARGET))
-        # A distinct hue can still disappear on black. Audit the final painted
-        # active result against its surface, not just against other matches.
-        if luminance(style["editor.background"]) < 0.1:
-            for surface_name in ("editor.background", "editor.active_line.background"):
+                            color_distance(color, surface), SEARCH_VISIBILITY_TARGET))
+            # A distinct hue can still disappear on a dark editor surface.
+            if surface_name in ("editor.background", "editor.active_line.background") and luminance_rgb(surface) < 0.1:
                 results.append(("Active search visibility", name, surface_name,
-                                contrast_rgb(color, rgb(style[surface_name])), 1.25))
+                                contrast_rgb(color, surface), 1.25))
     return results
 
 
@@ -248,36 +252,19 @@ def markdown_selection_checks(style):
     if not 0 < int(overlay[7:9], 16) < 255:
         raise ValueError(f"{MARKDOWN_SELECTION} must be visible and translucent")
     results = []
-    checked_backgrounds = set()
-
     def check(background_name, background, search_match=False):
         selected_background = composite(overlay, background)
-        if background_name not in checked_backgrounds:
-            checked_backgrounds.add(background_name)
-            if search_match:
-                results.append(("Markdown search selection visibility", MARKDOWN_SELECTION, background_name,
-                                color_distance(background, selected_background), SEARCH_VISIBILITY_TARGET))
-            else:
-                results.append(("Markdown selection visibility", MARKDOWN_SELECTION, background_name,
-                                contrast_rgb(background, selected_background), MARKDOWN_SELECTION_VISIBILITY_TARGET))
+        if search_match:
+            results.append(("Markdown search selection visibility", MARKDOWN_SELECTION, background_name,
+                            color_distance(background, selected_background), SEARCH_VISIBILITY_TARGET))
+        else:
+            results.append(("Markdown selection visibility", MARKDOWN_SELECTION, background_name,
+                            contrast_rgb(background, selected_background), MARKDOWN_SELECTION_VISIBILITY_TARGET))
 
-    for background_name in MARKDOWN_BACKGROUNDS:
-        background = rgb(style[background_name])
-        check(background_name, background)
-        # Zed gives inline code an editor.foreground overlay at 8% opacity,
-        # and links at 2.5%. Both are painted below the selection overlay.
-        for opacity, label in ((0.08, "inline code"), (0.025, "link")):
-            check(f"{background_name} / {label}",
-                  blend(rgb(style["editor.foreground"]), background, opacity))
-    for capture, highlight in style["syntax"].items():
-        background = highlight.get("background_color", style["editor.background"])
-        background_name = f"syntax.{capture}.background_color" if "background_color" in highlight else "editor.background"
-        check(f"{background_name} / code block", rgb(background))
-    # Opaque search paint covers inline chips and fenced-code backgrounds before
-    # selection is painted, so they share the same selected background.
-    for background_name in ("search.match_background", "search.active_match_background"):
-        for label in ("inline code", "code block"):
-            check(f"{background_name} / {label}", rgb(style[background_name]), search_match=True)
+    for name, background in markdown_surfaces(style):
+        check(name, background)
+        for key in SEARCH_BACKGROUNDS:
+            check(f"{key} / {name}", selection_color(style[key], background), search_match=True)
     return results
 
 
@@ -309,18 +296,18 @@ def word_diff_checks(style):
     results = []
     search_backgrounds = []
     for word, surfaces in WORD_DIFF_BACKGROUNDS.items():
-        ordinary, active = [selection_color(style[word], rgb(style[key])) for key in
-                            ("search.match_background", "search.active_match_background")]
-        states = [("ordinary", ordinary), ("active", active)] + [
-            (f"active / {focus} / players[0].selection", selection_color(style["players"][0]["selection"], active, opacity))
-            for focus, opacity in (("search focused", 0.5), ("editor focused", 1))
-        ]
-        search_backgrounds.extend((f"search.{state} / {word}", color) for state, color in states)
-        for state, color in states[1:]:
-            results.append(("Diff search distinction", f"{word} / {state}", f"{word} / ordinary",
-                            color_distance(color, ordinary), SEARCH_DISTINCTION_TARGET))
         for surface in surfaces:
             base = rgb(style[surface])
+            ordinary, active = [selection_color(style[word], selection_color(style[key], base))
+                                for key in SEARCH_BACKGROUNDS]
+            states = [("ordinary", ordinary), ("active", active)] + [
+                (f"active / {focus} / players[0].selection", selection_color(style["players"][0]["selection"], active, opacity))
+                for focus, opacity in (("search focused", 0.5), ("editor focused", 1))
+            ]
+            search_backgrounds.extend((f"search.{state} / {word} / {surface}", color) for state, color in states)
+            for state, color in states[1:]:
+                results.append(("Diff search distinction", f"{word} / {state}", f"{surface} / ordinary",
+                                color_distance(color, ordinary), SEARCH_DISTINCTION_TARGET))
             plain = selection_color(style[word], base)
             results.append(("Diff word visibility", word, surface, color_distance(plain, base), STATE_VISIBILITY_TARGET))
             for state, color in states:
@@ -343,7 +330,9 @@ def audit(theme):
         + STATUSES + status_backgrounds + status_borders + mode_colors
         + TERMINAL_TEXT + TERMINAL_BACKGROUNDS + ["scrollbar.track.background"]
     )
-    required = expected | TRANSPARENT | set(WORD_DIFF_BACKGROUNDS) | {"background.appearance", "players", "syntax", "accents", MARKDOWN_SELECTION}
+    required = expected | TRANSPARENT | set(WORD_DIFF_BACKGROUNDS) | set(SEARCH_BACKGROUNDS) | {
+        "background.appearance", "players", "syntax", "accents", MARKDOWN_SELECTION,
+    }
     if required != set(style):
         raise ValueError(f"Missing fields: {sorted(required - set(style))}; unclassified fields: {sorted(set(style) - required)}")
     for key in expected:
@@ -368,10 +357,9 @@ def audit(theme):
     def check(group, foregrounds, backgrounds, threshold):
         for foreground_name, foreground in foregrounds:
             for background_name, background in backgrounds:
-                if group in TEXT_GROUPS and ".selection" in background_name:
+                if group in TEXT_GROUPS and (".selection" in background_name or background_name.startswith("search.")):
                     continue
-                interaction = background_name.startswith("search.")
-                target = min(threshold, 4.5) if interaction else threshold
+                target = threshold
                 if foreground_name in vivid_foregrounds:
                     target = 2.5
                 ratio = contrast_rgb(foreground, background)
@@ -383,19 +371,20 @@ def audit(theme):
     ui_backgrounds = fields(UI_BACKGROUNDS + status_backgrounds)
     word_backgrounds = word_diff_backgrounds(style)
     word_results, word_search_backgrounds = word_diff_checks(style)
-    editor_backgrounds = fields(EDITOR_BACKGROUNDS) + word_backgrounds + word_search_backgrounds
+    search_backgrounds = [(f"{key} / {name}", selection_color(style[key], color))
+                          for key in SEARCH_BACKGROUNDS for name, color in fields(EDITOR_BACKGROUNDS)]
+    editor_backgrounds = fields(EDITOR_BACKGROUNDS) + word_backgrounds + search_backgrounds + word_search_backgrounds
     for index, player in enumerate(style["players"]):
         if set(player) != {"cursor", "background", "selection"}:
             raise ValueError(f"Incomplete player colors at index {index}")
         luminance(player["cursor"])
         ui_backgrounds.append((f"players[{index}].background", rgb(player["background"])))
         if len(player["selection"]) == 9:
-            for name, background in fields(EDITOR_BACKGROUNDS) + word_backgrounds:
+            for name, background in fields(EDITOR_BACKGROUNDS) + word_backgrounds + search_backgrounds:
                 label = f"{name} / players[{index}].selection"
                 editor_backgrounds.append((label, selection_color(player["selection"], background)))
-            active = rgb(style["search.active_match_background"])
-            editor_backgrounds.append((f"search.active_match_background / players[{index}].selection / search focused",
-                                       selection_color(player["selection"], active, 0.5)))
+                if name.startswith("search.active_match_background"):
+                    editor_backgrounds.append((f"{label} / search focused", selection_color(player["selection"], background, 0.5)))
         else:
             editor_backgrounds.append((f"players[{index}].selection", rgb(player["selection"])))
 
@@ -478,7 +467,7 @@ def main():
         if not family["name"] or not family["author"] or not family["themes"]:
             raise ValueError("Theme family metadata and themes must not be empty")
         sections = ["# GreenTree · Contrast audit", "",
-                    "Dark primary text: AAA 7:1. Comments and search: AA 4.5:1. Day Vivid uses 4.5:1, except green syntax at a custom 2.5:1 (below AA). Selected text has no contrast target.",
+                    "Dark primary text: AAA 7:1. Comments: AA 4.5:1. Day Vivid uses 4.5:1, except green syntax at a custom 2.5:1 (below AA). Search and selected text have no contrast target.",
                     "UI indicators use 3:1 on their surfaces. Selection checks measure background visibility and search overlap; selected text appearance is reviewed in Zed.",
                     "Visibility guards are custom: 0.06 Oklab distance (ΔEOK) for search, selection, symbols, changed words and conflict sides; 1.25:1 luminance for Markdown selections and active search on dark editor surfaces. They are not WCAG criteria or proof of visual acceptance.",
                     "ANSI black/white retain their terminal roles: paired normal, bright and dim colors target 4.5:1; black on a dark default surface and white on a light one are exempt. Other program-chosen combinations need an in-app check.",
