@@ -19,6 +19,10 @@ identify occurrences without distinguishing access type.
 Terminal ANSI black and white retain their dark/light roles, including when used
 as backgrounds. They are separate from the terminal's default text colors.
 
+Debugger execution rows use mint/green fills. Selected stack frames use pale mint
+in Day Vivid and blue-cyan in the dark variants; Zed 1.24.2 shares that fill with
+hovered frames and other controls using `element.hover`.
+
 Dark primary text targets AAA 7:1; comments use AA 4.5:1.
 Search and selections prioritize appearance and visibility, with no text contrast target.
 Day Vivid's green syntax uses a custom 2.5:1 floor, below AA.

@@ -291,6 +291,23 @@ class InteractionTests(unittest.TestCase):
     def setUpClass(cls):
         cls.themes = json.loads((ROOT / "themes/green-tree.json").read_text())["themes"]
 
+    def test_debugger_row_cannot_disappear_into_normal_or_active_lines(self):
+        for theme in self.themes:
+            for background in ("editor.background", "editor.active_line.background"):
+                with self.subTest(theme=theme["name"], background=background):
+                    style = copy.deepcopy(theme["style"])
+                    style["editor.debugger_active_line.background"] = style[background]
+                    self.assertTrue(any(r[0] == "Debugger row visibility" and r[2] == background
+                                        and r[3] < r[4] for r in interaction_checks(style)))
+
+    def test_selected_debugger_frame_cannot_disappear_into_the_panel(self):
+        for theme in self.themes:
+            with self.subTest(theme=theme["name"]):
+                style = copy.deepcopy(theme["style"])
+                style["element.hover"] = style["panel.background"]
+                self.assertTrue(any(r[0] == "Debugger frame visibility" and r[3] < r[4]
+                                    for r in interaction_checks(style)))
+
     def test_changed_words_cannot_blend_into_either_diff_row_style(self):
         for theme in self.themes:
             for kind in ("added", "deleted"):
@@ -438,7 +455,8 @@ class ThemeValidationTests(unittest.TestCase):
                 self.assertFalse([row for row in audit(theme) if row[3] < row[4]])
 
     def test_missing_interaction_keys_are_rejected(self):
-        for key in ("search.match_background", "search.active_match_background", MARKDOWN_SELECTION):
+        for key in ("search.match_background", "search.active_match_background", MARKDOWN_SELECTION,
+                    "editor.debugger_active_line.background", "element.hover"):
             with self.subTest(key=key):
                 theme = copy.deepcopy(self.family["themes"][-1])
                 del theme["style"][key]
@@ -480,6 +498,23 @@ class ThemeValidationTests(unittest.TestCase):
         self.assertEqual(result.returncode, 1)
         self.assertIn("Search visibility", result.stderr)
         self.assertIn("ΔEOK", result.stderr)
+
+    def test_cli_returns_failure_for_invisible_debugger_states(self):
+        for key, background, group in (
+            ("editor.debugger_active_line.background", "editor.background", "Debugger row visibility"),
+            ("element.hover", "panel.background", "Debugger frame visibility"),
+        ):
+            with self.subTest(key=key):
+                family = copy.deepcopy(self.family)
+                style = family["themes"][-1]["style"]
+                style[key] = style[background]
+                with tempfile.TemporaryDirectory() as directory:
+                    theme_path = Path(directory) / "bad-theme.json"
+                    theme_path.write_text(json.dumps(family))
+                    result = subprocess.run([sys.executable, str(ROOT / "scripts/check_contrast.py"), str(theme_path)],
+                                            capture_output=True, text=True)
+                self.assertEqual(result.returncode, 1)
+                self.assertIn(group, result.stderr)
 
     def test_cli_rejects_duplicate_theme_names(self):
         family = copy.deepcopy(self.family)

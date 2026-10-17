@@ -20,6 +20,8 @@ if the generated report differs from the committed copy.
   rows and overlapping search; conflict sides versus each other and the editor.
 - Terminal: default text and ANSI colors on the default surface; normal, bright
   and dim black/white pairs. Black must stay darker than white.
+- Debugger: execution row versus normal/active lines; selected stack frame versus
+  the actual panel background. Missing or invisible debugger colors fail the CLI.
 - Regressions: the old faint/brown highlights, selection hiding a match, invisible
   overlays, incorrect alpha/paint order, missing fields and duplicate JSON keys.
 - Independent color-math references, unrounded thresholds and failing CLI status.
@@ -48,7 +50,7 @@ glyphs. Their appearance needs a visual check, rather than a text contrast gate.
 Lists also use `ghost_element.selected`, not just `element.selected`. Diff word
 fills are painted after hunk fills and search: equal row/word colors hide changes,
 while opaque word fills erase search. Translucent fills preserve both, including
-when the player selection is painted last. ANSI slots can be foregrounds or
+when the editor selection is painted last. ANSI slots can be foregrounds or
 backgrounds; testing every slot only as text on the default surface previously
 inverted their intended roles.
 
@@ -62,6 +64,73 @@ inverted their intended roles.
 Use [human-todo.md](../human-todo.md) for the release checklist, pass criteria and
 result recording. It includes [the Markdown sample](../examples/theme-checks.md),
 common editor/terminal states and the remaining visual coverage gaps.
+
+## Debugger palette
+
+The paused execution row uses green in all four variants: `#C7FFE1` for Day
+Vivid, `#06342D` for Day AAA, and `#032E2B` for Night AAA and Midnight AAA.
+An earlier gray-green candidate failed the existing 0.06 Oklab visibility guard
+in Day Vivid and Day AAA. These fills restore separation from normal/active
+lines while preserving the existing primary-text contrast targets.
+In Zed 1.24.2, [the editor reads
+`editor.debugger_active_line.background`](https://github.com/zed-industries/zed/blob/v1.24.2/crates/editor/src/editor.rs#L6770).
+[Frames uses `element.hover` for both the selected frame and hovered frames](https://github.com/zed-industries/zed/blob/v1.24.2/crates/debugger_ui/src/session/running/stack_frame_list.rs#L603),
+so the dark variants use blue-cyan for that shared fill (`#003044` for Day AAA,
+`#002D38` for Night AAA and Midnight AAA). Day Vivid uses pale mint (`#C0FFD0`)
+for Frames. Other controls using `element.hover` inherit these colors. A theme
+cannot give selected and hovered stack frames different fills in this Zed version.
+
+## Local check · 2026-10-17
+
+The final JSON was loaded through the installed development-extension symlink
+using `zed: rebuild dev extension` in Zed 1.24.2 on macOS. All four variants were
+checked in a separate fixture workspace. Each of 35 scenes has one original
+3840 × 1938 JPEG per variant: 140 reviewed captures, excluding setup attempts.
+
+| Area | Scenes | Reviewed in all four variants |
+| --- | --- | --- |
+| Markdown preview | 01–10 | Prose/CJK, links, inline code, tables, quotes, TypeScript/diff fences; whole/partial/multiline selections; search overlap, Unicode, zero results and clearing |
+| Source and code assistance | 11–18 | Real TypeScript errors, diagnostic/type hover and project diagnostics; reference changes, refreshed bracket pairs; source search/reference overlap; completion selection and keyboard movement |
+| Lists | 19–20 | File finder names/paths and selected command, descriptions and shortcuts |
+| Git | 21–24 | Real word/number changes, partial search inside changed words, selection overlap and a temporary merge conflict |
+| Terminal | 25–27 | Normal/bright/dim ANSI slots, black/white backgrounds, reverse video, bold/underline, real `git diff` output and multiline selection |
+| Debugger | 28–33 | Live Node pause, expanded variables, caller-frame selection, F10, restart, enabled/disabled breakpoints and execution-highlight cleanup after stop |
+| Project search | 34 | Cross-file results with current/other matches after navigation to a different file |
+| Markdown source | 35 | Partial `tes` matches within plain/inline/bold/italic/struck text and table source |
+
+Debugger transitions were performed in one local dependency-free Node session;
+each resulting state was inspected in all four variants. Selecting the caller
+moved the green band and selected frame together and updated its scope. F10
+moved the band from line 5 to 6; restart returned it to line 5. Stop removed the
+execution band and inline values; Zed retained dimmed last-known variables.
+ANSI black on a dark default background remains an intentional audit exemption.
+Zed adjusted Day Vivid's black-on-green foreground during the terminal check.
+
+Raw evidence is Git-ignored under `.local/final-qa-2026-10-17/`: `index.md` links
+the 140 scene captures; `observations.json` records the visual checks;
+`review.json` identifies the tested theme SHA-256, environment and limitations.
+The QA session was stopped and its window closed. The original `algorithm-box`
+window/session and theme configuration were restored: dark mode, Night AAA,
+with Day Vivid retained as the light theme. No fixture screenshots are published
+as release previews, and this check does not fill in the user's acceptance boxes.
+
+The 59 Python tests, four-palette audit and whitespace check pass without
+relaxing primary-text targets. CI commands were run locally; this is not a
+claim that a new GitHub Actions run has completed.
+
+Two runtime caveats remain. Editing the linked JSON or rebuilding the extension
+index did not reliably refresh the active palette; `zed: rebuild dev extension`
+did. Switching from dark to light can leave the current bracket pair with the
+previous dark fill; moving to another pair and back refreshes it (scene 14).
+Neither behavior is fixed or exercised by the Python audit. The Frames
+hover/selection limitation described above also remains.
+
+Edit predictions were disabled and were not enabled for this check. Dedicated
+parameter-help UI and warning diagnostics were not deliberately exercised;
+type hovers and real error diagnostics were. Other debugger adapters, Vim/Helix,
+collaborative selections, older Zed binaries and other displays/platforms were
+not tested. Final aesthetic acceptance, including the latest green, remains
+with the user. Repeat the relevant visual checks after editor or theme changes.
 
 ## Local check · 2026-10-13
 

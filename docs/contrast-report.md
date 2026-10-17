@@ -10,7 +10,7 @@ Reproduce: `python3 scripts/check_contrast.py --report docs/contrast-report.md`.
 
 ## GreenTree Day Vivid
 
-Checked pairs: 11136.
+Checked pairs: 11139.
 
 | Scope | Pairs | Minimum | Target | Result |
 | --- | ---: | ---: | ---: | --- |
@@ -29,8 +29,10 @@ Checked pairs: 11136.
 | Editor selection visibility | 1 | 0.0945 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Search visibility | 100 | 0.0681 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Search state distinction | 60 | 0.0676 ΔEOK | 0.06 ΔEOK | PASS (custom) |
-| List selection visibility | 12 | 0.0653 ΔEOK | 0.06 ΔEOK | PASS (custom) |
+| List selection visibility | 12 | 0.0632 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Editor highlight visibility | 6 | 0.0675 ΔEOK | 0.06 ΔEOK | PASS (custom) |
+| Debugger row visibility | 2 | 0.0668 ΔEOK | 0.06 ΔEOK | PASS (custom) |
+| Debugger frame visibility | 1 | 0.0864 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Conflict distinction | 3 | 0.0652 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Diff search distinction | 12 | 0.0606 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Diff word visibility | 4 | 0.0635 ΔEOK | 0.06 ΔEOK | PASS (custom) |
@@ -42,16 +44,16 @@ Lowest text contrast pair:
 
 ## GreenTree Day AAA
 
-Checked pairs: 11142.
+Checked pairs: 11145.
 
 | Scope | Pairs | Minimum | Target | Result |
 | --- | ---: | ---: | ---: | --- |
-| UI text | 2346 | 7.0984:1 | 7:1 | PASS |
-| Editor / syntax | 3657 | 7.0984:1 | 7:1 | PASS |
-| Comments | 138 | 6.9128:1 | 4.5:1 | PASS |
+| UI text | 2346 | 7.0734:1 | 7:1 | PASS |
+| Editor / syntax | 3657 | 7.0734:1 | 7:1 | PASS |
+| Comments | 138 | 6.8885:1 | 4.5:1 | PASS |
 | Terminal text | 6 | 9.4944:1 | 7:1 | PASS |
 | Terminal ANSI | 45 | 5.4304:1 | 4.5:1 / 7:1 | PASS |
-| UI indicators | 3105 | 4.2923:1 | 3:1 | PASS |
+| UI indicators | 3105 | 4.2772:1 | 3:1 | PASS |
 | Scrollbar | 3 | 4.9861:1 | 3:1 | PASS |
 | Cursors | 1552 | 3.1523:1 | 3:1 | PASS |
 | Inverse cursor text | 8 | 8.2458:1 | 7:1 | PASS |
@@ -62,8 +64,10 @@ Checked pairs: 11142.
 | Search visibility | 100 | 0.0718 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Search state distinction | 60 | 0.0702 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Active search visibility | 6 | 1.8520:1 | 1.25:1 | PASS (custom) |
-| List selection visibility | 12 | 0.0783 ΔEOK | 0.06 ΔEOK | PASS (custom) |
+| List selection visibility | 12 | 0.0700 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Editor highlight visibility | 6 | 0.0815 ΔEOK | 0.06 ΔEOK | PASS (custom) |
+| Debugger row visibility | 2 | 0.0697 ΔEOK | 0.06 ΔEOK | PASS (custom) |
+| Debugger frame visibility | 1 | 0.0672 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Conflict distinction | 3 | 0.0823 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Diff search distinction | 12 | 0.0675 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Diff word visibility | 4 | 0.0778 ΔEOK | 0.06 ΔEOK | PASS (custom) |
@@ -75,16 +79,16 @@ Lowest text contrast pair:
 
 ## GreenTree Night AAA
 
-Checked pairs: 11142.
+Checked pairs: 11145.
 
 | Scope | Pairs | Minimum | Target | Result |
 | --- | ---: | ---: | ---: | --- |
-| UI text | 2346 | 7.2348:1 | 7:1 | PASS |
-| Editor / syntax | 3657 | 7.1235:1 | 7:1 | PASS |
-| Comments | 138 | 6.8481:1 | 4.5:1 | PASS |
+| UI text | 2346 | 7.1414:1 | 7:1 | PASS |
+| Editor / syntax | 3657 | 7.0316:1 | 7:1 | PASS |
+| Comments | 138 | 6.7598:1 | 4.5:1 | PASS |
 | Terminal text | 6 | 10.5586:1 | 7:1 | PASS |
 | Terminal ANSI | 45 | 4.5234:1 | 4.5:1 / 7:1 | PASS |
-| UI indicators | 3105 | 3.3775:1 | 3:1 | PASS |
+| UI indicators | 3105 | 3.3340:1 | 3:1 | PASS |
 | Scrollbar | 3 | 4.6351:1 | 3:1 | PASS |
 | Cursors | 1552 | 3.0738:1 | 3:1 | PASS |
 | Inverse cursor text | 8 | 9.9285:1 | 7:1 | PASS |
@@ -95,8 +99,10 @@ Checked pairs: 11142.
 | Search visibility | 100 | 0.0860 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Search state distinction | 60 | 0.0832 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Active search visibility | 6 | 1.8253:1 | 1.25:1 | PASS (custom) |
-| List selection visibility | 12 | 0.0999 ΔEOK | 0.06 ΔEOK | PASS (custom) |
+| List selection visibility | 12 | 0.0804 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Editor highlight visibility | 6 | 0.1368 ΔEOK | 0.06 ΔEOK | PASS (custom) |
+| Debugger row visibility | 2 | 0.0965 ΔEOK | 0.06 ΔEOK | PASS (custom) |
+| Debugger frame visibility | 1 | 0.1331 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Conflict distinction | 3 | 0.1255 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Diff search distinction | 12 | 0.0751 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Diff word visibility | 4 | 0.0896 ΔEOK | 0.06 ΔEOK | PASS (custom) |
@@ -108,16 +114,16 @@ Lowest text contrast pair:
 
 ## GreenTree Midnight AAA
 
-Checked pairs: 11142.
+Checked pairs: 11145.
 
 | Scope | Pairs | Minimum | Target | Result |
 | --- | ---: | ---: | ---: | --- |
-| UI text | 2346 | 7.2348:1 | 7:1 | PASS |
-| Editor / syntax | 3657 | 7.1235:1 | 7:1 | PASS |
-| Comments | 138 | 6.8481:1 | 4.5:1 | PASS |
+| UI text | 2346 | 7.1414:1 | 7:1 | PASS |
+| Editor / syntax | 3657 | 7.0316:1 | 7:1 | PASS |
+| Comments | 138 | 6.7598:1 | 4.5:1 | PASS |
 | Terminal text | 6 | 10.8791:1 | 7:1 | PASS |
 | Terminal ANSI | 45 | 5.4060:1 | 4.5:1 / 7:1 | PASS |
-| UI indicators | 3105 | 3.3775:1 | 3:1 | PASS |
+| UI indicators | 3105 | 3.3340:1 | 3:1 | PASS |
 | Scrollbar | 3 | 4.7758:1 | 3:1 | PASS |
 | Cursors | 1552 | 3.0738:1 | 3:1 | PASS |
 | Inverse cursor text | 8 | 10.2298:1 | 7:1 | PASS |
@@ -128,8 +134,10 @@ Checked pairs: 11142.
 | Search visibility | 100 | 0.0946 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Search state distinction | 60 | 0.0902 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Active search visibility | 6 | 1.8004:1 | 1.25:1 | PASS (custom) |
-| List selection visibility | 12 | 0.1197 ΔEOK | 0.06 ΔEOK | PASS (custom) |
+| List selection visibility | 12 | 0.0804 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Editor highlight visibility | 6 | 0.1774 ΔEOK | 0.06 ΔEOK | PASS (custom) |
+| Debugger row visibility | 2 | 0.1453 ΔEOK | 0.06 ΔEOK | PASS (custom) |
+| Debugger frame visibility | 1 | 0.2791 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Conflict distinction | 3 | 0.1255 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Diff search distinction | 12 | 0.0823 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Diff word visibility | 4 | 0.0946 ΔEOK | 0.06 ΔEOK | PASS (custom) |

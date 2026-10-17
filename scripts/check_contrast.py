@@ -119,6 +119,7 @@ COLOR_DISTANCE_GROUPS = {
     "Markdown search selection visibility", "List selection visibility",
     "Editor highlight visibility", "Diff word visibility", "Conflict distinction",
     "Diff search visibility", "Diff search distinction",
+    "Debugger row visibility", "Debugger frame visibility",
 }
 
 
@@ -278,6 +279,10 @@ def interaction_checks(style):
     for kind in ("read", "write", "bracket"):
         for background in ("editor.background", "editor.active_line.background"):
             pairs.append(("Editor highlight visibility", f"editor.document_highlight.{kind}_background", background))
+    for background in ("editor.background", "editor.active_line.background"):
+        pairs.append(("Debugger row visibility", "editor.debugger_active_line.background", background))
+    # Zed 1.24.2 paints both selected and hovered stack frames with element.hover.
+    pairs.append(("Debugger frame visibility", "element.hover", "panel.background"))
     for side in ("ours", "theirs"):
         pairs.append(("Conflict distinction", f"version_control.conflict_marker.{side}", "editor.background"))
     pairs.append(("Conflict distinction", "version_control.conflict_marker.ours", "version_control.conflict_marker.theirs"))
