@@ -28,6 +28,8 @@ Search and selections prioritize appearance and visibility, with no text contras
 Day Vivid's green syntax uses a custom 2.5:1 floor, below AA.
 See the generated [contrast report](contrast-report.md) and [checks](theme-testing.md).
 
-[Screenshots](screenshots/) show version 0.11.0 (`f0c745e`) in Zed 1.21.0 on macOS,
-using [tree.ts](../examples/tree.ts). They predate the interaction changes and
-are original 1922 × 1944 captures. File icons belong to the user's Zed setup.
+[Screenshots](screenshots/README.md) show version 0.11.2 in Zed 1.24.2 on macOS:
+24 original English captures covering code, Markdown, search/selection, a live
+debugger, Git diffs and terminal colors in all four variants. The READMEs use
+small clickable previews and collapsible galleries. File icons belong to the
+user's Zed setup.

@@ -111,8 +111,8 @@ the 140 scene captures; `observations.json` records the visual checks;
 `review.json` identifies the tested theme SHA-256, environment and limitations.
 The QA session was stopped and its window closed. The original `algorithm-box`
 window/session and theme configuration were restored: dark mode, Night AAA,
-with Day Vivid retained as the light theme. No fixture screenshots are published
-as release previews, and this check does not fill in the user's acceptance boxes.
+with Day Vivid retained as the light theme. Those 140 QA captures are not used as
+release previews, and this check does not fill in the user's acceptance boxes.
 
 The 59 Python tests, four-palette audit and whitespace check pass without
 relaxing primary-text targets. CI commands were run locally; this is not a
@@ -131,6 +131,22 @@ type hovers and real error diagnostics were. Other debugger adapters, Vim/Helix,
 collaborative selections, older Zed binaries and other displays/platforms were
 not tested. Final aesthetic acceptance, including the latest green, remains
 with the user. Repeat the relevant visual checks after editor or theme changes.
+
+## README showcase · 2026-10-17
+
+A separate English demonstration workspace supplied [24 public screenshots](screenshots/README.md):
+code, Markdown preview, source search with selection, paused Node.js debugging,
+real Git diffs and terminal/ANSI output, each inspected in all four variants.
+The READMEs share the same assets, with 360-pixel clickable previews, a visible
+debugger comparison and four collapsible galleries. The original overview URLs
+now point to the 0.11.2 captures.
+
+The published JPEGs are byte-for-byte copies of the locally retained originals.
+Raw captures, the demonstration workspace and a capture manifest remain ignored
+under `.local/readme-showcase-2026-10-17/`. The demonstration debug session was
+stopped, its window closed, and the original Night AAA / Day Vivid theme
+preferences restored. These presentation scenes supplement the 35-scene QA
+matrix above; they do not expand its platform or adapter coverage.
 
 ## Local check · 2026-10-13
 
