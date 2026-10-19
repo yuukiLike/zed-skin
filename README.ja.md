@@ -4,34 +4,35 @@
 
 [English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
-<table>
-<tr>
-<td align="center" width="50%">
-<strong>Day Vivid</strong><br>
-<a href="docs/screenshots/day-vivid.jpg"><img src="docs/screenshots/day-vivid.jpg" alt="GreenTree Day Vivid: TypeScript editor" width="360"></a><br>
-<sub>暖かな白、鮮やかな緑、紫とピンク</sub>
-</td>
-<td align="center" width="50%">
-<strong>Day AAA</strong><br>
-<a href="docs/screenshots/day-aaa.jpg"><img src="docs/screenshots/day-aaa.jpg" alt="GreenTree Day AAA: TypeScript editor" width="360"></a><br>
-<sub>深いインディゴと明るい構文色</sub>
-</td>
-</tr>
-<tr>
-<td align="center" width="50%">
-<strong>Night AAA</strong><br>
-<a href="docs/screenshots/night.jpg"><img src="docs/screenshots/night.jpg" alt="GreenTree Night AAA: TypeScript editor" width="360"></a><br>
-<sub>黒に近い背景、柔らかな白、標準の太さの緑</sub>
-</td>
-<td align="center" width="50%">
-<strong>Midnight AAA</strong><br>
-<a href="docs/screenshots/midnight.jpg"><img src="docs/screenshots/midnight.jpg" alt="GreenTree Midnight AAA: TypeScript editor" width="360"></a><br>
-<sub>純黒、明るい白、太字の緑のキーワード</sub>
-</td>
-</tr>
-</table>
+## テーマのプレビュー
+
+[Midnight AAA](#midnight-aaa) · [Night AAA](#night-aaa) · [Day AAA](#day-aaa) · [Day Vivid](#day-vivid)
 
 すべてのテーマで同じ英語のサンプルを使用しています。画像をクリックすると原寸で表示できます。
+
+### Midnight AAA
+
+純黒、明るい白、太字の緑のキーワード
+
+[![GreenTree Midnight AAA: TypeScript editor](docs/screenshots/midnight.jpg)](docs/screenshots/midnight.jpg)
+
+### Night AAA
+
+黒に近い背景、柔らかな白、標準の太さの緑
+
+[![GreenTree Night AAA: TypeScript editor](docs/screenshots/night.jpg)](docs/screenshots/night.jpg)
+
+### Day AAA
+
+深いインディゴと明るい構文色
+
+[![GreenTree Day AAA: TypeScript editor](docs/screenshots/day-aaa.jpg)](docs/screenshots/day-aaa.jpg)
+
+### Day Vivid
+
+暖かな白、鮮やかな緑、紫とピンク
+
+[![GreenTree Day Vivid: TypeScript editor](docs/screenshots/day-vivid.jpg)](docs/screenshots/day-vivid.jpg)
 
 ## インストール
 
@@ -48,59 +49,32 @@ Zed の **Extensions** で **[GreenTree](https://zed.dev/extensions/green-tree-t
 
 ## 使用例
 
-### デバッガー
+画面ごとに展開して、4 つのテーマを 2 列で比較できます。表示順は Midnight AAA、Night AAA、Day AAA、Day Vivid です。
+
+<details>
+<summary>デバッガー</summary>
 
 実際の Node.js セッションを緑の実行行で一時停止し、ブレークポイント、選択中のスタックフレーム、ローカル変数を表示しています。
 
-<table>
+<table width="100%">
 <tr>
-<td align="center" width="50%">
-<strong>Day Vivid</strong><br>
-<a href="docs/screenshots/v0.11.2/day-vivid-debugger.jpg"><img src="docs/screenshots/v0.11.2/day-vivid-debugger.jpg" alt="GreenTree Day Vivid: paused debugger with execution line, breakpoint, stack frames and variables" width="360"></a>
-</td>
-<td align="center" width="50%">
-<strong>Day AAA</strong><br>
-<a href="docs/screenshots/v0.11.2/day-aaa-debugger.jpg"><img src="docs/screenshots/v0.11.2/day-aaa-debugger.jpg" alt="GreenTree Day AAA: paused debugger with execution line, breakpoint, stack frames and variables" width="360"></a>
-</td>
-</tr>
-<tr>
-<td align="center" width="50%">
-<strong>Night AAA</strong><br>
-<a href="docs/screenshots/v0.11.2/night-debugger.jpg"><img src="docs/screenshots/v0.11.2/night-debugger.jpg" alt="GreenTree Night AAA: paused debugger with execution line, breakpoint, stack frames and variables" width="360"></a>
-</td>
 <td align="center" width="50%">
 <strong>Midnight AAA</strong><br>
-<a href="docs/screenshots/v0.11.2/midnight-debugger.jpg"><img src="docs/screenshots/v0.11.2/midnight-debugger.jpg" alt="GreenTree Midnight AAA: paused debugger with execution line, breakpoint, stack frames and variables" width="360"></a>
-</td>
-</tr>
-</table>
-
-### その他の画面
-
-テーマを展開して、Markdown、検索と選択範囲、Git 差分、ターミナルの配色を確認できます。
-
-<details>
-<summary>Day Vivid</summary>
-
-<table>
-<tr>
-<td align="center" width="50%">
-<strong>Markdown プレビュー</strong><br>
-<a href="docs/screenshots/v0.11.2/day-vivid-markdown.jpg"><img src="docs/screenshots/v0.11.2/day-vivid-markdown.jpg" alt="GreenTree Day Vivid: Markdown preview" width="360"></a>
+<a href="docs/screenshots/v0.11.2/midnight-debugger.jpg"><img src="docs/screenshots/v0.11.2/midnight-debugger.jpg" alt="GreenTree Midnight AAA: paused debugger with execution line, breakpoint, stack frames and variables" width="100%"></a>
 </td>
 <td align="center" width="50%">
-<strong>検索と選択範囲</strong><br>
-<a href="docs/screenshots/v0.11.2/day-vivid-search-selection.jpg"><img src="docs/screenshots/v0.11.2/day-vivid-search-selection.jpg" alt="GreenTree Day Vivid: Search and selection" width="360"></a>
+<strong>Night AAA</strong><br>
+<a href="docs/screenshots/v0.11.2/night-debugger.jpg"><img src="docs/screenshots/v0.11.2/night-debugger.jpg" alt="GreenTree Night AAA: paused debugger with execution line, breakpoint, stack frames and variables" width="100%"></a>
 </td>
 </tr>
 <tr>
 <td align="center" width="50%">
-<strong>Git 差分</strong><br>
-<a href="docs/screenshots/v0.11.2/day-vivid-git-diff.jpg"><img src="docs/screenshots/v0.11.2/day-vivid-git-diff.jpg" alt="GreenTree Day Vivid: Git diff" width="360"></a>
+<strong>Day AAA</strong><br>
+<a href="docs/screenshots/v0.11.2/day-aaa-debugger.jpg"><img src="docs/screenshots/v0.11.2/day-aaa-debugger.jpg" alt="GreenTree Day AAA: paused debugger with execution line, breakpoint, stack frames and variables" width="100%"></a>
 </td>
 <td align="center" width="50%">
-<strong>ターミナルと ANSI カラー</strong><br>
-<a href="docs/screenshots/v0.11.2/day-vivid-terminal.jpg"><img src="docs/screenshots/v0.11.2/day-vivid-terminal.jpg" alt="GreenTree Day Vivid: Terminal and ANSI colors" width="360"></a>
+<strong>Day Vivid</strong><br>
+<a href="docs/screenshots/v0.11.2/day-vivid-debugger.jpg"><img src="docs/screenshots/v0.11.2/day-vivid-debugger.jpg" alt="GreenTree Day Vivid: paused debugger with execution line, breakpoint, stack frames and variables" width="100%"></a>
 </td>
 </tr>
 </table>
@@ -108,55 +82,27 @@ Zed の **Extensions** で **[GreenTree](https://zed.dev/extensions/green-tree-t
 </details>
 
 <details>
-<summary>Day AAA</summary>
+<summary>Markdown プレビュー</summary>
 
-<table>
+<table width="100%">
 <tr>
 <td align="center" width="50%">
-<strong>Markdown プレビュー</strong><br>
-<a href="docs/screenshots/v0.11.2/day-aaa-markdown.jpg"><img src="docs/screenshots/v0.11.2/day-aaa-markdown.jpg" alt="GreenTree Day AAA: Markdown preview" width="360"></a>
+<strong>Midnight AAA</strong><br>
+<a href="docs/screenshots/v0.11.2/midnight-markdown.jpg"><img src="docs/screenshots/v0.11.2/midnight-markdown.jpg" alt="GreenTree Midnight AAA: Markdown preview" width="100%"></a>
 </td>
 <td align="center" width="50%">
-<strong>検索と選択範囲</strong><br>
-<a href="docs/screenshots/v0.11.2/day-aaa-search-selection.jpg"><img src="docs/screenshots/v0.11.2/day-aaa-search-selection.jpg" alt="GreenTree Day AAA: Search and selection" width="360"></a>
+<strong>Night AAA</strong><br>
+<a href="docs/screenshots/v0.11.2/night-markdown.jpg"><img src="docs/screenshots/v0.11.2/night-markdown.jpg" alt="GreenTree Night AAA: Markdown preview" width="100%"></a>
 </td>
 </tr>
 <tr>
 <td align="center" width="50%">
-<strong>Git 差分</strong><br>
-<a href="docs/screenshots/v0.11.2/day-aaa-git-diff.jpg"><img src="docs/screenshots/v0.11.2/day-aaa-git-diff.jpg" alt="GreenTree Day AAA: Git diff" width="360"></a>
+<strong>Day AAA</strong><br>
+<a href="docs/screenshots/v0.11.2/day-aaa-markdown.jpg"><img src="docs/screenshots/v0.11.2/day-aaa-markdown.jpg" alt="GreenTree Day AAA: Markdown preview" width="100%"></a>
 </td>
 <td align="center" width="50%">
-<strong>ターミナルと ANSI カラー</strong><br>
-<a href="docs/screenshots/v0.11.2/day-aaa-terminal.jpg"><img src="docs/screenshots/v0.11.2/day-aaa-terminal.jpg" alt="GreenTree Day AAA: Terminal and ANSI colors" width="360"></a>
-</td>
-</tr>
-</table>
-
-</details>
-
-<details>
-<summary>Night AAA</summary>
-
-<table>
-<tr>
-<td align="center" width="50%">
-<strong>Markdown プレビュー</strong><br>
-<a href="docs/screenshots/v0.11.2/night-markdown.jpg"><img src="docs/screenshots/v0.11.2/night-markdown.jpg" alt="GreenTree Night AAA: Markdown preview" width="360"></a>
-</td>
-<td align="center" width="50%">
-<strong>検索と選択範囲</strong><br>
-<a href="docs/screenshots/v0.11.2/night-search-selection.jpg"><img src="docs/screenshots/v0.11.2/night-search-selection.jpg" alt="GreenTree Night AAA: Search and selection" width="360"></a>
-</td>
-</tr>
-<tr>
-<td align="center" width="50%">
-<strong>Git 差分</strong><br>
-<a href="docs/screenshots/v0.11.2/night-git-diff.jpg"><img src="docs/screenshots/v0.11.2/night-git-diff.jpg" alt="GreenTree Night AAA: Git diff" width="360"></a>
-</td>
-<td align="center" width="50%">
-<strong>ターミナルと ANSI カラー</strong><br>
-<a href="docs/screenshots/v0.11.2/night-terminal.jpg"><img src="docs/screenshots/v0.11.2/night-terminal.jpg" alt="GreenTree Night AAA: Terminal and ANSI colors" width="360"></a>
+<strong>Day Vivid</strong><br>
+<a href="docs/screenshots/v0.11.2/day-vivid-markdown.jpg"><img src="docs/screenshots/v0.11.2/day-vivid-markdown.jpg" alt="GreenTree Day Vivid: Markdown preview" width="100%"></a>
 </td>
 </tr>
 </table>
@@ -164,27 +110,83 @@ Zed の **Extensions** で **[GreenTree](https://zed.dev/extensions/green-tree-t
 </details>
 
 <details>
-<summary>Midnight AAA</summary>
+<summary>検索と選択範囲</summary>
 
-<table>
+<table width="100%">
 <tr>
 <td align="center" width="50%">
-<strong>Markdown プレビュー</strong><br>
-<a href="docs/screenshots/v0.11.2/midnight-markdown.jpg"><img src="docs/screenshots/v0.11.2/midnight-markdown.jpg" alt="GreenTree Midnight AAA: Markdown preview" width="360"></a>
+<strong>Midnight AAA</strong><br>
+<a href="docs/screenshots/v0.11.2/midnight-search-selection.jpg"><img src="docs/screenshots/v0.11.2/midnight-search-selection.jpg" alt="GreenTree Midnight AAA: Search and selection" width="100%"></a>
 </td>
 <td align="center" width="50%">
-<strong>検索と選択範囲</strong><br>
-<a href="docs/screenshots/v0.11.2/midnight-search-selection.jpg"><img src="docs/screenshots/v0.11.2/midnight-search-selection.jpg" alt="GreenTree Midnight AAA: Search and selection" width="360"></a>
+<strong>Night AAA</strong><br>
+<a href="docs/screenshots/v0.11.2/night-search-selection.jpg"><img src="docs/screenshots/v0.11.2/night-search-selection.jpg" alt="GreenTree Night AAA: Search and selection" width="100%"></a>
 </td>
 </tr>
 <tr>
 <td align="center" width="50%">
-<strong>Git 差分</strong><br>
-<a href="docs/screenshots/v0.11.2/midnight-git-diff.jpg"><img src="docs/screenshots/v0.11.2/midnight-git-diff.jpg" alt="GreenTree Midnight AAA: Git diff" width="360"></a>
+<strong>Day AAA</strong><br>
+<a href="docs/screenshots/v0.11.2/day-aaa-search-selection.jpg"><img src="docs/screenshots/v0.11.2/day-aaa-search-selection.jpg" alt="GreenTree Day AAA: Search and selection" width="100%"></a>
 </td>
 <td align="center" width="50%">
-<strong>ターミナルと ANSI カラー</strong><br>
-<a href="docs/screenshots/v0.11.2/midnight-terminal.jpg"><img src="docs/screenshots/v0.11.2/midnight-terminal.jpg" alt="GreenTree Midnight AAA: Terminal and ANSI colors" width="360"></a>
+<strong>Day Vivid</strong><br>
+<a href="docs/screenshots/v0.11.2/day-vivid-search-selection.jpg"><img src="docs/screenshots/v0.11.2/day-vivid-search-selection.jpg" alt="GreenTree Day Vivid: Search and selection" width="100%"></a>
+</td>
+</tr>
+</table>
+
+</details>
+
+<details>
+<summary>Git 差分</summary>
+
+<table width="100%">
+<tr>
+<td align="center" width="50%">
+<strong>Midnight AAA</strong><br>
+<a href="docs/screenshots/v0.11.2/midnight-git-diff.jpg"><img src="docs/screenshots/v0.11.2/midnight-git-diff.jpg" alt="GreenTree Midnight AAA: Git diff" width="100%"></a>
+</td>
+<td align="center" width="50%">
+<strong>Night AAA</strong><br>
+<a href="docs/screenshots/v0.11.2/night-git-diff.jpg"><img src="docs/screenshots/v0.11.2/night-git-diff.jpg" alt="GreenTree Night AAA: Git diff" width="100%"></a>
+</td>
+</tr>
+<tr>
+<td align="center" width="50%">
+<strong>Day AAA</strong><br>
+<a href="docs/screenshots/v0.11.2/day-aaa-git-diff.jpg"><img src="docs/screenshots/v0.11.2/day-aaa-git-diff.jpg" alt="GreenTree Day AAA: Git diff" width="100%"></a>
+</td>
+<td align="center" width="50%">
+<strong>Day Vivid</strong><br>
+<a href="docs/screenshots/v0.11.2/day-vivid-git-diff.jpg"><img src="docs/screenshots/v0.11.2/day-vivid-git-diff.jpg" alt="GreenTree Day Vivid: Git diff" width="100%"></a>
+</td>
+</tr>
+</table>
+
+</details>
+
+<details>
+<summary>ターミナルと ANSI カラー</summary>
+
+<table width="100%">
+<tr>
+<td align="center" width="50%">
+<strong>Midnight AAA</strong><br>
+<a href="docs/screenshots/v0.11.2/midnight-terminal.jpg"><img src="docs/screenshots/v0.11.2/midnight-terminal.jpg" alt="GreenTree Midnight AAA: Terminal and ANSI colors" width="100%"></a>
+</td>
+<td align="center" width="50%">
+<strong>Night AAA</strong><br>
+<a href="docs/screenshots/v0.11.2/night-terminal.jpg"><img src="docs/screenshots/v0.11.2/night-terminal.jpg" alt="GreenTree Night AAA: Terminal and ANSI colors" width="100%"></a>
+</td>
+</tr>
+<tr>
+<td align="center" width="50%">
+<strong>Day AAA</strong><br>
+<a href="docs/screenshots/v0.11.2/day-aaa-terminal.jpg"><img src="docs/screenshots/v0.11.2/day-aaa-terminal.jpg" alt="GreenTree Day AAA: Terminal and ANSI colors" width="100%"></a>
+</td>
+<td align="center" width="50%">
+<strong>Day Vivid</strong><br>
+<a href="docs/screenshots/v0.11.2/day-vivid-terminal.jpg"><img src="docs/screenshots/v0.11.2/day-vivid-terminal.jpg" alt="GreenTree Day Vivid: Terminal and ANSI colors" width="100%"></a>
 </td>
 </tr>
 </table>
