@@ -42,9 +42,11 @@ It multiplies the selection's theme alpha by 0.5 while search has focus. An opaq
 selection can therefore replace the active search color when focus returns to the
 editor. All variants use translucent selections to preserve it. The theme API
 exposes two search backgrounds; adding outlines would require an editor change.
-Search uses the Markdown selection blue at 40% for the current match and 20% for
-others. Checks composite search over each actual surface, including inline chips
-and diff rows, before applying word highlights or selections.
+Search uses the Markdown selection blue at about 50% for the current match and
+30% for others; Markdown selections remain at 40%. Checks composite search over
+each actual surface, including inline chips and diff rows, before applying word
+highlights or selections. [Markdown previews in Zed 1.24.3](https://github.com/zed-industries/zed/blob/v1.24.3/crates/markdown/src/markdown.rs#L2599)
+read the same two search fields as the source editor, so both views inherit these fills.
 Markdown selections remain translucent for older Zed versions that paint over
 glyphs. Their appearance needs a visual check, rather than a text contrast gate.
 Lists also use `ghost_element.selected`, not just `element.selected`. Diff word
@@ -79,6 +81,25 @@ so the dark variants use blue-cyan for that shared fill (`#003044` for Day AAA,
 `#002D38` for Night AAA and Midnight AAA). Day Vivid uses pale mint (`#C0FFD0`)
 for Frames. Other controls using `element.hover` inherit these colors. A theme
 cannot give selected and hovered stack frames different fills in this Zed version.
+
+## Markdown search check · 2026-10-20
+
+Zed 1.24.3 on macOS loaded the linked development extension with the stronger
+search fills. All four variants were inspected in an isolated Markdown sample:
+one preview and one source screenshot per variant. The preview includes CJK
+prose, bold/italic text, links, inline code, a table, a quote, TypeScript and diff
+fences. Navigation from the first to the second of 19 matches was checked in
+Night AAA; the second match remains visibly stronger in all four variants.
+Source captures include the active match's editor selection with search focused.
+Midnight AAA also covered a preview selection across current/other matches,
+zero results and clearing the query.
+
+The 11 final captures plus the Night AAA baseline are Git-ignored under
+`.local/markdown-search-2026-10-20/`. The 59 Python tests, four-palette audit and
+whitespace check pass. Text-contrast and visibility thresholds were retained;
+affected cursor colors were adjusted to preserve 3:1 over the stronger overlays.
+This is a focused Markdown/search check; it does not repeat the broader debugger,
+terminal, collaboration or platform coverage below.
 
 ## Local check · 2026-10-17
 

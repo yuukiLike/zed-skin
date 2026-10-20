@@ -5,10 +5,12 @@
 - **Night AAA:** near black `#050505`, soft white and regular green keywords.
 - **Midnight AAA:** pure black `#000000`, bright white and bold green keywords.
 
-All variants use the Markdown selection blue for search: `#408CFF66` (40%) for the
-current match and `#408CFF33` (20%) for other matches. Local editor selections use
-`#408CFF40` (about 25%), preserving search underneath. Day Vivid's cursors are
-slightly darker to stay visible over the combined overlays. Comments are italic gray.
+All variants use a stronger version of the Markdown selection blue for search:
+`#408CFF80` (about 50%) for the current match and `#408CFF4D` (about 30%) for other
+matches. Markdown selections retain `#408CFF66` (40%); local editor selections use
+`#408CFF40` (about 25%), preserving search underneath. Affected cursors are darker
+in Day Vivid and lighter in the dark variants to stay visible over the stronger
+combined overlays. Comments are italic gray.
 
 Lists and symbol/bracket highlights use blue/cyan. Changed words use translucent
 blue (dark) or yellow (light), preserving search underneath. Diff gutters and row

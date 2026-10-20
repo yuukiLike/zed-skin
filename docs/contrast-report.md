@@ -21,22 +21,22 @@ Checked pairs: 11139.
 | Terminal ANSI | 45 | 4.5158:1 | 4.5:1 | PASS |
 | UI indicators | 3105 | 3.6919:1 | 3:1 | PASS |
 | Scrollbar | 3 | 3.6962:1 | 3:1 | PASS |
-| Cursors | 1552 | 3.0459:1 | 3:1 | PASS |
-| Inverse cursor text | 8 | 5.3620:1 | 4.5:1 | PASS |
+| Cursors | 1552 | 3.3145:1 | 3:1 | PASS |
+| Inverse cursor text | 8 | 6.3362:1 | 4.5:1 | PASS |
 | Vim / Helix badges | 8 | 4.5559:1 | 4.5:1 | PASS |
 | Markdown selection visibility | 18 | 1.4350:1 | 1.25:1 | PASS (custom) |
-| Markdown search selection visibility | 36 | 0.0792 ΔEOK | 0.06 ΔEOK | PASS (custom) |
+| Markdown search selection visibility | 36 | 0.0648 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Editor selection visibility | 1 | 0.0945 ΔEOK | 0.06 ΔEOK | PASS (custom) |
-| Search visibility | 100 | 0.0681 ΔEOK | 0.06 ΔEOK | PASS (custom) |
-| Search state distinction | 60 | 0.0676 ΔEOK | 0.06 ΔEOK | PASS (custom) |
+| Search visibility | 100 | 0.1027 ΔEOK | 0.06 ΔEOK | PASS (custom) |
+| Search state distinction | 60 | 0.0671 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | List selection visibility | 12 | 0.0632 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Editor highlight visibility | 6 | 0.0675 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Debugger row visibility | 2 | 0.0668 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Debugger frame visibility | 1 | 0.0864 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Conflict distinction | 3 | 0.0652 ΔEOK | 0.06 ΔEOK | PASS (custom) |
-| Diff search distinction | 12 | 0.0606 ΔEOK | 0.06 ΔEOK | PASS (custom) |
+| Diff search distinction | 12 | 0.0607 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Diff word visibility | 4 | 0.0635 ΔEOK | 0.06 ΔEOK | PASS (custom) |
-| Diff search visibility | 16 | 0.0603 ΔEOK | 0.06 ΔEOK | PASS (custom) |
+| Diff search visibility | 16 | 0.0912 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 
 Lowest text contrast pair:
 
@@ -55,23 +55,23 @@ Checked pairs: 11145.
 | Terminal ANSI | 45 | 5.4304:1 | 4.5:1 / 7:1 | PASS |
 | UI indicators | 3105 | 4.2772:1 | 3:1 | PASS |
 | Scrollbar | 3 | 4.9861:1 | 3:1 | PASS |
-| Cursors | 1552 | 3.1523:1 | 3:1 | PASS |
-| Inverse cursor text | 8 | 8.2458:1 | 7:1 | PASS |
+| Cursors | 1552 | 3.1134:1 | 3:1 | PASS |
+| Inverse cursor text | 8 | 9.1080:1 | 7:1 | PASS |
 | Vim / Helix badges | 8 | 7.8429:1 | 7:1 | PASS |
 | Markdown selection visibility | 18 | 1.6809:1 | 1.25:1 | PASS (custom) |
-| Markdown search selection visibility | 36 | 0.0820 ΔEOK | 0.06 ΔEOK | PASS (custom) |
+| Markdown search selection visibility | 36 | 0.0674 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Editor selection visibility | 1 | 0.1161 ΔEOK | 0.06 ΔEOK | PASS (custom) |
-| Search visibility | 100 | 0.0718 ΔEOK | 0.06 ΔEOK | PASS (custom) |
-| Search state distinction | 60 | 0.0702 ΔEOK | 0.06 ΔEOK | PASS (custom) |
-| Active search visibility | 6 | 1.8520:1 | 1.25:1 | PASS (custom) |
+| Search visibility | 100 | 0.1078 ΔEOK | 0.06 ΔEOK | PASS (custom) |
+| Search state distinction | 60 | 0.0693 ΔEOK | 0.06 ΔEOK | PASS (custom) |
+| Active search visibility | 6 | 2.1876:1 | 1.25:1 | PASS (custom) |
 | List selection visibility | 12 | 0.0700 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Editor highlight visibility | 6 | 0.0815 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Debugger row visibility | 2 | 0.0697 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Debugger frame visibility | 1 | 0.0672 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Conflict distinction | 3 | 0.0823 ΔEOK | 0.06 ΔEOK | PASS (custom) |
-| Diff search distinction | 12 | 0.0675 ΔEOK | 0.06 ΔEOK | PASS (custom) |
+| Diff search distinction | 12 | 0.0663 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Diff word visibility | 4 | 0.0778 ΔEOK | 0.06 ΔEOK | PASS (custom) |
-| Diff search visibility | 16 | 0.0702 ΔEOK | 0.06 ΔEOK | PASS (custom) |
+| Diff search visibility | 16 | 0.1050 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 
 Lowest text contrast pair:
 
@@ -90,23 +90,23 @@ Checked pairs: 11145.
 | Terminal ANSI | 45 | 4.5234:1 | 4.5:1 / 7:1 | PASS |
 | UI indicators | 3105 | 3.3340:1 | 3:1 | PASS |
 | Scrollbar | 3 | 4.6351:1 | 3:1 | PASS |
-| Cursors | 1552 | 3.0738:1 | 3:1 | PASS |
-| Inverse cursor text | 8 | 9.9285:1 | 7:1 | PASS |
+| Cursors | 1552 | 3.0476:1 | 3:1 | PASS |
+| Inverse cursor text | 8 | 11.0848:1 | 7:1 | PASS |
 | Vim / Helix badges | 8 | 9.0515:1 | 7:1 | PASS |
 | Markdown selection visibility | 18 | 1.8055:1 | 1.25:1 | PASS (custom) |
-| Markdown search selection visibility | 36 | 0.0961 ΔEOK | 0.06 ΔEOK | PASS (custom) |
+| Markdown search selection visibility | 36 | 0.0787 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Editor selection visibility | 1 | 0.1684 ΔEOK | 0.06 ΔEOK | PASS (custom) |
-| Search visibility | 100 | 0.0860 ΔEOK | 0.06 ΔEOK | PASS (custom) |
-| Search state distinction | 60 | 0.0832 ΔEOK | 0.06 ΔEOK | PASS (custom) |
-| Active search visibility | 6 | 1.8253:1 | 1.25:1 | PASS (custom) |
+| Search visibility | 100 | 0.1288 ΔEOK | 0.06 ΔEOK | PASS (custom) |
+| Search state distinction | 60 | 0.0817 ΔEOK | 0.06 ΔEOK | PASS (custom) |
+| Active search visibility | 6 | 2.2730:1 | 1.25:1 | PASS (custom) |
 | List selection visibility | 12 | 0.0804 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Editor highlight visibility | 6 | 0.1368 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Debugger row visibility | 2 | 0.0965 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Debugger frame visibility | 1 | 0.1331 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Conflict distinction | 3 | 0.1255 ΔEOK | 0.06 ΔEOK | PASS (custom) |
-| Diff search distinction | 12 | 0.0751 ΔEOK | 0.06 ΔEOK | PASS (custom) |
+| Diff search distinction | 12 | 0.0737 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Diff word visibility | 4 | 0.0896 ΔEOK | 0.06 ΔEOK | PASS (custom) |
-| Diff search visibility | 16 | 0.0782 ΔEOK | 0.06 ΔEOK | PASS (custom) |
+| Diff search visibility | 16 | 0.1168 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 
 Lowest text contrast pair:
 
@@ -125,23 +125,23 @@ Checked pairs: 11145.
 | Terminal ANSI | 45 | 5.4060:1 | 4.5:1 / 7:1 | PASS |
 | UI indicators | 3105 | 3.3340:1 | 3:1 | PASS |
 | Scrollbar | 3 | 4.7758:1 | 3:1 | PASS |
-| Cursors | 1552 | 3.0738:1 | 3:1 | PASS |
-| Inverse cursor text | 8 | 10.2298:1 | 7:1 | PASS |
+| Cursors | 1552 | 3.0476:1 | 3:1 | PASS |
+| Inverse cursor text | 8 | 11.4213:1 | 7:1 | PASS |
 | Vim / Helix badges | 8 | 9.7633:1 | 7:1 | PASS |
 | Markdown selection visibility | 18 | 1.8004:1 | 1.25:1 | PASS (custom) |
-| Markdown search selection visibility | 36 | 0.1032 ΔEOK | 0.06 ΔEOK | PASS (custom) |
+| Markdown search selection visibility | 36 | 0.0843 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Editor selection visibility | 1 | 0.2646 ΔEOK | 0.06 ΔEOK | PASS (custom) |
-| Search visibility | 100 | 0.0946 ΔEOK | 0.06 ΔEOK | PASS (custom) |
-| Search state distinction | 60 | 0.0902 ΔEOK | 0.06 ΔEOK | PASS (custom) |
-| Active search visibility | 6 | 1.8004:1 | 1.25:1 | PASS (custom) |
+| Search visibility | 100 | 0.1411 ΔEOK | 0.06 ΔEOK | PASS (custom) |
+| Search state distinction | 60 | 0.0881 ΔEOK | 0.06 ΔEOK | PASS (custom) |
+| Active search visibility | 6 | 2.2565:1 | 1.25:1 | PASS (custom) |
 | List selection visibility | 12 | 0.0804 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Editor highlight visibility | 6 | 0.1774 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Debugger row visibility | 2 | 0.1453 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Debugger frame visibility | 1 | 0.2791 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Conflict distinction | 3 | 0.1255 ΔEOK | 0.06 ΔEOK | PASS (custom) |
-| Diff search distinction | 12 | 0.0823 ΔEOK | 0.06 ΔEOK | PASS (custom) |
+| Diff search distinction | 12 | 0.0806 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Diff word visibility | 4 | 0.0946 ΔEOK | 0.06 ΔEOK | PASS (custom) |
-| Diff search visibility | 16 | 0.0857 ΔEOK | 0.06 ΔEOK | PASS (custom) |
+| Diff search visibility | 16 | 0.1280 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 
 Lowest text contrast pair:
 

@@ -48,8 +48,8 @@
         "tab_bar.background": "#F3F0E9",
         "tab.inactive_background": "#F3F0E9",
         "tab.active_background": "#EAF1F8",
-        "search.match_background": "#408CFF33",
-        "search.active_match_background": "#408CFF66",
+        "search.match_background": "#408CFF4D",
+        "search.active_match_background": "#408CFF80",
         "panel.background": "#F3F0E9",
         "panel.focused_border": "#006AC4",
         "panel.indent_guide": "#747C82",
@@ -206,37 +206,37 @@
         ],
         "players": [
           {
-            "cursor": "#0060B8",
+            "cursor": "#0055A3",
             "background": "#EAF1F8",
             "selection": "#408CFF40"
           },
           {
-            "cursor": "#7637E1",
+            "cursor": "#6931C8",
             "background": "#EAF1F8",
             "selection": "#EAF1F8"
           },
           {
-            "cursor": "#006D61",
+            "cursor": "#006157",
             "background": "#F3F0E9",
             "selection": "#EAF1F8"
           },
           {
-            "cursor": "#915200",
+            "cursor": "#814900",
             "background": "#F3EDF7",
             "selection": "#F3EDF7"
           },
           {
-            "cursor": "#006D61",
+            "cursor": "#006157",
             "background": "#F9EEEE",
             "selection": "#F9EEEE"
           },
           {
-            "cursor": "#B0286F",
+            "cursor": "#9D2363",
             "background": "#F3F0E9",
             "selection": "#F3F0E9"
           },
           {
-            "cursor": "#B92541",
+            "cursor": "#A5213A",
             "background": "#EAF1F8",
             "selection": "#EAF1F8"
           },
@@ -455,8 +455,8 @@
         "tab_bar.background": "#171D30",
         "tab.inactive_background": "#171D30",
         "tab.active_background": "#242D43",
-        "search.match_background": "#408CFF33",
-        "search.active_match_background": "#408CFF66",
+        "search.match_background": "#408CFF4D",
+        "search.active_match_background": "#408CFF80",
         "panel.background": "#171D30",
         "panel.focused_border": "#78C1FF",
         "panel.indent_guide": "#8290B1",
@@ -613,12 +613,12 @@
         ],
         "players": [
           {
-            "cursor": "#78C1FF",
+            "cursor": "#8CCAFF",
             "background": "#242D43",
             "selection": "#408CFF40"
           },
           {
-            "cursor": "#CCB0FF",
+            "cursor": "#D2BAFF",
             "background": "#242D43",
             "selection": "#242D43"
           },
@@ -638,12 +638,12 @@
             "selection": "#322332"
           },
           {
-            "cursor": "#FF9ECD",
+            "cursor": "#FFADD5",
             "background": "#1F253B",
             "selection": "#1F253B"
           },
           {
-            "cursor": "#FFA4B3",
+            "cursor": "#FFB2BF",
             "background": "#242D43",
             "selection": "#242D43"
           },
@@ -861,8 +861,8 @@
         "tab_bar.background": "#0B0B0D",
         "tab.inactive_background": "#0B0B0D",
         "tab.active_background": "#15263E",
-        "search.match_background": "#408CFF33",
-        "search.active_match_background": "#408CFF66",
+        "search.match_background": "#408CFF4D",
+        "search.active_match_background": "#408CFF80",
         "panel.background": "#0B0B0D",
         "panel.focused_border": "#5C98EA",
         "panel.indent_guide": "#717985",
@@ -1024,7 +1024,7 @@
             "selection": "#408CFF40"
           },
           {
-            "cursor": "#D2A8FF",
+            "cursor": "#D9B8FF",
             "background": "#15263E",
             "selection": "#15263E"
           },
@@ -1034,7 +1034,7 @@
             "selection": "#292416"
           },
           {
-            "cursor": "#FF9FB8",
+            "cursor": "#FFADC2",
             "background": "#241F30",
             "selection": "#241F30"
           },
@@ -1044,12 +1044,12 @@
             "selection": "#271C23"
           },
           {
-            "cursor": "#FFA47A",
+            "cursor": "#FFB28F",
             "background": "#252117",
             "selection": "#252117"
           },
           {
-            "cursor": "#FF9993",
+            "cursor": "#FFAAA5",
             "background": "#15263E",
             "selection": "#15263E"
           },
@@ -1267,8 +1267,8 @@
         "tab_bar.background": "#000000",
         "tab.inactive_background": "#000000",
         "tab.active_background": "#0C1A2D",
-        "search.match_background": "#408CFF33",
-        "search.active_match_background": "#408CFF66",
+        "search.match_background": "#408CFF4D",
+        "search.active_match_background": "#408CFF80",
         "panel.background": "#000000",
         "panel.focused_border": "#5C98EA",
         "panel.indent_guide": "#717985",
@@ -1430,7 +1430,7 @@
             "selection": "#408CFF40"
           },
           {
-            "cursor": "#D2A8FF",
+            "cursor": "#D9B8FF",
             "background": "#0C1A2D",
             "selection": "#0C1A2D"
           },
@@ -1440,7 +1440,7 @@
             "selection": "#201A0C"
           },
           {
-            "cursor": "#FF9FB8",
+            "cursor": "#FFADC2",
             "background": "#160E24",
             "selection": "#160E24"
           },
@@ -1450,12 +1450,12 @@
             "selection": "#1F0F16"
           },
           {
-            "cursor": "#FFA47A",
+            "cursor": "#FFB28F",
             "background": "#17140B",
             "selection": "#17140B"
           },
           {
-            "cursor": "#FF9993",
+            "cursor": "#FFAAA5",
             "background": "#0C1A2D",
             "selection": "#0C1A2D"
           },

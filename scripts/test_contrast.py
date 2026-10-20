@@ -132,12 +132,13 @@ class SearchHighlightTests(unittest.TestCase):
             for surface in ("editor.background", "editor.background / inline code", "editor.background / code block"):
                 self.assertIn((state, f"ordinary match / {surface}"), cases)
 
-    def test_search_uses_the_markdown_selection_blue_with_lighter_other_matches(self):
+    def test_search_uses_stronger_markdown_selection_blue_with_lighter_other_matches(self):
         for theme in self.themes:
             with self.subTest(theme=theme["name"]):
                 style = theme["style"]
                 ordinary, active = (style[key] for key in SEARCH_BACKGROUNDS)
-                self.assertEqual(active, style[MARKDOWN_SELECTION])
+                self.assertEqual(active[:7], style[MARKDOWN_SELECTION][:7])
+                self.assertGreater(int(active[7:], 16), int(style[MARKDOWN_SELECTION][7:], 16))
                 self.assertEqual(ordinary[:7], active[:7])
                 self.assertLess(int(ordinary[7:], 16), int(active[7:], 16))
 
