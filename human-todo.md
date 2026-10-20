@@ -2,7 +2,7 @@
 
 macOS / VS Code 键位（含本机自定义）；`⌘` = Command，`⇧` = Shift，`→` = 依次按。
 
-**通用入口：`Alt + Shift + P` 打开命令面板，输入下表的 `命令`；面板也会显示实际快捷键。**
+**通用入口：`Command + Shift + P` 打开命令面板，输入下表的 `命令`；面板也会显示实际快捷键。**
 
 四款主题逐一检查并截图，图片存至 `.local/human-qa/`。修改开发扩展后，在命令面板运行 `zed: rebuild dev extension`。
 
@@ -23,7 +23,7 @@ macOS / VS Code 键位（含本机自定义）；`⌘` = Command，`⇧` = Shift
 
 F 键触发系统功能时，加按 `fn`。首次调试没有可选任务时，先[配置调试](https://zed.dev/docs/debugger)。
 
-键位参考：[Zed macOS](https://github.com/zed-industries/zed/blob/v1.24.3/assets/keymaps/default-macos.json) · [VS Code 覆盖](https://github.com/zed-industries/zed/blob/v1.24.3/assets/keymaps/macos/vscode.json)。命令面板与 Markdown 预览快捷键按本机自定义配置记录。
+键位参考：[Zed macOS](https://github.com/zed-industries/zed/blob/v1.24.3/assets/keymaps/default-macos.json) · [VS Code 覆盖](https://github.com/zed-industries/zed/blob/v1.24.3/assets/keymaps/macos/vscode.json)。Markdown 预览快捷键为本机自定义。
 
 检查通过后勾选；未启用的功能注明“未测”。
 
