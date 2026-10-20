@@ -117,7 +117,7 @@ STATE_VISIBILITY_TARGET = 0.06
 COLOR_DISTANCE_GROUPS = {
     "Search visibility", "Search state distinction", "Editor selection visibility",
     "Markdown search selection visibility", "List selection visibility",
-    "Editor highlight visibility", "Diff word visibility", "Conflict distinction",
+    "Editor highlight visibility", "Diff row distinction", "Diff word visibility", "Conflict distinction",
     "Diff search visibility", "Diff search distinction",
     "Debugger row visibility", "Debugger frame visibility",
 }
@@ -283,6 +283,9 @@ def interaction_checks(style):
         pairs.append(("Debugger row visibility", "editor.debugger_active_line.background", background))
     # Zed 1.24.2 paints both selected and hovered stack frames with element.hover.
     pairs.append(("Debugger frame visibility", "element.hover", "panel.background"))
+    for surface in ("background", "hollow_background"):
+        pairs.append(("Diff row distinction", f"editor.diff_hunk.added.{surface}",
+                      f"editor.diff_hunk.deleted.{surface}"))
     for side in ("ours", "theirs"):
         pairs.append(("Conflict distinction", f"version_control.conflict_marker.{side}", "editor.background"))
     pairs.append(("Conflict distinction", "version_control.conflict_marker.ours", "version_control.conflict_marker.theirs"))
@@ -365,6 +368,13 @@ def audit(theme):
                 if group in TEXT_GROUPS and (".selection" in background_name or background_name.startswith("search.")):
                     continue
                 target = threshold
+                # Brighter Git highlights keep primary text at AAA and colored
+                # syntax/status text at AA, as documented in the palette targets.
+                if (group in {"UI text", "Editor / syntax"}
+                        and (background_name.startswith("version_control.word_")
+                             or background_name.startswith("editor.diff_hunk."))
+                        and foreground_name not in {"text", "editor.foreground"}):
+                    target = min(target, 4.5)
                 if foreground_name in vivid_foregrounds:
                     target = 2.5
                 ratio = contrast_rgb(foreground, background)
@@ -431,9 +441,10 @@ def audit(theme):
         if luminance(style[black]) >= luminance(style[white]):
             raise ValueError(f"{black} must be darker than {white}")
         check("Terminal ANSI", fields([black]), fields([white]), 4.5)
-    # Search and text selections cover glyph ranges, not UI borders or icons.
+    # Search, word diffs and selections cover glyphs, not UI borders or icons.
     indicator_backgrounds = [(name, color) for name, color in all_backgrounds
-                             if not name.startswith("search.") and ".selection" not in name]
+                             if not name.startswith(("search.", "version_control.word_"))
+                             and ".selection" not in name]
     check("UI indicators", fields(NON_TEXT + status_borders), indicator_backgrounds, 3)
     check("Scrollbar", fields(["scrollbar.thumb.background", "scrollbar.thumb.hover_background",
           "scrollbar.thumb.active_background"]), fields(["scrollbar.track.background"]), 3)
@@ -472,9 +483,9 @@ def main():
         if not family["name"] or not family["author"] or not family["themes"]:
             raise ValueError("Theme family metadata and themes must not be empty")
         sections = ["# GreenTree · Contrast audit", "",
-                    "Dark primary text: AAA 7:1. Comments: AA 4.5:1. Day Vivid uses 4.5:1, except green syntax at a custom 2.5:1 (below AA). Search and selected text have no contrast target.",
+                    "Dark primary text: AAA 7:1. Colored syntax/status text on Git diff highlights: AA 4.5:1; normal surfaces retain 7:1. Comments: AA 4.5:1. Day Vivid uses 4.5:1, except green syntax at a custom 2.5:1 (below AA). Search and selected text have no contrast target.",
                     "UI indicators use 3:1 on their surfaces. Selection checks measure background visibility and search overlap; selected text appearance is reviewed in Zed.",
-                    "Visibility guards are custom: 0.06 Oklab distance (ΔEOK) for search, selection, symbols, changed words and conflict sides; 1.25:1 luminance for Markdown selections and active search on dark editor surfaces. They are not WCAG criteria or proof of visual acceptance.",
+                    "Visibility guards are custom: 0.06 Oklab distance (ΔEOK) for search, selection, symbols, added/deleted rows, changed words and conflict sides; 1.25:1 luminance for Markdown selections and active search on dark editor surfaces. They are not WCAG criteria or proof of visual acceptance.",
                     "ANSI black/white retain their terminal roles: paired normal, bright and dim colors target 4.5:1; black on a dark default surface and white on a light one are exempt. Other program-chosen combinations need an in-app check.",
                     "Pass/fail uses unrounded values. See [checks, sources and limits](theme-testing.md).", "",
                     "Reproduce: `python3 scripts/check_contrast.py --report docs/contrast-report.md`.", ""]

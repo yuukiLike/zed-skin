@@ -34,7 +34,7 @@
         "text.muted": "#4E514C",
         "text.placeholder": "#66685F",
         "text.disabled": "#66685F",
-        "text.accent": "#207D37",
+        "text.accent": "#1E7634",
         "icon": "#51534E",
         "icon.muted": "#66685F",
         "icon.disabled": "#66685F",
@@ -78,7 +78,7 @@
         "editor.highlighted_line.background": "#EAF1F8",
         "editor.debugger_active_line.background": "#C7FFE1",
         "editor.line_number": "#66685F",
-        "editor.active_line_number": "#006AC4",
+        "editor.active_line_number": "#0067BF",
         "editor.hover_line_number": "#30312F",
         "editor.invisible": "#747C82",
         "editor.wrap_guide": "#747C82",
@@ -88,11 +88,11 @@
         "editor.document_highlight.read_background": "#BFFFFF",
         "editor.document_highlight.write_background": "#BFFFFF",
         "editor.document_highlight.bracket_background": "#BFFFFF",
-        "editor.diff_hunk.added.background": "#F3F0E9",
-        "editor.diff_hunk.added.hollow_background": "#F3F0E9",
-        "editor.diff_hunk.added.hollow_border": "#006AC4",
-        "editor.diff_hunk.deleted.background": "#F9EEEE",
-        "editor.diff_hunk.deleted.hollow_background": "#F7F0F0",
+        "editor.diff_hunk.added.background": "#D0FFE4",
+        "editor.diff_hunk.added.hollow_background": "#D0FFE4",
+        "editor.diff_hunk.added.hollow_border": "#207D37",
+        "editor.diff_hunk.deleted.background": "#FFF8FA",
+        "editor.diff_hunk.deleted.hollow_background": "#FFF8FA",
         "editor.diff_hunk.deleted.hollow_border": "#BF2643",
         "terminal.background": "#F3EFE5",
         "terminal.ansi.background": "#F3EFE5",
@@ -123,21 +123,21 @@
         "terminal.ansi.white": "#D8E1EC",
         "terminal.ansi.bright_white": "#F0F4FF",
         "terminal.ansi.dim_white": "#B5BBC5",
-        "link_text.hover": "#006AC4",
-        "version_control.added": "#207D37",
+        "link_text.hover": "#0067BF",
+        "version_control.added": "#1E7634",
         "version_control.deleted": "#BF2643",
-        "version_control.modified": "#A15B00",
+        "version_control.modified": "#9A5700",
         "version_control.renamed": "#7C3AED",
-        "version_control.conflict": "#A15B00",
+        "version_control.conflict": "#9A5700",
         "version_control.ignored": "#66685F",
-        "version_control.word_added": "#FFFF0033",
-        "version_control.word_deleted": "#FFFF0033",
+        "version_control.word_added": "#44FF0033",
+        "version_control.word_deleted": "#FF759833",
         "version_control.conflict_marker.ours": "#BFFFFF",
         "version_control.conflict_marker.theirs": "#FFF7BB",
-        "conflict": "#A15B00",
+        "conflict": "#9A5700",
         "conflict.background": "#FFF5DD",
         "conflict.border": "#A15B00",
-        "created": "#207D37",
+        "created": "#1E7634",
         "created.background": "#F3F0E9",
         "created.border": "#006AC4",
         "deleted": "#BF2643",
@@ -149,16 +149,16 @@
         "hidden": "#66685F",
         "hidden.background": "#F3F0E9",
         "hidden.border": "#747C82",
-        "hint": "#006AC4",
+        "hint": "#0067BF",
         "hint.background": "#F3F0E9",
         "hint.border": "#006AC4",
         "ignored": "#66685F",
         "ignored.background": "#F3F0E9",
         "ignored.border": "#747C82",
-        "info": "#006AC4",
+        "info": "#0067BF",
         "info.background": "#F3F0E9",
         "info.border": "#006AC4",
-        "modified": "#A15B00",
+        "modified": "#9A5700",
         "modified.background": "#F3F0E9",
         "modified.border": "#A15B00",
         "predictive": "#66685F",
@@ -167,13 +167,13 @@
         "renamed": "#7C3AED",
         "renamed.background": "#F3EDF7",
         "renamed.border": "#7C3AED",
-        "success": "#207D37",
+        "success": "#1E7634",
         "success.background": "#F3F0E9",
         "success.border": "#006AC4",
         "unreachable": "#66685F",
         "unreachable.background": "#F3F0E9",
         "unreachable.border": "#747C82",
-        "warning": "#A15B00",
+        "warning": "#9A5700",
         "warning.background": "#FFF5DD",
         "warning.border": "#A15B00",
         "vim.normal.background": "#F3F0E9",
@@ -189,18 +189,18 @@
         "vim.visual_block.background": "#F3F0E9",
         "vim.visual_block.foreground": "#A15B00",
         "vim.yank.background": "#EAF1F8",
-        "vim.helix_jump_label.foreground": "#A15B00",
+        "vim.helix_jump_label.foreground": "#9A5700",
         "vim.helix_normal.background": "#F3F0E9",
         "vim.helix_normal.foreground": "#207D37",
         "vim.helix_select.background": "#F3F0E9",
         "vim.helix_select.foreground": "#7C3AED",
         "accents": [
-          "#006AC4",
+          "#0067BF",
           "#7C3AED",
-          "#007568",
-          "#A15B00",
-          "#007568",
-          "#BD2B77",
+          "#007467",
+          "#9A5700",
+          "#007467",
+          "#BB2B76",
           "#BF2643",
           "#51534E"
         ],
@@ -251,7 +251,7 @@
             "color": "#7C3AED"
           },
           "boolean": {
-            "color": "#BD2B77",
+            "color": "#BB2B76",
             "font_weight": 600
           },
           "comment": {
@@ -263,10 +263,10 @@
             "font_style": "italic"
           },
           "constant": {
-            "color": "#BD2B77"
+            "color": "#BB2B76"
           },
           "constructor": {
-            "color": "#006AC4",
+            "color": "#0067BF",
             "font_weight": 500
           },
           "embedded": {
@@ -284,36 +284,36 @@
             "color": "#7C3AED"
           },
           "function": {
-            "color": "#006AC4",
+            "color": "#0067BF",
             "font_weight": 500
           },
           "function.method": {
-            "color": "#006AC4",
+            "color": "#0067BF",
             "font_weight": 500
           },
           "function.builtin": {
-            "color": "#00758F"
+            "color": "#00718B"
           },
           "hint": {
-            "color": "#006AC4"
+            "color": "#0067BF"
           },
           "keyword": {
             "color": "#009843"
           },
           "label": {
-            "color": "#A15B00"
+            "color": "#9A5700"
           },
           "link_text": {
-            "color": "#006AC4"
+            "color": "#0067BF"
           },
           "link_uri": {
-            "color": "#006AC4"
+            "color": "#0067BF"
           },
           "namespace": {
             "color": "#7C3AED"
           },
           "number": {
-            "color": "#BD2B77",
+            "color": "#BB2B76",
             "font_weight": 600
           },
           "operator": {
@@ -329,7 +329,7 @@
             "color": "#30312F"
           },
           "property": {
-            "color": "#00758F"
+            "color": "#00718B"
           },
           "punctuation": {
             "color": "#51534E"
@@ -341,40 +341,40 @@
             "color": "#51534E"
           },
           "punctuation.list_marker": {
-            "color": "#006AC4"
+            "color": "#0067BF"
           },
           "punctuation.markup": {
             "color": "#009843"
           },
           "punctuation.special": {
-            "color": "#BD2B77"
+            "color": "#BB2B76"
           },
           "selector": {
-            "color": "#A15B00"
+            "color": "#9A5700"
           },
           "selector.pseudo": {
-            "color": "#00758F"
+            "color": "#00718B"
           },
           "string": {
-            "color": "#A15B00"
+            "color": "#9A5700"
           },
           "string.escape": {
-            "color": "#BD2B77"
+            "color": "#BB2B76"
           },
           "string.regex": {
-            "color": "#A15B00"
+            "color": "#9A5700"
           },
           "string.special": {
-            "color": "#00758F"
+            "color": "#00718B"
           },
           "string.special.symbol": {
-            "color": "#00758F"
+            "color": "#00718B"
           },
           "tag": {
             "color": "#009843"
           },
           "text.literal": {
-            "color": "#A15B00"
+            "color": "#9A5700"
           },
           "title": {
             "color": "#009843"
@@ -394,7 +394,7 @@
             "color": "#30312F"
           },
           "variable.special": {
-            "color": "#A15B00"
+            "color": "#9A5700"
           },
           "variant": {
             "color": "#7C3AED"
@@ -495,12 +495,12 @@
         "editor.document_highlight.read_background": "#002866",
         "editor.document_highlight.write_background": "#002866",
         "editor.document_highlight.bracket_background": "#002866",
-        "editor.diff_hunk.added.background": "#1F253B",
-        "editor.diff_hunk.added.hollow_background": "#1F253B",
-        "editor.diff_hunk.added.hollow_border": "#78C1FF",
-        "editor.diff_hunk.deleted.background": "#322332",
-        "editor.diff_hunk.deleted.hollow_background": "#282030",
-        "editor.diff_hunk.deleted.hollow_border": "#FFA4B3",
+        "editor.diff_hunk.added.background": "#233B32",
+        "editor.diff_hunk.added.hollow_background": "#233B32",
+        "editor.diff_hunk.added.hollow_border": "#98DEB6",
+        "editor.diff_hunk.deleted.background": "#3B292F",
+        "editor.diff_hunk.deleted.hollow_background": "#3B292F",
+        "editor.diff_hunk.deleted.hollow_border": "#FFADB3",
         "terminal.background": "#1C2135",
         "terminal.ansi.background": "#1C2135",
         "terminal.foreground": "#E2E9F5",
@@ -531,14 +531,14 @@
         "terminal.ansi.bright_white": "#F0F4FF",
         "terminal.ansi.dim_white": "#BEC8DF",
         "link_text.hover": "#78C1FF",
-        "version_control.added": "#40D975",
-        "version_control.deleted": "#FFA4B3",
+        "version_control.added": "#98DEB6",
+        "version_control.deleted": "#FFADB3",
         "version_control.modified": "#F5CC69",
         "version_control.renamed": "#CCB0FF",
         "version_control.conflict": "#F5CC69",
         "version_control.ignored": "#BEC8DF",
-        "version_control.word_added": "#0000FF33",
-        "version_control.word_deleted": "#0000FF33",
+        "version_control.word_added": "#78DBA821",
+        "version_control.word_deleted": "#F39BA926",
         "version_control.conflict_marker.ours": "#002866",
         "version_control.conflict_marker.theirs": "#003428",
         "conflict": "#F5CC69",
@@ -613,37 +613,37 @@
         ],
         "players": [
           {
-            "cursor": "#8CCAFF",
+            "cursor": "#AAD8FF",
             "background": "#242D43",
             "selection": "#408CFF40"
           },
           {
-            "cursor": "#D2BAFF",
+            "cursor": "#DCCAFF",
             "background": "#242D43",
             "selection": "#242D43"
           },
           {
-            "cursor": "#5FDDC9",
+            "cursor": "#7FE4D4",
             "background": "#1F253B",
             "selection": "#242D43"
           },
           {
-            "cursor": "#F5CC69",
+            "cursor": "#F5CE6E",
             "background": "#2D2542",
             "selection": "#2D2542"
           },
           {
-            "cursor": "#5FDDC9",
+            "cursor": "#7FE4D4",
             "background": "#322332",
             "selection": "#322332"
           },
           {
-            "cursor": "#FFADD5",
+            "cursor": "#FFC1DF",
             "background": "#1F253B",
             "selection": "#1F253B"
           },
           {
-            "cursor": "#FFB2BF",
+            "cursor": "#FFC3CD",
             "background": "#242D43",
             "selection": "#242D43"
           },
@@ -901,12 +901,12 @@
         "editor.document_highlight.read_background": "#00245E",
         "editor.document_highlight.write_background": "#00245E",
         "editor.document_highlight.bracket_background": "#00245E",
-        "editor.diff_hunk.added.background": "#111318",
-        "editor.diff_hunk.added.hollow_background": "#111318",
-        "editor.diff_hunk.added.hollow_border": "#5C98EA",
-        "editor.diff_hunk.deleted.background": "#271C23",
-        "editor.diff_hunk.deleted.hollow_background": "#1B141A",
-        "editor.diff_hunk.deleted.hollow_border": "#FF9993",
+        "editor.diff_hunk.added.background": "#1D342C",
+        "editor.diff_hunk.added.hollow_background": "#1D342C",
+        "editor.diff_hunk.added.hollow_border": "#98DEB6",
+        "editor.diff_hunk.deleted.background": "#37262B",
+        "editor.diff_hunk.deleted.hollow_background": "#37262B",
+        "editor.diff_hunk.deleted.hollow_border": "#FFADB3",
         "terminal.background": "#050505",
         "terminal.ansi.background": "#050505",
         "terminal.foreground": "#D8E1EC",
@@ -937,14 +937,14 @@
         "terminal.ansi.bright_white": "#D8E1EC",
         "terminal.ansi.dim_white": "#B5BBC5",
         "link_text.hover": "#80BBFF",
-        "version_control.added": "#54D878",
-        "version_control.deleted": "#FF9993",
+        "version_control.added": "#98DEB6",
+        "version_control.deleted": "#FFADB3",
         "version_control.modified": "#E9C04F",
         "version_control.renamed": "#D2A8FF",
         "version_control.conflict": "#FF9FB8",
         "version_control.ignored": "#B5BBC5",
-        "version_control.word_added": "#0000FF33",
-        "version_control.word_deleted": "#0000FF33",
+        "version_control.word_added": "#78DBA822",
+        "version_control.word_deleted": "#F39BA926",
         "version_control.conflict_marker.ours": "#00245E",
         "version_control.conflict_marker.theirs": "#002D20",
         "conflict": "#FF9FB8",
@@ -1019,42 +1019,42 @@
         ],
         "players": [
           {
-            "cursor": "#FFAD66",
+            "cursor": "#FFC38F",
             "background": "#15263E",
             "selection": "#408CFF40"
           },
           {
-            "cursor": "#D9B8FF",
+            "cursor": "#DFC4FF",
             "background": "#15263E",
             "selection": "#15263E"
           },
           {
-            "cursor": "#E9C04F",
+            "cursor": "#EDCC70",
             "background": "#252117",
             "selection": "#292416"
           },
           {
-            "cursor": "#FFADC2",
+            "cursor": "#FFBECF",
             "background": "#241F30",
             "selection": "#241F30"
           },
           {
-            "cursor": "#62CFDF",
+            "cursor": "#8CDCE8",
             "background": "#271C23",
             "selection": "#271C23"
           },
           {
-            "cursor": "#FFB28F",
+            "cursor": "#FFC2A7",
             "background": "#252117",
             "selection": "#252117"
           },
           {
-            "cursor": "#FFAAA5",
+            "cursor": "#FFC0BC",
             "background": "#15263E",
             "selection": "#15263E"
           },
           {
-            "cursor": "#B7C1CD",
+            "cursor": "#C8D0D9",
             "background": "#111318",
             "selection": "#15263E"
           }
@@ -1307,12 +1307,12 @@
         "editor.document_highlight.read_background": "#00245E",
         "editor.document_highlight.write_background": "#00245E",
         "editor.document_highlight.bracket_background": "#00245E",
-        "editor.diff_hunk.added.background": "#06080C",
-        "editor.diff_hunk.added.hollow_background": "#06080C",
-        "editor.diff_hunk.added.hollow_border": "#5C98EA",
-        "editor.diff_hunk.deleted.background": "#1F0F16",
-        "editor.diff_hunk.deleted.hollow_background": "#11070D",
-        "editor.diff_hunk.deleted.hollow_border": "#FF9993",
+        "editor.diff_hunk.added.background": "#182F27",
+        "editor.diff_hunk.added.hollow_background": "#182F27",
+        "editor.diff_hunk.added.hollow_border": "#98DEB6",
+        "editor.diff_hunk.deleted.background": "#322126",
+        "editor.diff_hunk.deleted.hollow_background": "#322126",
+        "editor.diff_hunk.deleted.hollow_border": "#FFADB3",
         "terminal.background": "#000000",
         "terminal.ansi.background": "#000000",
         "terminal.foreground": "#EFF4FB",
@@ -1343,14 +1343,14 @@
         "terminal.ansi.bright_white": "#EFF4FB",
         "terminal.ansi.dim_white": "#B5BBC5",
         "link_text.hover": "#80BBFF",
-        "version_control.added": "#54D878",
-        "version_control.deleted": "#FF9993",
+        "version_control.added": "#98DEB6",
+        "version_control.deleted": "#FFADB3",
         "version_control.modified": "#E9C04F",
         "version_control.renamed": "#D2A8FF",
         "version_control.conflict": "#FF9FB8",
         "version_control.ignored": "#B5BBC5",
-        "version_control.word_added": "#0000FF33",
-        "version_control.word_deleted": "#0000FF33",
+        "version_control.word_added": "#78DBA826",
+        "version_control.word_deleted": "#F39BA929",
         "version_control.conflict_marker.ours": "#00245E",
         "version_control.conflict_marker.theirs": "#002D20",
         "conflict": "#FF9FB8",
@@ -1425,42 +1425,42 @@
         ],
         "players": [
           {
-            "cursor": "#FFAD66",
+            "cursor": "#FFC38F",
             "background": "#0C1A2D",
             "selection": "#408CFF40"
           },
           {
-            "cursor": "#D9B8FF",
+            "cursor": "#DFC4FF",
             "background": "#0C1A2D",
             "selection": "#0C1A2D"
           },
           {
-            "cursor": "#E9C04F",
+            "cursor": "#EDCC70",
             "background": "#17140B",
             "selection": "#201A0C"
           },
           {
-            "cursor": "#FFADC2",
+            "cursor": "#FFBDCE",
             "background": "#160E24",
             "selection": "#160E24"
           },
           {
-            "cursor": "#62CFDF",
+            "cursor": "#8CDCE8",
             "background": "#1F0F16",
             "selection": "#1F0F16"
           },
           {
-            "cursor": "#FFB28F",
+            "cursor": "#FFC1A4",
             "background": "#17140B",
             "selection": "#17140B"
           },
           {
-            "cursor": "#FFAAA5",
+            "cursor": "#FFBFBC",
             "background": "#0C1A2D",
             "selection": "#0C1A2D"
           },
           {
-            "cursor": "#B7C1CD",
+            "cursor": "#C8D0D9",
             "background": "#06080C",
             "selection": "#0C1A2D"
           }

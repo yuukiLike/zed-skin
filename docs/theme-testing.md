@@ -16,8 +16,9 @@ if the generated report differs from the committed copy.
 - Markdown: selection visibility on prose, links, inline code, fenced code and
   diffs, including search overlap.
 - Lists: selected rows versus the surrounding surface and hover; symbols and
-  brackets versus normal/active lines; changed words versus solid/hollow diff
-  rows and overlapping search; conflict sides versus each other and the editor.
+  brackets versus normal/active lines; added versus deleted rows; changed words
+  versus solid/hollow diff rows and overlapping search; conflict sides versus
+  each other and the editor.
 - Terminal: default text and ANSI colors on the default surface; normal, bright
   and dim black/white pairs. Black must stay darker than white.
 - Debugger: execution row versus normal/active lines; selected stack frame versus
@@ -26,7 +27,9 @@ if the generated report differs from the committed copy.
   overlays, incorrect alpha/paint order, missing fields and duplicate JSON keys.
 - Independent color-math references, unrounded thresholds and failing CLI status.
 
-Dark primary text targets 7:1; comments target 4.5:1.
+Dark primary text targets 7:1, including diff rows and changed words. Colored
+syntax/status text retains 7:1 on normal surfaces and targets 4.5:1 on Git diff
+highlights. Comments target 4.5:1.
 Day Vivid targets 4.5:1 except green syntax at a custom 2.5:1.
 Search and selected text have no contrast target; tests retain visibility and overlap checks.
 ANSI black on a dark default surface and white on a light one are exempt;
@@ -81,6 +84,29 @@ so the dark variants use blue-cyan for that shared fill (`#003044` for Day AAA,
 `#002D38` for Night AAA and Midnight AAA). Day Vivid uses pale mint (`#C0FFD0`)
 for Frames. Other controls using `element.hover` inherit these colors. A theme
 cannot give selected and hovered stack frames different fills in this Zed version.
+
+## Git diff palette check · 2026-10-21
+
+Zed 1.24.4 on macOS loaded the rebuilt development extension. All four variants
+were reviewed with `git: diff` in an isolated local Git repository: whole added
+and removed lines, changed identifiers, a changed number, and partial `Number`
+search matches in the working side. Each variant has one plain diff and one
+search-overlap capture. The eight final original JPEGs, fixture and review index
+are Git-ignored under `.local/git-diff-2026-10-21/`; earlier file-comparison setup
+captures are kept separately from that final review set.
+
+The revised palette uses soft mint/coral accents and translucent word fills.
+Primary text retains 7:1 on dark diff highlights, while colored syntax/status
+text uses 4.5:1 there; normal surfaces retain their existing targets. Cursors were
+lightened on the dark variants and affected Day Vivid text colors were slightly
+darkened. The audit now checks added/deleted row separation, and excludes word
+fills from border/icon backgrounds because they only cover glyph ranges.
+
+The 61 Python tests, four-palette audit and whitespace check pass. Original Zed
+settings, including theme and font size, were restored after capture. This focused
+check does not repeat conflict, debugger, terminal or other-platform runtime QA;
+their existing modeled checks still run. Final aesthetic acceptance remains with
+the user.
 
 ## Markdown search check · 2026-10-20
 

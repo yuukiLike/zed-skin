@@ -86,7 +86,8 @@ class MarkdownSelectionTests(unittest.TestCase):
                 rows = audit(theme)
                 self.assertEqual({row[4] for row in rows if row[0] == "Comments"}, {4.5})
                 for group in ("Editor / syntax", "UI text", "Terminal text"):
-                    primary = [row for row in rows if row[0] == group and not row[2].startswith("search.")]
+                    primary = [row for row in rows if row[0] == group
+                               and not row[2].startswith(("search.", "editor.diff_hunk.", "version_control.word_"))]
                     self.assertTrue(primary)
                     self.assertEqual({row[4] for row in primary}, {7})
                 for group in ("Editor / syntax", "UI text"):
@@ -309,6 +310,19 @@ class InteractionTests(unittest.TestCase):
                 self.assertTrue(any(r[0] == "Debugger frame visibility" and r[3] < r[4]
                                     for r in interaction_checks(style)))
 
+    def test_added_and_deleted_rows_cannot_be_equal_or_almost_equal(self):
+        for theme in self.themes:
+            for surface in ("background", "hollow_background"):
+                for deleted in ("#00351F", "#00351E"):
+                    with self.subTest(theme=theme["name"], surface=surface, deleted=deleted):
+                        style = copy.deepcopy(theme["style"])
+                        added_key = f"editor.diff_hunk.added.{surface}"
+                        deleted_key = f"editor.diff_hunk.deleted.{surface}"
+                        style[added_key] = "#00351F"
+                        style[deleted_key] = deleted
+                        self.assertTrue(any(r[0] == "Diff row distinction" and r[1:3] == (added_key, deleted_key)
+                                            and r[3] < r[4] for r in interaction_checks(style)))
+
     def test_changed_words_cannot_blend_into_either_diff_row_style(self):
         for theme in self.themes:
             for kind in ("added", "deleted"):
@@ -346,11 +360,25 @@ class InteractionTests(unittest.TestCase):
         for _, color in rows:
             self.assertEqual(color, (0, 0, 0.2))
 
-    def test_word_diff_search_does_not_weaken_plain_code(self):
+    def test_diff_highlights_keep_primary_text_aaa_and_colored_text_aa(self):
         for theme in self.themes[1:]:
-            rows = [r for r in audit(theme) if r[0] == "Editor / syntax" and "version_control.word_" in r[2]]
+            rows = [r for r in audit(theme) if r[0] == "Editor / syntax"]
+            diff_rows = [r for r in rows if r[2].startswith(("version_control.word_", "editor.diff_hunk."))]
+            self.assertEqual({r[4] for r in diff_rows if r[1] == "editor.foreground"}, {7})
+            self.assertEqual({r[4] for r in diff_rows if r[1].startswith("syntax.")}, {4.5})
+            self.assertEqual({r[4] for r in rows if r[2] == "editor.background"}, {7})
             self.assertFalse([r for r in rows if r[2].startswith("search.")])
-            self.assertEqual({r[4] for r in rows if not r[2].startswith("search.")}, {7})
+
+    def test_diff_primary_text_cannot_use_the_colored_text_aa_exception(self):
+        for original in self.themes[1:]:
+            theme = copy.deepcopy(original)
+            theme["style"]["editor.foreground"] = "#AAAAAA"
+            row = next(r for r in audit(theme) if r[:3] == (
+                "Editor / syntax", "editor.foreground", "editor.diff_hunk.added.background"))
+            with self.subTest(theme=theme["name"]):
+                self.assertGreaterEqual(row[3], 4.5)
+                self.assertLess(row[3], 7)
+                self.assertEqual(row[4], 7)
 
     def test_search_then_word_then_selection_are_composited_on_each_diff_row(self):
         style = copy.deepcopy(self.themes[-1]["style"])
