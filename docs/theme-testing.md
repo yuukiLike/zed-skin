@@ -93,6 +93,25 @@ Day Vivid uses pale leaf green (`#D3E9AD`)
 for Frames. Other controls using `element.hover` inherit these colors. A theme
 cannot give selected and hovered stack frames different fills in this Zed version.
 
+## Vivid keywords on a dimmer display · 2026-10-24
+
+The user found the palette comfortable on a MacBook Air but reported that green
+keywords such as `import` looked too close to black text on a dimmer LG display.
+Only Vivid's `syntax.keyword.color` changes: `#00551C` to the brighter, more
+saturated leaf green `#00610C`. The user rejected added boldness on the MacBook
+Air, so keywords retain their original weight 500 and variables remain at 400.
+This adjustment relies on color alone. Other syntax entries, comments, Markdown
+headings, all UI/selection colors, backgrounds, the three other theme objects
+and global Zed settings remain unchanged.
+
+Keyword-to-variable contrast increases from 2.15:1 to 2.52:1. Keyword-to-editor
+contrast decreases from 6.96:1 to 5.93:1, with a minimum of 4.57:1 across
+enforced surfaces. The existing 62 regression tests and enforced contrast checks
+pass; search/selection and rendered-Markdown text measurements remain advisory.
+These calculations do not model either physical display or prove visual
+acceptance. Comparison on both screens is pending. No computer-use testing or
+global display/font settings changes were performed.
+
 ## Vivid tab-close hover · 2026-10-24
 
 The user reported that the hovered tab-close button was hard to distinguish.
