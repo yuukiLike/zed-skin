@@ -3,7 +3,7 @@
 - **Day Vivid:** soft sage `#DCE4D6` with near-black variables `#090D12`, leaf
   green keywords `#00551C`, royal-blue calls `#1234BF`, orchid types `#8500A9`,
   raspberry values `#A00052` and burnt-orange strings `#803B00`. Properties use
-  deep teal `#003642`, italic comments use slate blue-gray `#4E5262`, and
+  orange `#943000`, italic comments use slate blue-gray `#4E5262`, and
   punctuation uses neutral slate `#41464D`. Color categories differ in both hue
   and lightness. Font weights and backgrounds are unchanged.
 - **Day AAA:** deep indigo `#1C2135` with bright syntax colors.
@@ -20,11 +20,11 @@ gray comments. No global font-family, weight or fading overrides are installed.
 
 On the sage editor background, keyword contrast increases from 5.88:1 to
 6.96:1 while retaining the leaf-green hue; comments reach 5.95:1. The existing
-4.5:1 requirements remain enforced on normal and diff surfaces. The closest
-pair among eight primary syntax roles increases from 0.1046 to 0.1339 Oklab
-distance. Properties separate from green keywords, and comments separate from
-violet types and near-black variables. This is a relative palette measurement,
-not a guarantee of visual acceptance.
+4.5:1 requirements remain enforced on normal and diff surfaces. At the user's
+request, property names such as `length` use orange: 6.01:1 on the editor and
+4.98:1 on the selected row. Properties and strings now share a warm color
+family; other approved syntax colors are retained. Palette measurements do not
+guarantee visual acceptance.
 
 Day Vivid's lists and symbol/bracket highlights use leaf green, with matching
 focus borders, active indent guides and line numbers. Its selected row is
@@ -74,8 +74,10 @@ only Vivid's colored syntax and UI/file-list foregrounds. Its sage surfaces and
 green selection fills are retained. An initial
 scope check compared only the latest rollback and missed earlier dark-theme
 edits. The three dark variants have now been restored exactly to the original
-session snapshot, also verified against HEAD. The user approved the final Vivid
-appearance on 2026-10-23 and requested a commit. No final computer-use testing
+session snapshot, also verified against HEAD. The user approved the Vivid
+appearance committed as `7652d97` on 2026-10-23, then requested the orange
+property follow-up. The user confirmed the orange properties felt more
+comfortable and authorized delivery on 2026-10-23. No final computer-use testing
 was performed at the user's request. Published screenshots
 show the previous palette. The four global overrides introduced during this
 work (UI family/weight, editor weight and unnecessary-code fading) were removed.

@@ -154,27 +154,27 @@ text changes from `#17602B` to `#0B4722` (5.42:1 to 7.67:1 on the panel;
 4.86:1 to 6.88:1 when selected). Shared UI keys also affect menus, status labels
 and debugger text within Vivid.
 
-The user approved the current-file highlight, then requested wider separation
-among code categories and clearer leaf green. This step changes 36 Vivid syntax
-foregrounds and `editor.foreground` only:
+The user approved the current-file highlight and the broader Vivid palette in
+commit `7652d97`, then requested orange property names such as `length`. This
+follow-up changes only `syntax.property.color`; the current palette is:
 
 | Role | Current color | Contrast on editor background |
 | --- | --- | --- |
 | Keywords (`import`, `from`) | `#00551C` | 6.96:1 |
 | Calls (`expect`, `equal`) | `#1234BF` | 7.10:1 |
 | Types (`Array`) | `#8500A9` | 6.27:1 |
-| Properties (`prototype`, `hasOwnProperty`) | `#003642` | 10.03:1 |
+| Properties (`length`, `prototype`, `hasOwnProperty`) | `#943000` | 6.01:1 |
 | Strings | `#803B00` | 6.33:1 |
 | Numbers / booleans | `#A00052` | 6.16:1 |
 | Comments | `#4E5262` | 5.95:1 |
 | Variables (`copy`, `input`) | `#090D12` | 14.95:1 |
 
-Compared with the preceding palette, comments/variables grow from 0.2015 to
-0.2843 Oklab distance, comments/types from 0.1793 to 0.2066, functions/types
-from 0.1752 to 0.1936, and strings/numbers from 0.1142 to 0.1453. The closest
-pair among these eight roles improves from 0.1046 to 0.1339. These distances
-describe palette changes, not a perceptual pass/fail; not every individual pair
-is farther apart.
+The accepted palette's Oklab distances remain 0.2843 for comments/variables,
+0.2066 for comments/types, 0.1936 for functions/types, and 0.1453 for
+strings/numbers. Properties and strings intentionally share a warm color family
+after the orange request. The property contrast is 4.98:1 on the selected row
+and at least 4.63:1 across the enforced normal/diff surfaces. Color distances
+describe the palette, not a perceptual pass/fail.
 
 Leaf green is adjusted from `#006127` to `#00551C`, improving its editor contrast
 from 5.88:1 to 6.96:1 and selected-row contrast from 4.87:1 to 5.76:1. Its green
@@ -184,13 +184,13 @@ targets; search/selection and rendered-Markdown pairs retain their reported
 advisory status. Punctuation and predictive syntax keep their neutral slate;
 numbers, booleans and special strings retain raspberry.
 
-The accepted current-file highlight, all UI/file-list colors, font weights/styles,
-backgrounds, selection fills, the three dark themes and global settings are
-unchanged in this step. Validation uses the existing contrast/compositing audit,
-regression suite and source comparisons. The user approved the final Vivid
-appearance on 2026-10-23 and requested a commit. Validation includes 62 passing
-tests and the user's own Zed screenshots; no new agent computer-use testing was
-performed, and extended runtime scenarios were not visually rechecked.
+The accepted current-file highlight, other syntax colors, all UI/file-list
+colors, font weights/styles, backgrounds, selection fills, the three dark themes
+and global settings are unchanged in this step. Validation uses the existing
+contrast/compositing audit, regression suite and source comparisons. All 62
+regression tests pass. On 2026-10-23 the user confirmed the orange properties
+felt more comfortable and authorized delivery. No new agent computer-use
+testing was performed, and extended runtime scenarios were not visually rechecked.
 
 ## Git diff palette check · 2026-10-21
 
