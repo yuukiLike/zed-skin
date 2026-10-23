@@ -1,7 +1,7 @@
 # Palette notes
 
 - **Day Vivid:** soft sage `#DCE4D6` with near-black variables `#090D12`, leaf
-  green keywords `#00551C`, royal-blue calls `#1234BF`, orchid types `#8500A9`,
+  green keywords `#00610C`, royal-blue calls `#1234BF`, orchid types `#8500A9`,
   raspberry values `#A00052` and burnt-orange strings `#803B00`. Properties use
   orange `#943000`, italic comments use muted plum `#674A5F`, and
   punctuation uses neutral slate `#41464D`. Markdown source headings use emerald
@@ -19,9 +19,11 @@ comments (400), with keywords/functions at 500; other tokens retain their
 earlier weights. Dark variants retain their original token weights and italic
 gray comments. No global font-family, weight or fading overrides are installed.
 
-On the sage editor background, keyword contrast increases from 5.88:1 to
-6.96:1 while retaining the leaf-green hue; comments reach 5.92:1. The existing
-4.5:1 requirements remain enforced on normal and diff surfaces. At the user's
+For the dimmer-display adjustment, keyword contrast against near-black variables
+increases from 2.15:1 to 2.52:1. The brighter, more saturated leaf green retains
+5.93:1 against the sage editor and at least 4.57:1 across enforced surfaces;
+comments reach 5.92:1 on the editor. The existing 4.5:1 requirements remain
+enforced on normal and diff surfaces. At the user's
 request, property names such as `length` use orange: 6.01:1 on the editor and
 4.98:1 on the selected row. Properties and strings now share a warm color
 family; other approved syntax colors are retained. Palette measurements do not
@@ -100,3 +102,5 @@ selection are preserved. Only Day Vivid differs from the original theme family.
 The user reported that the 2026-10-24 comment/Markdown appearance looked good.
 The user also approved the final rose hover-fill adjustment and requested a
 commit on 2026-10-24. No computer-use checks or global settings changes were made.
+The subsequent keyword color-only adjustment has static validation only;
+comparison on the MacBook Air and dimmer LG display is pending.
