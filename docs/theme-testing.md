@@ -106,8 +106,8 @@ changes from earlier in the session. That error is now corrected: Day AAA,
 Night AAA and Midnight AAA match the original session-start snapshot and HEAD
 exactly. Day Vivid is the only theme object with a net change.
 
-Vivid variables are `#202820`, keywords `#185C28`, functions `#174299`, numbers
-`#8A1F58`, strings `#744000` and italic comments `#3E4A39`. Regular tokens use
+The restored checkpoint used variables `#202820`, keywords `#185C28`, functions
+`#174299`, numbers `#8A1F58`, strings `#744000` and italic comments `#3E4A39`. Regular tokens use
 explicit weight 400;
 keywords/functions retain 500 and other tokens their earlier weights. On the
 sage background, calculated contrast is 11.63:1 for variables, 7.18:1 for
@@ -130,8 +130,67 @@ The 62 regression tests pass. Direct comparisons verify that only Vivid differs
 from the original theme family, all three dark objects match HEAD exactly, and
 Vivid was untouched during this scope repair. At the user's request, validation
 uses source review and static checks, with no new computer-use checks or
-screenshots. Reload the development extension before comparing colors. Overall
-visual acceptance is still pending.
+screenshots. Reload the development extension before comparing colors. At that
+rollback checkpoint, visual acceptance was still pending.
+
+After checkpoint commit `5382f74` was pushed, the first Vivid adjustment changed
+green syntax from `#185C28` to `#145024` and comments from `#3E4A39` to `#354331`.
+That step changed eight syntax foregrounds and retained blue and purple.
+
+The next user screenshot requested stronger green keywords, orange strings,
+blue calls, purple types and file-list greens. That adjustment changed
+25 syntax foregrounds, 22 shared UI/status foregrounds and three accent entries:
+
+| Text | Before that adjustment | After that adjustment | Contrast on editor background |
+| --- | --- | --- | --- |
+| Green keywords | `#145024` | `#0B4722` | 7.31:1 → 8.31:1 |
+| Orange strings | `#744000` | `#6B3000` | 6.51:1 → 7.87:1 |
+| Blue calls | `#174299` | `#1234A6` | 7.08:1 → 7.79:1 |
+| Purple types | `#5A28A3` | `#5319A5` | 7.11:1 → 7.86:1 |
+
+Secondary UI/file-list text changes from `#3E4A39` to `#2D412F` (6.63:1 to
+7.79:1 on the panel; 5.95:1 to 6.99:1 when selected). Added-file/green accent
+text changes from `#17602B` to `#0B4722` (5.42:1 to 7.67:1 on the panel;
+4.86:1 to 6.88:1 when selected). Shared UI keys also affect menus, status labels
+and debugger text within Vivid.
+
+The user approved the current-file highlight, then requested wider separation
+among code categories and clearer leaf green. This step changes 36 Vivid syntax
+foregrounds and `editor.foreground` only:
+
+| Role | Current color | Contrast on editor background |
+| --- | --- | --- |
+| Keywords (`import`, `from`) | `#00551C` | 6.96:1 |
+| Calls (`expect`, `equal`) | `#1234BF` | 7.10:1 |
+| Types (`Array`) | `#8500A9` | 6.27:1 |
+| Properties (`prototype`, `hasOwnProperty`) | `#003642` | 10.03:1 |
+| Strings | `#803B00` | 6.33:1 |
+| Numbers / booleans | `#A00052` | 6.16:1 |
+| Comments | `#4E5262` | 5.95:1 |
+| Variables (`copy`, `input`) | `#090D12` | 14.95:1 |
+
+Compared with the preceding palette, comments/variables grow from 0.2015 to
+0.2843 Oklab distance, comments/types from 0.1793 to 0.2066, functions/types
+from 0.1752 to 0.1936, and strings/numbers from 0.1142 to 0.1453. The closest
+pair among these eight roles improves from 0.1046 to 0.1339. These distances
+describe palette changes, not a perceptual pass/fail; not every individual pair
+is farther apart.
+
+Leaf green is adjusted from `#006127` to `#00551C`, improving its editor contrast
+from 5.88:1 to 6.96:1 and selected-row contrast from 4.87:1 to 5.76:1. Its green
+hue is retained, with substantially more lightness and chroma than the rejected
+near-black green `#003D1A`. All normal/diff text gates remain at their existing
+targets; search/selection and rendered-Markdown pairs retain their reported
+advisory status. Punctuation and predictive syntax keep their neutral slate;
+numbers, booleans and special strings retain raspberry.
+
+The accepted current-file highlight, all UI/file-list colors, font weights/styles,
+backgrounds, selection fills, the three dark themes and global settings are
+unchanged in this step. Validation uses the existing contrast/compositing audit,
+regression suite and source comparisons. The user approved the final Vivid
+appearance on 2026-10-23 and requested a commit. Validation includes 62 passing
+tests and the user's own Zed screenshots; no new agent computer-use testing was
+performed, and extended runtime scenarios were not visually rechecked.
 
 ## Git diff palette check · 2026-10-21
 
