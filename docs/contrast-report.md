@@ -14,21 +14,21 @@ Checked pairs: 32556.
 
 | Scope | Pairs | Minimum | Target | Result |
 | --- | ---: | ---: | ---: | --- |
-| UI text | 10268 | 2.2230:1 | 4.5:1 | REVIEW (5748 advisory) |
-| Editor / syntax | 16006 | 2.2299:1 | 4.5:1 | REVIEW (7601 advisory) |
-| Comments | 604 | 2.7195:1 | 4.5:1 | REVIEW (304 advisory) |
+| UI text | 10268 | 2.2192:1 | 4.5:1 | REVIEW (4859 advisory) |
+| Editor / syntax | 16006 | 2.2192:1 | 4.5:1 | REVIEW (7714 advisory) |
+| Comments | 604 | 2.2427:1 | 4.5:1 | REVIEW (410 advisory) |
 | Terminal text | 12 | 4.0000:1 | 4.5:1 | REVIEW (2 advisory) |
 | Terminal ANSI | 87 | 3.4832:1 | 4.5:1 | REVIEW (38 advisory) |
-| UI indicators | 3735 | 3.1835:1 | 3:1 | PASS |
+| UI indicators | 3735 | 3.1180:1 | 3:1 | PASS |
 | Scrollbar | 3 | 4.0216:1 | 3:1 | PASS |
 | Cursors | 1552 | 3.0251:1 | 3:1 | PASS |
 | Inverse cursor text | 8 | 6.9783:1 | 4.5:1 | PASS |
 | Vim / Helix badges | 8 | 4.5091:1 | 4.5:1 | PASS |
-| Markdown selection visibility | 18 | 1.6310:1 | 1.25:1 | PASS (custom) |
-| Markdown search selection visibility | 36 | 0.0621 ΔEOK | 0.06 ΔEOK | PASS (custom) |
+| Markdown selection visibility | 18 | 1.6154:1 | 1.25:1 | PASS (custom) |
+| Markdown search selection visibility | 36 | 0.0609 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Editor selection visibility | 1 | 0.0887 ΔEOK | 0.06 ΔEOK | PASS (custom) |
-| Search visibility | 100 | 0.0879 ΔEOK | 0.06 ΔEOK | PASS (custom) |
-| Search state distinction | 60 | 0.0863 ΔEOK | 0.06 ΔEOK | PASS (custom) |
+| Search visibility | 100 | 0.0865 ΔEOK | 0.06 ΔEOK | PASS (custom) |
+| Search state distinction | 60 | 0.0848 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | List selection visibility | 12 | 0.0625 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Editor highlight visibility | 6 | 0.0685 ΔEOK | 0.06 ΔEOK | PASS (custom) |
 | Debugger row visibility | 2 | 0.0707 ΔEOK | 0.06 ΔEOK | PASS (custom) |
@@ -41,7 +41,7 @@ Checked pairs: 32556.
 
 Lowest text contrast pair:
 
-`text.accent` / `search.active_match_background / element.selection_background / surface.background / inline code`: 2.2230:1.
+`version_control.deleted` / `search.active_match_background / element.selection_background / surface.background / inline code`: 2.2192:1.
 
 ## GreenTree Day AAA
 
