@@ -21,13 +21,9 @@ TEXT_CONTRAST_TARGETS = {
     "GreenTree Night AAA": 7,
     "GreenTree Midnight AAA": 7,
 }
-# Vivid deliberately prioritizes a bright green on warm white. Only these
-# green syntax captures use a custom floor; 2.5:1 is NOT a WCAG text target.
-# Keep other Vivid text at 4.5:1. Dark variants retain 7:1 for primary text;
-# comments use AA's 4.5:1. Search and selected text have no contrast target.
-VIVID_GREEN_CAPTURES = {
-    "keyword", "preproc", "punctuation.markup", "tag", "title", "diff.plus",
-}
+# Vivid targets AA on normal surfaces. The original dark palettes retain AAA
+# for primary text and AA for comments. Expanded interaction/Markdown text
+# measurements remain visible as advisory results, not new palette requirements.
 COMMENT_CAPTURES = {"comment", "comment.doc"}
 TEXT_GROUPS = {
     "UI text", "Editor / syntax", "Terminal text", "Terminal ANSI", "Inverse cursor text",
@@ -246,8 +242,8 @@ def search_highlight_checks(style):
 
 
 def markdown_selection_checks(style):
-    # Keep selections visible on each rendered surface. Selected text has no
-    # contrast target, including older Zed versions that paint over glyphs.
+    # Keep selections visible on each rendered surface. audit() separately
+    # checks text against the composited fill beneath glyphs in Zed 1.25.2.
     overlay = style[MARKDOWN_SELECTION]
     composite(overlay, rgb(style["editor.background"]))  # Validate RGBA first.
     if not 0 < int(overlay[7:9], 16) < 255:
@@ -357,26 +353,19 @@ def audit(theme):
         raise ValueError("Provide local/remote player colors and at least one accent")
 
     results = []
-    vivid_foregrounds = (
-        {f"syntax.{capture}" for capture in VIVID_GREEN_CAPTURES}
-        if theme["name"] == "GreenTree Day Vivid" else set()
-    )
-
     def check(group, foregrounds, backgrounds, threshold):
         for foreground_name, foreground in foregrounds:
             for background_name, background in backgrounds:
-                if group in TEXT_GROUPS and (".selection" in background_name or background_name.startswith("search.")):
-                    continue
                 target = threshold
+                if group in TEXT_GROUPS and (".selection" in background_name or background_name.startswith("search.")):
+                    target = min(target, 4.5)
                 # Brighter Git highlights keep primary text at AAA and colored
                 # syntax/status text at AA, as documented in the palette targets.
-                if (group in {"UI text", "Editor / syntax"}
+                if (group in {"UI text", "Editor / syntax", "Comments"}
                         and (background_name.startswith("version_control.word_")
                              or background_name.startswith("editor.diff_hunk."))
                         and foreground_name not in {"text", "editor.foreground"}):
                     target = min(target, 4.5)
-                if foreground_name in vivid_foregrounds:
-                    target = 2.5
                 ratio = contrast_rgb(foreground, background)
                 results.append((group, foreground_name, background_name, ratio, target))
 
@@ -389,6 +378,17 @@ def audit(theme):
     search_backgrounds = [(f"{key} / {name}", selection_color(style[key], color))
                           for key in SEARCH_BACKGROUNDS for name, color in fields(EDITOR_BACKGROUNDS)]
     editor_backgrounds = fields(EDITOR_BACKGROUNDS) + word_backgrounds + search_backgrounds + word_search_backgrounds
+    # Markdown previews share the search colors but have their own selection
+    # overlay. Audit the text on that final fill, including selection over search.
+    for name, background in markdown_surfaces(style):
+        editor_backgrounds.append((f"markdown / {name}", background))
+        editor_backgrounds.append((f"{MARKDOWN_SELECTION} / {name}",
+                                   selection_color(style[MARKDOWN_SELECTION], background)))
+        for key in SEARCH_BACKGROUNDS:
+            searched = selection_color(style[key], background)
+            editor_backgrounds.append((f"{key} / markdown / {name}", searched))
+            editor_backgrounds.append((f"{key} / {MARKDOWN_SELECTION} / {name}",
+                                       selection_color(style[MARKDOWN_SELECTION], searched)))
     for index, player in enumerate(style["players"]):
         if set(player) != {"cursor", "background", "selection"}:
             raise ValueError(f"Incomplete player colors at index {index}")
@@ -430,12 +430,16 @@ def audit(theme):
     check("UI text", fields(UI_TEXT + STATUSES) + accents, all_backgrounds, text_threshold)
     check("Editor / syntax", fields(EDITOR_TEXT) + syntax_text, all_backgrounds, text_threshold)
     check("Comments", comment_text, all_backgrounds, 4.5)
-    check("Terminal text", fields(TERMINAL_TEXT[:3]), fields(TERMINAL_BACKGROUNDS), text_threshold)
+    terminal_backgrounds = fields(TERMINAL_BACKGROUNDS) + [
+        (f"{name} / players[0].selection", selection_color(style["players"][0]["selection"], color))
+        for name, color in fields(TERMINAL_BACKGROUNDS)
+    ]
+    check("Terminal text", fields(TERMINAL_TEXT[:3]), terminal_backgrounds, text_threshold)
     # ANSI names can be foregrounds OR backgrounds. Do not turn black into
     # white (or white into black) just to pass the default-background check.
     low_contrast_name = "black" if theme["appearance"] == "dark" else "white"
     ansi_on_default = [key for key in TERMINAL_TEXT[3:] if not key.endswith(low_contrast_name)]
-    check("Terminal ANSI", fields(ansi_on_default), fields(TERMINAL_BACKGROUNDS), text_threshold)
+    check("Terminal ANSI", fields(ansi_on_default), terminal_backgrounds, text_threshold)
     for variant in ("", "bright_", "dim_"):
         black, white = (f"terminal.ansi.{variant}{name}" for name in ("black", "white"))
         if luminance(style[black]) >= luminance(style[white]):
@@ -448,8 +452,13 @@ def audit(theme):
     check("UI indicators", fields(NON_TEXT + status_borders), indicator_backgrounds, 3)
     check("Scrollbar", fields(["scrollbar.thumb.background", "scrollbar.thumb.hover_background",
           "scrollbar.thumb.active_background"]), fields(["scrollbar.track.background"]), 3)
+    # Rendered Markdown previews have text selections but no editor caret.
+    cursor_backgrounds = [(name, color) for name, color in all_backgrounds
+                          if not name.startswith("markdown / ")
+                          and " / markdown / " not in name
+                          and MARKDOWN_SELECTION not in name]
     for index, player in enumerate(style["players"]):
-        check("Cursors", [(f"players[{index}].cursor", rgb(player["cursor"]))], all_backgrounds, 3)
+        check("Cursors", [(f"players[{index}].cursor", rgb(player["cursor"]))], cursor_backgrounds, 3)
         # Zed uses editor.background for text inside block cursors and cursor
         # name labels, with the player's cursor color as the background.
         check("Inverse cursor text", fields(["editor.background"]),
@@ -461,6 +470,17 @@ def audit(theme):
     results.extend(interaction_checks(style))
     results.extend(word_results)
     return results
+
+
+def advisory_text_check(theme, row):
+    """Retain expanded measurements without recoloring restored palettes.
+
+    Search/selection text and rendered Markdown surfaces were outside the
+    original enforced scope. Report their deficits honestly while preserving
+    the user's requested palettes and the baseline normal-surface requirements.
+    """
+    return (theme["name"] in TEXT_CONTRAST_TARGETS and row[0] in TEXT_GROUPS
+            and (".selection" in row[2] or row[2].startswith(("search.", "markdown / "))))
 
 
 def text_contrast_target(name):
@@ -483,8 +503,8 @@ def main():
         if not family["name"] or not family["author"] or not family["themes"]:
             raise ValueError("Theme family metadata and themes must not be empty")
         sections = ["# GreenTree · Contrast audit", "",
-                    "Dark primary text: AAA 7:1. Colored syntax/status text on Git diff highlights: AA 4.5:1; normal surfaces retain 7:1. Comments: AA 4.5:1. Day Vivid uses 4.5:1, except green syntax at a custom 2.5:1 (below AA). Search and selected text have no contrast target.",
-                    "UI indicators use 3:1 on their surfaces. Selection checks measure background visibility and search overlap; selected text appearance is reviewed in Zed.",
+                    "Day Vivid targets AA 4.5:1 on normal surfaces. The three dark variants match their session-start palettes: primary text targets AAA 7:1 and comments AA 4.5:1. Dark Git highlights retain 7:1 for primary text and 4.5:1 for colored text. Expanded search/selection and rendered-Markdown text measurements are advisory: below-target pairs are marked REVIEW, not claimed as passing their contrast targets.",
+                    "UI indicators use 3:1 on their surfaces. Selection checks cover both text readability and background visibility, including search overlap in source, Markdown previews and terminal selections.",
                     "Visibility guards are custom: 0.06 Oklab distance (ΔEOK) for search, selection, symbols, added/deleted rows, changed words and conflict sides; 1.25:1 luminance for Markdown selections and active search on dark editor surfaces. They are not WCAG criteria or proof of visual acceptance.",
                     "ANSI black/white retain their terminal roles: paired normal, bright and dim colors target 4.5:1; black on a dark default surface and white on a light one are exempt. Other program-chosen combinations need an in-app check.",
                     "Pass/fail uses unrounded values. See [checks, sources and limits](theme-testing.md).", "",
@@ -496,17 +516,20 @@ def main():
         for theme in family["themes"]:
             print(f"\n{theme['name']}")
             results = audit(theme)
-            failed.extend((theme["name"], *row) for row in results if row[3] < row[4])
+            failed.extend((theme["name"], *row) for row in results
+                          if row[3] < row[4] and not advisory_text_check(theme, row))
             sections += [f"## {theme['name']}", "", f"Checked pairs: {len(results)}.", "",
                          "| Scope | Pairs | Minimum | Target | Result |",
                          "| --- | ---: | ---: | ---: | --- |"]
             for group in dict.fromkeys(row[0] for row in results):
                 rows = [row for row in results if row[0] == group]
                 worst = min(rows, key=lambda row: row[3])
-                result = "PASS" if all(row[3] >= row[4] for row in rows) else "FAIL"
+                below_target = [row for row in rows if row[3] < row[4]]
+                failures = [row for row in below_target if not advisory_text_check(theme, row)]
+                result = "FAIL" if failures else f"REVIEW ({len(below_target)} advisory)" if below_target else "PASS"
                 unit = " ΔEOK" if group in COLOR_DISTANCE_GROUPS else ":1"
                 targets = " / ".join(f"{value:g}{unit}" for value in sorted({row[4] for row in rows}))
-                if group in COLOR_DISTANCE_GROUPS | {"Markdown selection visibility", "Active search visibility"} or (theme["name"] == "GreenTree Day Vivid" and group == "Editor / syntax"):
+                if group in COLOR_DISTANCE_GROUPS | {"Markdown selection visibility", "Active search visibility"}:
                     result += " (custom)"
                 sections.append(f"| {group} | {len(rows)} | {measurement(group, worst[3])} | {targets} | {result} |")
                 print(f"{result:4} {group:22} {len(rows):5} pairs; min {measurement(group, worst[3])} ({worst[1]} / {worst[2]})")

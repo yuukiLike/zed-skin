@@ -9,6 +9,7 @@ Green-focused, high contrast themes for Zed: one light and three dark variants.
 [Midnight AAA](#midnight-aaa) · [Night AAA](#night-aaa) · [Day AAA](#day-aaa) · [Day Vivid](#day-vivid)
 
 The same English sample in every variant. Click any image to view it at full size.
+Images show 0.11.2; the latest colors and font weights are described in the [palette notes](docs/palette-review.md).
 
 ### Midnight AAA
 
@@ -30,7 +31,7 @@ Deep indigo with bright syntax colors
 
 ### Day Vivid
 
-Warm ivory, vivid green, violet and pink
+Soft sage, leaf green, clear blue, pink and orange
 
 [![GreenTree Day Vivid: TypeScript editor](docs/screenshots/day-vivid.jpg)](docs/screenshots/day-vivid.jpg)
 
@@ -197,7 +198,7 @@ Captured with GreenTree 0.11.2 in Zed 1.24.2 on macOS. All screenshots use Engli
 
 ## Palette and checks
 
-Dark variants target AAA 7:1 for primary text and AA 4.5:1 for comments. Search and selections share a blue hue and prioritize appearance and visibility, with no text contrast target. Day Vivid's green uses a custom 2.5:1 floor, below AA. These are palette targets, not whole-editor certification.
+Day Vivid targets AA 4.5:1 for normal text. The original dark palettes target AAA 7:1 for primary text and AA 4.5:1 for comments. Expanded search/selection and rendered-Markdown measurements report below-target pairs as REVIEW, not as passing contrast. These are palette targets, not whole-editor certification.
 
 Dependency-free [checks](docs/theme-testing.md) cover search, selections, lists, Git diffs/conflicts, symbols, brackets, debugger highlights and ANSI black/white pairs.
 

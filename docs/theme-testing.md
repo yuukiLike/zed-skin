@@ -13,25 +13,27 @@ if the generated report differs from the committed copy.
 
 - All four palettes: text contrast, visible search/selection backgrounds, and
   distinct current/other matches with either the search field or editor focused.
-- Markdown: selection visibility on prose, links, inline code, fenced code and
-  diffs, including search overlap.
+- Markdown: text contrast and selection visibility on prose, links, inline code,
+  fenced code and diffs, including search overlap beneath the glyphs.
 - Lists: selected rows versus the surrounding surface and hover; symbols and
   brackets versus normal/active lines; added versus deleted rows; changed words
   versus solid/hollow diff rows and overlapping search; conflict sides versus
   each other and the editor.
-- Terminal: default text and ANSI colors on the default surface; normal, bright
-  and dim black/white pairs. Black must stay darker than white.
+- Terminal: default text and ANSI colors on the default and selected surfaces;
+  normal, bright and dim black/white pairs. Black must stay darker than white.
 - Debugger: execution row versus normal/active lines; selected stack frame versus
   the actual panel background. Missing or invisible debugger colors fail the CLI.
 - Regressions: the old faint/brown highlights, selection hiding a match, invisible
   overlays, incorrect alpha/paint order, missing fields and duplicate JSON keys.
 - Independent color-math references, unrounded thresholds and failing CLI status.
 
-Dark primary text targets 7:1, including diff rows and changed words. Colored
-syntax/status text retains 7:1 on normal surfaces and targets 4.5:1 on Git diff
-highlights. Comments target 4.5:1.
-Day Vivid targets 4.5:1 except green syntax at a custom 2.5:1.
-Search and selected text have no contrast target; tests retain visibility and overlap checks.
+Day Vivid targets AA 4.5:1 on normal surfaces. The original dark variants
+retain 7:1 for primary text and 4.5:1 for comments. Dark primary text retains
+7:1 on Git highlights; colored text uses 4.5:1 there. Expanded search/selection
+and rendered-Markdown text measurements are advisory, with below-target pairs
+marked REVIEW rather than PASS. Baseline normal-surface and highlight-visibility
+requirements remain enforced. A successful CLI exit does not make REVIEW rows
+meet their text-contrast targets.
 ANSI black on a dark default surface and white on a light one are exempt;
 black/white pairs target 4.5:1. Arbitrary program-chosen pairs are not guaranteed.
 Visibility uses custom guards: 0.06 Oklab distance for color separation, and 1.25:1
@@ -45,13 +47,18 @@ It multiplies the selection's theme alpha by 0.5 while search has focus. An opaq
 selection can therefore replace the active search color when focus returns to the
 editor. All variants use translucent selections to preserve it. The theme API
 exposes two search backgrounds; adding outlines would require an editor change.
-Search uses the Markdown selection blue at about 50% for the current match and
-30% for others; Markdown selections remain at 40%. Checks composite search over
+Day Vivid search and Markdown selections use green at about 60% for the current
+match, 30% for others and 55% for Markdown selections. The original dark variants
+use blue at 50%, 30% and 40%. Checks composite search over
 each actual surface, including inline chips and diff rows, before applying word
-highlights or selections. [Markdown previews in Zed 1.24.3](https://github.com/zed-industries/zed/blob/v1.24.3/crates/markdown/src/markdown.rs#L2599)
+highlights or selections. [Markdown previews in Zed 1.25.2](https://github.com/zed-industries/zed/blob/v1.25.2/crates/markdown/src/markdown.rs#L2600)
 read the same two search fields as the source editor, so both views inherit these fills.
-Markdown selections remain translucent for older Zed versions that paint over
-glyphs. Their appearance needs a visual check, rather than a text contrast gate.
+[The renderer paints chips, search and selection before glyphs](https://github.com/zed-industries/zed/blob/v1.25.2/crates/markdown/src/markdown.rs#L8042).
+The text audit therefore composites these backgrounds while retaining the glyph
+color. Older versions that paint selection over glyphs need a separate runtime
+check; passing this model does not validate those versions. Rendered previews
+have selections but no editor caret, so their fills are excluded from caret
+contrast checks; source-editor search and selection still check the cursor.
 Lists also use `ghost_element.selected`, not just `element.selected`. Diff word
 fills are painted after hunk fills and search: equal row/word colors hide changes,
 while opaque word fills erase search. Translucent fills preserve both, including
@@ -72,7 +79,7 @@ common editor/terminal states and the remaining visual coverage gaps.
 
 ## Debugger palette
 
-The paused execution row uses green in all four variants: `#C7FFE1` for Day
+The paused execution row uses green in all four variants: `#B6DBA6` for Day
 Vivid, `#06342D` for Day AAA, and `#032E2B` for Night AAA and Midnight AAA.
 An earlier gray-green candidate failed the existing 0.06 Oklab visibility guard
 in Day Vivid and Day AAA. These fills restore separation from normal/active
@@ -80,10 +87,51 @@ lines while preserving the existing primary-text contrast targets.
 In Zed 1.24.2, [the editor reads
 `editor.debugger_active_line.background`](https://github.com/zed-industries/zed/blob/v1.24.2/crates/editor/src/editor.rs#L6770).
 [Frames uses `element.hover` for both the selected frame and hovered frames](https://github.com/zed-industries/zed/blob/v1.24.2/crates/debugger_ui/src/session/running/stack_frame_list.rs#L603),
-so the dark variants use blue-cyan for that shared fill (`#003044` for Day AAA,
-`#002D38` for Night AAA and Midnight AAA). Day Vivid uses pale mint (`#C0FFD0`)
+so the original dark variants use blue-cyan for that shared fill (`#003044` in
+Day AAA and `#002D38` in Night AAA and Midnight AAA).
+Day Vivid uses pale leaf green (`#D3E9AD`)
 for Frames. Other controls using `element.hover` inherit these colors. A theme
 cannot give selected and hovered stack frames different fills in this Zed version.
+
+## Green highlights and softer daylight · 2026-10-23
+
+Day Vivid retains the accepted sage editor background (`#DCE4D6`) and green
+lists, references, brackets, focus indicators, cursors, search and selections.
+After reloading Zed, the user found the accumulated foreground darkening and
+heavy typography too strong. Earlier feedback had described a cached palette.
+The latest instruction limits the rollback to Day Vivid; its colors and token
+weights now come from the saved version before the broad readability revision.
+The first scope check compared only the latest rollback, missing dark-theme
+changes from earlier in the session. That error is now corrected: Day AAA,
+Night AAA and Midnight AAA match the original session-start snapshot and HEAD
+exactly. Day Vivid is the only theme object with a net change.
+
+Vivid variables are `#202820`, keywords `#185C28`, functions `#174299`, numbers
+`#8A1F58`, strings `#744000` and italic comments `#3E4A39`. Regular tokens use
+explicit weight 400;
+keywords/functions retain 500 and other tokens their earlier weights. On the
+sage background, calculated contrast is 11.63:1 for variables, 7.18:1 for
+comments, 6.20:1 for green, 7.08:1 for blue, 6.66:1 for pink and 6.51:1 for orange.
+
+The normal-text target returns to Vivid's earlier AA 4.5:1. Its restored
+search/selection text can fall below AA on stacked fills: those ratios remain
+in the report as REVIEW. The original dark palettes also retain their baseline
+contrast requirements; expanded Markdown/interaction measurements are advisory.
+The regression suite checks that Vivid's low interaction ratios are reported,
+while unreadable normal text and invisible highlights still fail the CLI.
+
+Global settings were a second source of cross-theme changes. The session's
+`ui_font_family`, `ui_font_weight`, `buffer_font_weight` and
+`unnecessary_code_fade` overrides have been removed; the complete settings file
+matches the original snapshot. Font sizes and theme selection are preserved.
+Vivid's token weights remain in its theme object rather than global settings.
+
+The 62 regression tests pass. Direct comparisons verify that only Vivid differs
+from the original theme family, all three dark objects match HEAD exactly, and
+Vivid was untouched during this scope repair. At the user's request, validation
+uses source review and static checks, with no new computer-use checks or
+screenshots. Reload the development extension before comparing colors. Overall
+visual acceptance is still pending.
 
 ## Git diff palette check · 2026-10-21
 
