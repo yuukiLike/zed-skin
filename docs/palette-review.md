@@ -3,8 +3,9 @@
 - **Day Vivid:** soft sage `#DCE4D6` with near-black variables `#090D12`, leaf
   green keywords `#00551C`, royal-blue calls `#1234BF`, orchid types `#8500A9`,
   raspberry values `#A00052` and burnt-orange strings `#803B00`. Properties use
-  orange `#943000`, italic comments use slate blue-gray `#4E5262`, and
-  punctuation uses neutral slate `#41464D`. Color categories differ in both hue
+  orange `#943000`, italic comments use muted plum `#674A5F`, and
+  punctuation uses neutral slate `#41464D`. Markdown source headings use emerald
+  `#005F46`, separately from code keywords. Color categories differ in both hue
   and lightness. Font weights and backgrounds are unchanged.
 - **Day AAA:** deep indigo `#1C2135` with bright syntax colors.
 - **Night AAA:** near black `#050505`, soft white and regular green keywords.
@@ -19,7 +20,7 @@ earlier weights. Dark variants retain their original token weights and italic
 gray comments. No global font-family, weight or fading overrides are installed.
 
 On the sage editor background, keyword contrast increases from 5.88:1 to
-6.96:1 while retaining the leaf-green hue; comments reach 5.95:1. The existing
+6.96:1 while retaining the leaf-green hue; comments reach 5.92:1. The existing
 4.5:1 requirements remain enforced on normal and diff surfaces. At the user's
 request, property names such as `length` use orange: 6.01:1 on the editor and
 4.98:1 on the selected row. Properties and strings now share a warm color
@@ -30,19 +31,32 @@ Day Vivid's lists and symbol/bracket highlights use leaf green, with matching
 focus borders, active indent guides and line numbers. Its selected row is
 `#B4D8AA`, distinct from its `#D3E9AD` hover. The user approved the current-file
 highlight; these UI colors remain unchanged in the syntax-category adjustment.
+Subtle buttons (including the tab close button) and list rows using
+`ghost_element.hover` now use soft rose `#E8C8D5` on hover, distinct from green
+selected rows. Filled controls and debugger frames retain their leaf-green
+`element.hover`. Tab backgrounds and the dark close glyph remain unchanged.
 Git diffs use soft mint green
 for additions and coral/rose for deletions, with matching gutters and hollow
 borders. Changed words use brighter translucent green/red fills over lightly
 tinted rows, preserving search underneath. The dark palettes retain their
 original blue/cyan lists, symbol highlights, word fills and cursor colors.
 Vivid's secondary UI/file-list text uses forest green `#2D412F`; added-file
-labels and green UI accents use `#0B4722`. These shared UI colors also apply to
+labels and green status colors use `#0B4722`. These shared UI colors also apply to
 menus, status labels and debugger text. File lists retain their existing weight.
 Secondary text reaches 7.79:1 on the panel and 6.99:1 on the selected row;
 added-file text reaches 7.67:1 and 6.88:1, respectively. Conflict
 sides use blue/green in dark themes and muted blue/yellow in Day Vivid.
 Read/write references share one color;
 they identify occurrences without distinguishing access type.
+
+Markdown preview links use royal blue `#1234BF` through the shared `text.accent`
+field. Forest borders `#39704C` and `#3F7654` color tables, quotes, dividers and
+code frames; other Vivid controls using `border` or `border.variant` inherit
+these colors too. Focus/selection borders, file-list text, selected rows and
+backgrounds are unchanged. In Zed 1.25.3, preview H1-H5 headings, prose and inline-code
+text all use `text`; H6 uses `text.muted`. The source-heading capture does not recolor rendered
+headings. Code blocks also share the editor background. These are renderer
+limits, not additional theme controls. See the [source mapping](theme-testing.md#vivid-comments-and-markdown--2026-10-24).
 
 Terminal ANSI black and white retain their dark/light roles, including when used
 as backgrounds. They are separate from the terminal's default text colors.
@@ -83,3 +97,6 @@ show the previous palette. The four global overrides introduced during this
 work (UI family/weight, editor weight and unnecessary-code fading) were removed.
 The settings file matches the session-start snapshot; font sizes and theme
 selection are preserved. Only Day Vivid differs from the original theme family.
+The user reported that the 2026-10-24 comment/Markdown appearance looked good.
+The user also approved the final rose hover-fill adjustment and requested a
+commit on 2026-10-24. No computer-use checks or global settings changes were made.

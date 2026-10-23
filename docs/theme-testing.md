@@ -93,6 +93,72 @@ Day Vivid uses pale leaf green (`#D3E9AD`)
 for Frames. Other controls using `element.hover` inherit these colors. A theme
 cannot give selected and hovered stack frames different fills in this Zed version.
 
+## Vivid tab-close hover · 2026-10-24
+
+The user reported that the hovered tab-close button was hard to distinguish.
+[Zed 1.25.3 builds it as a default subtle IconButton with `Color::Muted`](https://github.com/zed-industries/zed/blob/v1.25.3/crates/workspace/src/pane.rs#L3020).
+[Muted resolves to `text.muted`](https://github.com/zed-industries/zed/blob/v1.25.3/crates/ui/src/styles/color.rs#L93),
+while [the hover fill uses `ghost_element.hover`](https://github.com/zed-industries/zed/blob/v1.25.3/crates/ui/src/components/button/button_like.rs#L298).
+The old glyph contrast was already 8.22:1; the pale hover fill was nearly the
+same color as the tab backgrounds.
+
+Only Vivid's `ghost_element.hover` changes in this step, from `#D8E2CE` to
+soft rose `#E8C8D5`. Oklab distances from active/inactive tab backgrounds
+increase from 0.0167/0.0173 to 0.0813/0.0637; the distance from the selected
+green row is 0.1108. The unchanged dark close glyph has 7.15:1 contrast on the
+new fill. These are focused palette calculations, not an in-app visual pass
+or a new CLI gate.
+
+Other subtle/outlined buttons and selectable list rows using the same hover
+field inherit the rose fill. Selected-row fills, filled-control hover,
+debugger highlights, tab backgrounds, typography, syntax and the other three
+theme objects remain unchanged from the preceding step. Global Zed settings
+are unchanged. The existing 62 regression tests and enforced contrast checks
+pass; extended interaction text measurements remain advisory. No computer-use
+testing was performed. On 2026-10-24 the user approved the final appearance,
+including the hover fill, and requested a commit.
+
+## Vivid comments and Markdown · 2026-10-24
+
+The user distinguished rendered Markdown Preview from the Markdown source:
+the preview felt dull, while the source only needed a more elegant heading green.
+Comments had not lost highlighting; both comment captures used low-chroma
+blue-gray `#4E5262`. The orange-property commit did not alter them.
+The first rose-plum revision (`#7D3C62`) felt too prominent to the user. The
+follow-up uses muted plum `#674A5F`, reducing Oklab chroma from 0.1021 to 0.0503
+while preserving the existing font style, weight and contrast requirements.
+
+| Surface | Theme field | New color |
+| --- | --- | --- |
+| Source comments and doc comments | `syntax.comment`, `syntax.comment.doc` | Muted plum `#674A5F` |
+| Markdown source headings | `syntax.title` | Emerald `#005F46` |
+| Preview links and other UI accent text | `text.accent` | Royal blue `#1234BF` |
+| Preview tables, quotes, rules and other UI borders | `border` | Forest green `#39704C` |
+| Preview heading rules, code frames and other secondary borders | `border.variant` | Fern green `#3F7654` |
+
+[Zed 1.25.3's Markdown style](https://github.com/zed-industries/zed/blob/v1.25.3/crates/markdown/src/markdown.rs#L186)
+uses these shared fields. Its preview overrides use `text` for prose, H1-H5
+headings and inline-code text; H6 uses `text.muted`. Inline-code chips use `editor.foreground` at 8% opacity,
+and fenced blocks share `editor.background`. Changing `syntax.title` therefore
+affects source headings and Markdown highlighted inside a fence, not rendered
+heading colors. The theme does not expose separate controls for these preview
+surfaces. This pass changes the available accents and borders, not the layout
+or the shared foreground/background to simulate unsupported controls.
+
+The supplied preview's large example is a fence labeled `md`, so its contents
+are highlighted as Markdown, not as a standalone JavaScript file. Its source
+document was inspected but not changed.
+
+Comments measure 5.92:1 on the editor and at least 4.56:1 across enforced
+surfaces; source headings measure 5.91:1 and at least 4.55:1, respectively.
+The comment/Markdown step changed six Day Vivid color fields. Other syntax colors, token weights,
+focus/selection fills and borders, debugger colors, file-list text, backgrounds,
+the other three theme objects and global Zed settings remain unchanged.
+The existing 62 tests and contrast audit pass; advisory interaction states
+remain REVIEW. No computer-use testing or new screenshots were performed.
+The user later reported that this appearance looked good. A possible change
+to the comment font style was discussed but not applied.
+
 ## Green highlights and softer daylight · 2026-10-23
 
 Day Vivid retains the accepted sage editor background (`#DCE4D6`) and green
@@ -156,9 +222,9 @@ and debugger text within Vivid.
 
 The user approved the current-file highlight and the broader Vivid palette in
 commit `7652d97`, then requested orange property names such as `length`. This
-follow-up changes only `syntax.property.color`; the current palette is:
+follow-up changed only `syntax.property.color`; that checkpoint's palette was:
 
-| Role | Current color | Contrast on editor background |
+| Role | Checkpoint color | Contrast on editor background |
 | --- | --- | --- |
 | Keywords (`import`, `from`) | `#00551C` | 6.96:1 |
 | Calls (`expect`, `equal`) | `#1234BF` | 7.10:1 |

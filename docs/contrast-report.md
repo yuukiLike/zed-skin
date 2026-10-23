@@ -14,9 +14,9 @@ Checked pairs: 32556.
 
 | Scope | Pairs | Minimum | Target | Result |
 | --- | ---: | ---: | ---: | --- |
-| UI text | 10268 | 2.2192:1 | 4.5:1 | REVIEW (4859 advisory) |
-| Editor / syntax | 16006 | 2.2192:1 | 4.5:1 | REVIEW (7884 advisory) |
-| Comments | 604 | 2.2427:1 | 4.5:1 | REVIEW (410 advisory) |
+| UI text | 10268 | 2.2192:1 | 4.5:1 | REVIEW (4885 advisory) |
+| Editor / syntax | 16006 | 2.2192:1 | 4.5:1 | REVIEW (7929 advisory) |
+| Comments | 604 | 2.2310:1 | 4.5:1 | REVIEW (410 advisory) |
 | Terminal text | 12 | 4.0000:1 | 4.5:1 | REVIEW (2 advisory) |
 | Terminal ANSI | 87 | 3.4832:1 | 4.5:1 | REVIEW (38 advisory) |
 | UI indicators | 3735 | 3.1180:1 | 3:1 | PASS |
