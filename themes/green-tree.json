@@ -11,8 +11,8 @@
         "background": "#DCE4D6",
         "surface.background": "#D3DCCB",
         "elevated_surface.background": "#E3E9DD",
-        "border": "#63705D",
-        "border.variant": "#63705D",
+        "border": "#39704C",
+        "border.variant": "#3F7654",
         "border.focused": "#2B6E34",
         "border.selected": "#2B6E34",
         "border.transparent": "#00000000",
@@ -26,7 +26,7 @@
         "drop_target.background": "#D0E1C5",
         "drop_target.border": "#2B6E34",
         "ghost_element.background": "#00000000",
-        "ghost_element.hover": "#D8E2CE",
+        "ghost_element.hover": "#E8C8D5",
         "ghost_element.active": "#D0E1C5",
         "ghost_element.selected": "#B4D8AA",
         "ghost_element.disabled": "#D3DCCB",
@@ -34,7 +34,7 @@
         "text.muted": "#2D412F",
         "text.placeholder": "#2D412F",
         "text.disabled": "#2D412F",
-        "text.accent": "#0B4722",
+        "text.accent": "#1234BF",
         "icon": "#3C4639",
         "icon.muted": "#535F4D",
         "icon.disabled": "#535F4D",
@@ -256,12 +256,12 @@
             "font_weight": 600
           },
           "comment": {
-            "color": "#4E5262",
+            "color": "#674A5F",
             "font_style": "italic",
             "font_weight": 400
           },
           "comment.doc": {
-            "color": "#4E5262",
+            "color": "#674A5F",
             "font_style": "italic",
             "font_weight": 400
           },
@@ -411,7 +411,7 @@
             "font_weight": 400
           },
           "title": {
-            "color": "#00551C",
+            "color": "#005F46",
             "font_weight": 400
           },
           "type": {
