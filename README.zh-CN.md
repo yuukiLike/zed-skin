@@ -9,6 +9,7 @@
 [Midnight AAA](#midnight-aaa) · [Night AAA](#night-aaa) · [Day AAA](#day-aaa) · [Day Vivid](#day-vivid)
 
 四款外观使用相同的英文示例。点击任意图片可查看原图。
+图片为 0.11.2；最新颜色与字重见[配色说明](docs/palette-review.md)。
 
 ### Midnight AAA
 
@@ -30,7 +31,7 @@
 
 ### Day Vivid
 
-暖白、鲜绿、紫色与粉色
+柔和灰绿背景，叶绿、清爽蓝、粉色与橙色文字
 
 [![GreenTree Day Vivid: TypeScript editor](docs/screenshots/day-vivid.jpg)](docs/screenshots/day-vivid.jpg)
 
@@ -197,7 +198,7 @@
 
 ## 配色与检查
 
-深色主题以 AAA 7:1 为主要文字目标，注释采用 AA 4.5:1。搜索与选区统一使用蓝色，优先考虑观感与辨识度，不设文字对比度门槛。Day Vivid 的绿色采用自定义 2.5:1 下限，低于 AA。这些是配色目标，不代表整个编辑器获得认证。
+Day Vivid 常规文字以 AA 4.5:1 为目标；恢复原样的深色主题以主要文字 AAA 7:1、注释 AA 4.5:1 为目标。新增的搜索、选区叠加及 Markdown 渲染文字测量，将未达目标的项标为 REVIEW，不视作达标。这些是配色目标，不代表整个编辑器获得认证。
 
 无需额外依赖的[检查](docs/theme-testing.md)覆盖搜索、选区、列表、Git 差异与冲突、符号引用、括号、调试高亮和 ANSI 黑白配对。
 

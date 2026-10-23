@@ -9,6 +9,7 @@
 [Midnight AAA](#midnight-aaa) · [Night AAA](#night-aaa) · [Day AAA](#day-aaa) · [Day Vivid](#day-vivid)
 
 すべてのテーマで同じ英語のサンプルを使用しています。画像をクリックすると原寸で表示できます。
+画像は 0.11.2 のものです。最新の配色と文字の太さは[配色メモ](docs/palette-review.md)をご覧ください。
 
 ### Midnight AAA
 
@@ -30,7 +31,7 @@
 
 ### Day Vivid
 
-暖かな白、鮮やかな緑、紫とピンク
+柔らかなセージ色の背景、葉の緑、澄んだ青、ピンクとオレンジ
 
 [![GreenTree Day Vivid: TypeScript editor](docs/screenshots/day-vivid.jpg)](docs/screenshots/day-vivid.jpg)
 
@@ -197,7 +198,7 @@ macOS 上の GreenTree 0.11.2、Zed 1.24.2 で撮影しました。UI とサン�
 
 ## 配色と検証
 
-ダークテーマは主要な文字に AAA 7:1、コメントに AA 4.5:1 を目標とします。検索と選択範囲は青で統一し、見た目と識別しやすさを優先して、文字のコントラスト基準は設けません。Day Vivid の緑は独自の下限 2.5:1 で、AA を満たしません。配色の目標であり、エディタ全体の認証ではありません。
+Day Vivid の通常の文字は AA 4.5:1、元に戻したダーク 3 種は主要な文字に AAA 7:1、コメントに AA 4.5:1 を目標とします。追加の検索・選択範囲・Markdown 描画の計測では、未達項目を REVIEW と表示し、合格とは扱いません。配色の目標であり、エディタ全体の認証ではありません。
 
 追加依存なしの[検証](docs/theme-testing.md)は、検索・選択範囲・リスト・Git 差分と競合・シンボル参照・括弧・デバッガーのハイライト・ANSI の黒と白の組み合わせを対象にします。
 
