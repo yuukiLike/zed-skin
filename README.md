@@ -9,7 +9,8 @@ Green-focused, high contrast themes for Zed: one light and three dark variants.
 [Midnight AAA](#midnight-aaa) · [Night AAA](#night-aaa) · [Day AAA](#day-aaa) · [Day Vivid](#day-vivid)
 
 The same English sample in every variant. Click any image to view it at full size.
-Images show 0.11.2; the latest colors and font weights are described in the [palette notes](docs/palette-review.md).
+Refreshed on 2026-10-25 with the current repository palette, including the latest Day Vivid colors. See the [palette notes](docs/palette-review.md).
+Images embed sRGB color profiles; appearance can still vary between displays. [Cross-computer color check](human-todo.md#截图与跨电脑色差).
 
 ### Midnight AAA
 
@@ -31,7 +32,7 @@ Deep indigo with bright syntax colors
 
 ### Day Vivid
 
-Soft sage, leaf green, clear blue, pink and orange
+Soft sage, leaf-green keywords, blue calls, orange properties and muted plum comments
 
 [![GreenTree Day Vivid: TypeScript editor](docs/screenshots/day-vivid.jpg)](docs/screenshots/day-vivid.jpg)
 
@@ -194,7 +195,7 @@ A live Node.js session, paused on the green execution line, with a breakpoint, t
 
 </details>
 
-Captured with GreenTree 0.11.2 in Zed 1.24.2 on macOS. All screenshots use English UI and sample content; file icons come from the user's Zed setup. [Capture notes](docs/screenshots/README.md).
+Captured on 2026-10-25 in Zed 1.25.3 on macOS 27.0.1. All screenshots use English UI and sample content, with embedded sRGB profiles; file icons belong to the capture setup. [Capture and color notes](docs/screenshots/README.md).
 
 ## Palette and checks
 

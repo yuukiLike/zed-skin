@@ -93,6 +93,37 @@ Day Vivid uses pale leaf green (`#D3E9AD`)
 for Frames. Other controls using `element.hover` inherit these colors. A theme
 cannot give selected and hovered stack frames different fills in this Zed version.
 
+## README refresh and color profiles · 2026-10-25
+
+All 24 public screenshots were recaptured in Zed 1.25.3 on macOS 27.0.1 with
+the current repository theme, copied byte-for-byte into an isolated Zed
+user-data directory. Each of the four variants was inspected in six scenes:
+TypeScript, source search/selection, rendered Markdown, actual Git changes,
+terminal/ANSI output and a live Node.js pause. The debugger shows the green
+execution row, enabled breakpoint, inline values, selected frame and locals.
+After stopping, the green band and inline values disappeared; the debugger
+retained its last-known variables. The session and isolated editor were closed.
+
+The capture interface returns native JPEGs with the LG ULTRAFINE ICC profile.
+Published copies use an ICC conversion to embedded sRGB, with no layout changes
+or manual recoloring. All 24 exports retain 3840 × 1938 dimensions; their ICC
+profiles, editor-background samples and four debugger-row samples were checked
+against the loaded palette, allowing three 8-bit levels for JPEG/color-conversion
+rounding. The [capture notes](screenshots/README.md) describe the conversion and
+source theme fingerprint. Raw images, the fixture, scripts and a per-image
+hash/profile manifest remain under the ignored
+`.local/readme-refresh-2026-10-25/` directory.
+
+The existing 62 Python tests and enforced four-palette audit pass, and the
+generated contrast report matches the committed report. Advisory REVIEW pairs
+remain advisory. These six presentation scenes do not repeat the earlier
+35-scene regression matrix or validate every hover, conflict, adapter or platform.
+Only one Mac/LG display setup was available; no calibrated color-difference
+measurement or second-computer comparison was performed. The
+[human checklist](../human-todo.md#截图与跨电脑色差) records the distinction and
+the remaining comparison steps. Display settings and the regular Zed profile
+were not changed, and no theme fields were edited during this refresh.
+
 ## Vivid keywords on a dimmer display · 2026-10-24
 
 The user found the palette comfortable on a MacBook Air but reported that green
