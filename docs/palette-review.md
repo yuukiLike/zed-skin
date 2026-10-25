@@ -75,11 +75,14 @@ Normal-surface and highlight-visibility requirements remain enforced; REVIEW
 does not claim that every rendered or stacked state meets its text target.
 See the generated [contrast report](contrast-report.md) and [checks](theme-testing.md).
 
-[Screenshots](screenshots/README.md) show version 0.11.2 in Zed 1.24.2 on macOS:
-24 original English captures covering code, Markdown, search/selection, a live
-debugger, Git diffs and terminal colors in all four variants. The READMEs use
-small clickable previews and collapsible galleries. File icons belong to the
-user's Zed setup.
+[Screenshots](screenshots/README.md) were refreshed on 2026-10-25 from the current
+repository palette in Zed 1.25.3 on macOS 27.0.1: 24 English captures covering
+code, Markdown, search/selection, a live debugger, Git diffs and terminal colors
+in all four variants. The READMEs use clickable previews and collapsible galleries.
+Published images are converted from the capture display's ICC profile to embedded
+sRGB; the originals remain in the ignored local evidence folder. File icons
+belong to the capture setup. [Cross-computer comparison](../human-todo.md#截图与跨电脑色差)
+remains necessary for physical-display acceptance.
 
 The 2026-10-23 palette has code review and automated color checks. The user
 confirmed the sage background and selected text from their own screenshots.
@@ -93,14 +96,15 @@ edits. The three dark variants have now been restored exactly to the original
 session snapshot, also verified against HEAD. The user approved the Vivid
 appearance committed as `7652d97` on 2026-10-23, then requested the orange
 property follow-up. The user confirmed the orange properties felt more
-comfortable and authorized delivery on 2026-10-23. No final computer-use testing
-was performed at the user's request. Published screenshots
-show the previous palette. The four global overrides introduced during this
+comfortable and authorized delivery on 2026-10-23. At that stage, no final computer-use
+testing was performed at the user's request. The 2026-10-25 screenshot refresh
+now illustrates the current palette. The four global overrides introduced during this
 work (UI family/weight, editor weight and unnecessary-code fading) were removed.
 The settings file matches the session-start snapshot; font sizes and theme
 selection are preserved. Only Day Vivid differs from the original theme family.
 The user reported that the 2026-10-24 comment/Markdown appearance looked good.
 The user also approved the final rose hover-fill adjustment and requested a
-commit on 2026-10-24. No computer-use checks or global settings changes were made.
-The subsequent keyword color-only adjustment has static validation only;
-comparison on the MacBook Air and dimmer LG display is pending.
+commit on 2026-10-24. That step used no computer-use checks or global settings changes.
+The subsequent keyword color-only adjustment is now shown in the 2026-10-25
+LG-display captures as well as the static audit. A controlled comparison on the
+MacBook Air and dimmer LG display is still pending.
