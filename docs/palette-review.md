@@ -75,14 +75,12 @@ Normal-surface and highlight-visibility requirements remain enforced; REVIEW
 does not claim that every rendered or stacked state meets its text target.
 See the generated [contrast report](contrast-report.md) and [checks](theme-testing.md).
 
-[Screenshots](screenshots/README.md) were refreshed on 2026-10-25 from the current
-repository palette in Zed 1.25.3 on macOS 27.0.1: 24 English captures covering
-code, Markdown, search/selection, a live debugger, Git diffs and terminal colors
-in all four variants. The READMEs use clickable previews and collapsible galleries.
-Published images are converted from the capture display's ICC profile to embedded
-sRGB; the originals remain in the ignored local evidence folder. File icons
-belong to the capture setup. [Cross-computer comparison](../human-todo.md#截图与跨电脑色差)
-remains necessary for physical-display acceptance.
+[Screenshots](screenshots/README.md) show the current palette in Zed 1.25.3 on
+macOS 27.0.1: 24 English captures across six scenes and all four variants,
+refreshed on 2026-10-25 with embedded sRGB profiles. The Day Vivid editor overview
+uses the user's preferred local Color LCD capture; the other images are from LG.
+File icons belong to the capture setup. Physical-display acceptance remains
+separate from the [screenshot comparison](../human-todo.md#截图与跨电脑色差).
 
 The 2026-10-23 palette has code review and automated color checks. The user
 confirmed the sage background and selected text from their own screenshots.

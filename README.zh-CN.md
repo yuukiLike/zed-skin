@@ -9,8 +9,7 @@
 [Midnight AAA](#midnight-aaa) · [Night AAA](#night-aaa) · [Day AAA](#day-aaa) · [Day Vivid](#day-vivid)
 
 四款外观使用相同的英文示例。点击任意图片可查看原图。
-截图于 2026-10-25 按当前仓库配色更新，包含最新的 Day Vivid 外观。颜色与字重见[配色说明](docs/palette-review.md)。
-图片内嵌 sRGB 色彩配置，但不同显示器上的观感仍可能不同。[跨电脑色差检查](human-todo.md#截图与跨电脑色差)。
+截图于 2026-10-25 按当前配色更新。[配色说明](docs/palette-review.md) · [截图与色彩说明](docs/screenshots/README.md)。
 
 ### Midnight AAA
 
@@ -195,7 +194,7 @@
 
 </details>
 
-截图于 2026-10-25 在 macOS 27.0.1、Zed 1.25.3 中拍摄，界面和示例内容均为英文，图片内嵌 sRGB 色彩配置；文件图标来自截图环境。[截图与色彩说明](docs/screenshots/README.md)。
+截图来自 macOS 27.0.1、Zed 1.25.3，使用英文示例并内嵌 sRGB 色彩配置；文件图标来自截图环境。
 
 ## 配色与检查
 

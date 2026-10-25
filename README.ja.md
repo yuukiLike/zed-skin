@@ -9,8 +9,7 @@
 [Midnight AAA](#midnight-aaa) · [Night AAA](#night-aaa) · [Day AAA](#day-aaa) · [Day Vivid](#day-vivid)
 
 すべてのテーマで同じ英語のサンプルを使用しています。画像をクリックすると原寸で表示できます。
-2026-10-25 に現在のリポジトリの配色で撮り直し、最新の Day Vivid を反映しました。配色と文字の太さは[配色メモ](docs/palette-review.md)をご覧ください。
-画像には sRGB カラープロファイルを埋め込んでいますが、ディスプレイによって見え方は変わります。[異なるパソコンでの色の確認](human-todo.md#截图与跨电脑色差)。
+2026-10-25 に現在の配色へ更新しました。[配色メモ](docs/palette-review.md) · [撮影と色について](docs/screenshots/README.md)。
 
 ### Midnight AAA
 
@@ -195,7 +194,7 @@ Zed の **Extensions** で **[GreenTree](https://zed.dev/extensions/green-tree-t
 
 </details>
 
-2026-10-25 に macOS 27.0.1、Zed 1.25.3 で撮影しました。UI とサンプルはすべて英語で、画像には sRGB プロファイルを埋め込んでいます。ファイルアイコンは撮影環境によるものです。[撮影と色について](docs/screenshots/README.md)。
+macOS 27.0.1、Zed 1.25.3 で撮影した英語のサンプルです。画像には sRGB プロファイルを埋め込んでいます。ファイルアイコンは撮影環境によるものです。
 
 ## 配色と検証
 
