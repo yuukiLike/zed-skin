@@ -93,6 +93,24 @@ Day Vivid uses pale leaf green (`#D3E9AD`)
 for Frames. Other controls using `element.hover` inherit these colors. A theme
 cannot give selected and hovered stack frames different fills in this Zed version.
 
+## 1.0.0 release check · 2026-10-28
+
+The release packages the existing Day Vivid refinements as GreenTree 1.0.0.
+All 62 Python regression tests and the enforced four-palette audit pass. The
+generated contrast report matches the committed report; advisory REVIEW pairs
+retain their existing status.
+
+The local dev extension was checked in Zed across Day Vivid, Day AAA, Night AAA
+and Midnight AAA using `examples/tree.ts` and `examples/theme-checks.md`.
+Code syntax, comments, current/other search matches, Markdown headings, prose,
+links, inline code and tables were inspected. Eight screenshots stay Git-ignored
+under `.local/release-1.0.0/`. The original Zed theme settings were restored.
+The palette SHA-256 remains
+`5413a3e9f66776768c2b0b73a741fd2aad5d14194c12deb39485dba7cc6fa838`.
+Live debugger, Git-conflict, terminal and physical-display checks were not
+repeated in this release check; their earlier records and open manual checklist
+items remain applicable.
+
 ## README refresh and color profiles · 2026-10-25
 
 The gallery covers all four variants in six scenes: TypeScript, search/selection,

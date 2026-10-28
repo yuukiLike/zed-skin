@@ -4,7 +4,7 @@ The three READMEs share 24 English screenshots: six scenes in each of GreenTree'
 four variants. They were refreshed on **2026-10-25** in **Zed 1.25.3 on macOS
 27.0.1**, using the palette at
 [`7caf432`](https://github.com/yuukiLike/zed-skin/commit/7caf43209904ce663f0f2e9fbe0f154a0b85bfc1).
-The extension remains **0.11.2**; existing image URLs, including `v0.11.2/`, are retained.
+GreenTree **1.0.0** uses this palette; existing image URLs, including `v0.11.2/`, are retained.
 The captured theme matches `themes/green-tree.json`, SHA-256
 `5413a3e9f66776768c2b0b73a741fd2aad5d14194c12deb39485dba7cc6fa838`.
 
